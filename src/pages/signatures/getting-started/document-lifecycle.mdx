@@ -10,7 +10,7 @@ export default Layout;
 
 ## Default document lifecycle
 
-- **Signature order is created** when you create a signature order with `createSignatureOrder` you send a long document blobs with it,
+- **Signature order is created** when you create a signature order with `createSignatureOrder` you send along document blobs with it,
 upon receiving it we validate it and then [double-encrypt](#encryption-and-storage) it and store it on Azure servers.
 - **Signatory signs** whenever a signatory needs to sign a document we download and decrypt it to show it to the user,
 once the user signs we embed the signatory evidence (usually e-ID claims returned by Criipto Verify inside the PDF and seal it with Criiptos AATL certificate.
@@ -25,7 +25,7 @@ Auto-expired and cancelled signature orders also have their documents automatica
 ## Encryption and storage
 
 Documents are stored in Azure Datacenters in Europe, documents are always double encrypted, both by an Azure-managed key and by a non-Azure, fully EU-owned HSM.
-This protects the documents from any outside access to personal data, in accordance with Screms-II.
+This protects the documents from any outside access to personal data, in accordance with Schrems-II.
 
 ## Extended lifecycle
 
@@ -33,7 +33,7 @@ If you wish to extend document lifetime so that it exists on Criiptos servers be
 The documents will then stay available on the signature order until the configured amount of days has passed where at which point they will be deleted from Criiptos servers.
 
 To ensure the highest protection of personal data you **must** make sure to clean up signature orders as soon as you can verify you have securely stored documents on your own servers, you can do so by calling the `cleanupSignatureOrder` mutation.
-The `cleanupSignatureOrder` can be called an indefinite amount of times after closing the order and is idempotent.
+The `cleanupSignatureOrder` is idempotent. If you are ever in a situation where you are uncertain about whether the clean-up mutation succeed, it is better to try it again than not doing anything.
 
 import GraphQLExample from '../../../components/GraphQLExample';
 import * as cancelSignatureOrderExample from '../../../examples/cancelSignatureOrder.graphql';
