@@ -15,8 +15,7 @@ If you are building a native app, and would like to get the smoothest possible U
 
 This will require that you take on a bit more work to orchestrate the login process in comparison with just going with the browser-based flow, but the net result is a much better UX.
 
-You should always start by detecting the presence of the native e-ID app on the users device.
-The implementation of this check is OS dependent, so you need to consult the platform's documentation for guidance.
+You should always start by detecting the presence of the native e-ID app on the users device. See below for [app-detection examples](#app-detection).
 
 If the desired app is present on the users device, you must augment the authorize request you send to Criipto Verify so it contains one of the following values (also OS dependent)
 
@@ -26,6 +25,65 @@ If the desired app is present on the users device, you must augment the authoriz
 The value must be sent in the `login_hint` query parameter. Further details on this (and other) parameters in an authorize request can be found [here](/verify/getting-started/oidc-intro#authorize-request-parameters)
 
 Your app is responsible for sending the appropriate value for the platform it is deployed on.
+
+### App detection
+
+The following code and configuration snippets illustrates how you can detect the presence of both the Danish MitID and the Swedish BankID apps.
+
+#### Android
+```java
+public boolean deviceHasDKMitApp() {
+  try {
+    getPackageManager().getPackageInfo("dk.mitid.app.android", 0);
+    return true;
+  } catch (PackageManager.NameNotFoundException e) {
+    return false;
+  }
+}
+
+public boolean deviceHasSEBankIdApp() {
+  try {
+    getPackageManager().getPackageInfo("com.bankid.bus", 0);
+    return true;
+  } catch (PackageManager.NameNotFoundException e) {
+    return false;
+  }
+}
+```
+
+<Highlight icon="exclamation">
+
+From Android 11, your applications `Manifest.xml` must contain the following to be able to perform these queries:
+
+</Highlight>
+
+```xml
+<manifest ...>
+  <queries>
+    <package android:name="dk.mitid.app.android" />
+    <package android:name="com.bankid.bus" />
+  </queries>
+  <application .... />
+</manifest>
+```
+
+#### iOS
+
+```swift
+func canOpenDKMitIDApp() -> Bool {
+  guard let url = URL(string: "https://appswitch.mitid.nets.eu/.well-known/apple-app-site-association") else {
+    return false
+  }
+  return UIApplication.shared.canOpenUrl(url)
+}
+
+func canOpenSEBankIDApp() -> Bool {
+  guard let url = URL(string: "https://app.bankid.com/.well-known/apple-app-site-association") else {
+    return false
+  }
+  return UIApplication.shared.canOpenUrl(url)
+}
+```
 
 ### Swedish BankID
 App switch is supported for the same-device login flow (`acr_values=urn:grn:authn:se:bankid:same-device`).
@@ -87,6 +145,66 @@ If you must target very old OS versions, `SFSafariViewController` can be used as
 
 Once the flow completes, the MitID app will perform an app-switch back to your app, which makes the `Custom Tab` / `ASWebAuthenticationSession` resume its operation, thus completing the login process by issuing an `OAuth2` formatted response to your native app.
 
+#### Android notes
+
+It is not entirely intuitive how the switchback / resume flow can be handled on this OS.
+The following setup has been observed to work:
+
+1. Set a dedicated activity for the e-ID login UI flow, and set the following properties in your applications `Manifest.xml`.
+
+<Highlight icon="exclamation">
+
+Remember to replace the values of the `android.host` and `android.pathPattern` properties in the `data` node.
+These values must correspond to the [App Link for your app](https://developer.android.com/training/app-links).
+You can read more about [how App Links work here](https://developer.android.com/training/app-links/verify-site-associations)
+
+</Highlight>
+
+``` xml
+<activity
+        android:name=".activities.mitIDLoginActivity"
+        android:launchMode="singleTop">
+           <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                        android:host="yourwebdomain.com"
+                        android:pathPattern="/yourRedirectUrlPath"
+                        android:scheme="https" />
+            </intent-filter>
+</activity>
+```
+
+After the app links are configured properly, register the app link as a _Callback URL_ in Criipto, and set it as the `redirect_uri` query parameter in the `authorize request` towards Criipto Verify.
+You can read more about the anatomy of the `authorize request` in our [authorize URL builder](/verify/guides/authorize-url-builder/#auth-methods--acr-values).
+
+Show the custom tab in the `mitIDLoginActivity`, and the user will be taken to MitID app during the login process.
+After Login, the context switches back to your app automatically because of the app link used in the `redirect_uri`.
+When the custom tab tries to load your app link, you can access the returned `code` value in an override of the `onNewIntent` function of the `mitIDLoginActivity`:
+
+```java
+override fun onNewIntent(intent: Intent?) {
+    super.onNewIntent(intent)
+    val data = intent?.data
+    if (data != null && data.isHierarchical) {
+        if (data.getQueryParameter("error") != null) {
+            val error = data.getQueryParameter("error")
+            if (data.getQueryParameter("error_description") != null) {
+              val error_description = data.getQueryParameter("error_description")
+            }
+            // Handle error in a way that matches your UX requirements
+        }
+        if (data.getQueryParameter("code") != null) {
+            val code = data.getQueryParameter("code")
+            // Exchange the `code` to a token using the standard OAuth2/OIDC protocols.
+            // Exactly how to do this depends on your choice of flow.
+            // If you are using the PKCE flow, you can run the exchange directly from your app.
+            // If you are using the traditional authorization code flow, send the code to your server backend so it can run the exchange.
+        }
+    }
+}
+```
 
 ## Web apps
 
