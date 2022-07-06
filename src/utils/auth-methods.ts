@@ -103,6 +103,11 @@ export const PROVIDERS : Provider[] = [
       title: 'Norwegian BankID',
       acrValue: 'urn:grn:authn:no:bankid',
       scopes: noBankIdScopes
+    },
+    {
+      title: 'Norwegian BankID Biometrics',
+      acrValue: 'urn:grn:authn:no:bankid:substantial',
+      scopes: noBankIdScopes
     }],
     page: '/verify/e-ids/norwegian-bankid'
   },
