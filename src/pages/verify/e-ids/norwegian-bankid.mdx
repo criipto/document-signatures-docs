@@ -6,6 +6,7 @@ title: Norwegian BankID
 subtitle: Learn more about Norwegian BanKID token contents, how to create test users and how to gain access to production.
 ---
 import Layout from '../../../layouts/mdx';
+import ConsentRevocation from '../../../components/ConsentRevocation';
 
 export default Layout;
 
@@ -153,19 +154,29 @@ which can be a useful if you are working with technology that does not let you c
 
 Access to the SSN is governed by Norwegian law, as described in the [Ordering Norwegian BankID](/eid-specifics/order-no-bankid) guide.
 
-The unverified data are supplied by end-users and not verified by Vipps or the Norwegian banks.
+The unverified data are supplied by end-users and not verified by Bidbax (operator of BankID) or the Norwegian banks.
 
 ### Consent model
 
 End-users must explicitly grant consent to releasing the data to you.
 
-The consent model is enforced by Vipps (operator of BankID), and they also provide the consent and data collection dialogs.
+The consent model is enforced by Bidbax, and they also provide the consent and data collection dialogs.
 
 ### Forced and optional consent
 
 If you request SSN, it will be treated as a required value. End users will not be allowed to complete a login until they have explicitly given their consent to release SSN.
 
 All other additional data are treated as optional values. A login may complete even if the user does not consent to release the requested data.
+
+Consent to SSN will be stored by Criipto for 1 year for your tenant, after which the user must provide explicit SSN consent again.
+
+<Highlight icon="info">
+
+Criipto _does not_ store the SSN itself, just the fact that the user has granted your tenant access to it.
+
+</Highlight>
+
+<ConsentRevocation />
 
 ### Configuration
 
