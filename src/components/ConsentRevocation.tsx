@@ -18,5 +18,5 @@ export default function ConsentRevocation() {
         </Link>
       </Paragraph>
     </React.Fragment>
-  )
+  );
 }
