@@ -53,5 +53,3 @@ export default function MdxLayout(props: {children: React.ReactNode, location: L
     </DefaultLayout>
   );
 }
-
-export const oidcDomain = window.location.search ?? 'asdasd';

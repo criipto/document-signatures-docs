@@ -1,8 +1,23 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { MDXProvider } from "@mdx-js/react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import SyntaxHighlighter from 'react-syntax-highlighter';
+import { useLocation } from '@reach/router';
 import { vs2015 } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+
+function useQueryParams() {
+  const location = useLocation();
+  const params = useMemo(() => {
+    return new URLSearchParams(location.search);
+  }, [location]);
+  return params;
+}
+
+function replaceParams(input: string, params: URLSearchParams) {
+  input = input.replace(/{{YOUR_CRIIPTO_DOMAIN}}/g, params.get('domain') ?? 'YOUR_CRIIPTO_DOMAIN');
+  input = input.replace(/{{YOUR_CLIENT_ID}}/g, params.get('client_id') ?? 'YOUR_CLIENT_ID');
+  return input;
+}
 
 export const textToId = function (input: string) {
   if (input.toLowerCase == undefined) console.error(input);
@@ -76,7 +91,10 @@ export const Pre = (props: {children: React.ReactNode}) => {
 }
 
 export const Code = (props: {className?: string, children: string}) => {
+  const params = useQueryParams();
   const language = props.className?.startsWith('language-') ? props.className.replace('language-', '') : undefined;
+  const text = replaceParams(props.children, params);
+
   if (language && SyntaxHighlighter.supportedLanguages.includes(language)) {
     return (
       <SyntaxHighlighter
@@ -86,14 +104,14 @@ export const Code = (props: {className?: string, children: string}) => {
           padding: '0.85em 1.14em'
         }}
       >
-        {props.children}
+        {text}
       </SyntaxHighlighter>
     )
   }
 
   return (
     <pre style={{background: 'rgb(30, 30, 30)', color: 'rgb(220, 220, 220)'}}>
-      <code >{props.children}</code>
+      <code>{text}</code>
     </pre>
   );
 }
@@ -119,6 +137,12 @@ export const ImageContainer = (props: {children: React.ReactNode, maxWidth?: num
   return (<div style={{maxWidth: props.maxWidth ? `${props.maxWidth}px` : undefined}}>{props.children}</div>);
 }
 
+export const QueryParam = (props: {param: string, fallback?: string}) => {
+  const {param, fallback} = props;
+  const params = useQueryParams();
+  return params.get(param) ?? fallback;
+};
+
 const components = {
   h2: H2,
   h3: H3,
@@ -131,7 +155,8 @@ const components = {
   ImageContainer,
   p: Paragraph,
   ol: (props: any) => (<ol {...props} className="max-w-screen-md">{props.children}</ol>),
-  ul: (props: any) => (<ul {...props} className="max-w-screen-md">{props.children}</ul>)
+  ul: (props: any) => (<ul {...props} className="max-w-screen-md">{props.children}</ul>),
+  QueryParam
 }
 
 export default function CustomMDXProvider(props: {children: any}) {

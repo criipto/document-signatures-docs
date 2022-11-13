@@ -21,8 +21,9 @@ Once you register your application you will also need some of the information fo
 
 Specifically you need the following information to configure you application
 
-- _Client ID_ to identify you application to Criipto Verify. In the case below we chose `urn:criipto:samples:no1`
-- _Domain_ on which you will be communicating with Criipto Verify. Could be for example `samples.criipto.id`
+- _Client ID_ to identify you application to Criipto Verify.
+- _Domain_ on which you will be communicating with Criipto Verify.
+- _Client Secret_ to perform code exchange.
 
 ### Register callback URLs
 
@@ -65,6 +66,17 @@ Next, configure the OIDC authentication handler. Add a call to `AddOpenIdConnect
 
 The OIDC middleware requests both the `openid` and `profile` scopes by default, you may configure additional scopes if your application is [configured with dynamic scopes](https://docs.criipto.com/verify/getting-started/oidc-intro/#the-scope-parameter).
 
+```json
+// appsettings.json
+{
+  "Criipto": {
+    "Domain": "{{YOUR_CRIIPTO_DOMAIN}}",
+    "ClientId": "{{YOUR_CLIENT_ID}}",
+    "ClientSecret": "YOUR_CLIENT_SECRET"
+  }
+}
+```
+
 ```csharp
 // Program.cs
 
@@ -81,9 +93,9 @@ builder.Services.AddAuthentication(options => {
 })
 .AddCookie()
 .AddOpenIdConnect(options => {
-    options.ClientId = builder.Configuration["Criipto:ClientId"]; // ClientID from application registration
-    options.ClientSecret = builder.Configuration["Criipto:ClientSecret"]; // Client from application registration
-    options.Authority = $"https://{builder.Configuration["Criipto:Domain"]}/"; // Domain from application registration
+    options.ClientId = builder.Configuration["Criipto:ClientId"];
+    options.ClientSecret = builder.Configuration["Criipto:ClientSecret"];
+    options.Authority = $"https://{builder.Configuration["Criipto:Domain"]}/";
     options.ResponseType = "code";
 
     // The next to settings must match the Callback URLs in Criipto Verify
