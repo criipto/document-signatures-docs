@@ -14,8 +14,8 @@ function useQueryParams() {
 }
 
 function replaceParams(input: string, params: URLSearchParams) {
-  input = input.replace(/{{YOUR_CRIIPTO_DOMAIN}}/g, params.get('domain') ?? 'YOUR_CRIIPTO_DOMAIN');
-  input = input.replace(/{{YOUR_CLIENT_ID}}/g, params.get('client_id') ?? 'YOUR_CLIENT_ID');
+  input = input.replace(/{{YOUR_CRIIPTO_DOMAIN}}/g, params.get('verify_domain') ?? '{{YOUR_CRIIPTO_DOMAIN}}');
+  input = input.replace(/{{YOUR_CLIENT_ID}}/g, params.get('verify_client_id') ?? '{{YOUR_CLIENT_ID}}');
   return input;
 }
 
