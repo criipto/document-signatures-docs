@@ -117,7 +117,9 @@ export const Code = (props: {className?: string, children: string}) => {
 }
 
 export const InlineCode = (props: {children: React.ReactNode}) => {
-  return <span className="not-prose"><code className="bg-gray-100 py-0.5 px-1.5 rounded-md font-semibold text-sm">{props.children}</code></span>;
+  const params = useQueryParams();
+  const children = typeof props.children === "string" ? replaceParams(props.children as string, params) : props.children;
+  return <span className="not-prose"><code className="bg-gray-100 py-0.5 px-1.5 rounded-md font-semibold text-sm">{children}</code></span>;
 };
 
 export const Highlight = (props: {children: React.ReactNode, icon?: string, warning?: boolean}) => {
