@@ -68,13 +68,13 @@ export function PageNavigation(props: Props) {
 
   return (
     <React.Fragment>
-      <h5 className="text-blue font-semibold mb-4 text-m leading-6">{props.title || 'On this page'} </h5>
-      <ul className="text-gray-700 text-sm leading-6">
+      <h5 className="text-ash-500 font-semibold uppercase mb-4 text-sm leading-6">{props.title || 'On this page'} </h5>
+      <ul className="text-deep-purple-900 text-sm leading-6">
         {items.map(item => (
           <li key={item.text} className={item.level > 1 ? `ml-4` : ''}>
             <a
               href={item.link}
-              className={`group flex items-start block py-1 hover:text-blue ${active === item ? 'text-blue font-semibold' : ''}`}
+              className={`group flex items-start block py-1 hover:font-bold ${active === item ? 'font-bold' : ''}`}
               onClick={(event) => handleClick(event, item)}
             >
               {item.level > 1 && (

@@ -50,8 +50,7 @@
     "redux": "^4.1.2"
   },
   "devDependencies": {
-    "@fontsource/raleway": "^4.5.0",
-    "@fontsource/roboto-slab": "^4.5.1",
+    "@fontsource/ibm-plex-sans": "^4.5.13",
     "@graphql-codegen/cli": "^2.3.0",
     "@graphql-codegen/typescript": "^2.4.1",
     "@graphql-codegen/typescript-operations": "^2.2.1",

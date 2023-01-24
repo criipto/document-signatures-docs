@@ -6,7 +6,13 @@ module.exports = {
   theme: {
     colors: {
       ...colors,
-      blue: "#204C82"
+      blue: "#204C82",
+      ash: {
+        500: "#647185"
+      },
+      'deep-purple': {
+        900: '#302935'
+      }
     },
     extend: {
       typography: {

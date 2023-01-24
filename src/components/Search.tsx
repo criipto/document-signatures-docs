@@ -120,7 +120,7 @@ function HitsComponent(props: HitsProps) {
     <div>
       {Object.keys(productGroups).map(product => (
         <div key={product}>
-          <h2 className="block text-lg tracking-tight mb-4 mt-4 no-underline font-roboto-slab font-semibold text-blue">
+          <h2 className="block text-lg tracking-tight mb-4 mt-4 no-underline font-semibold text-blue">
             Criipto {upperFirst(product)}
           </h2>
             {productGroups[product].map((hit) => (
