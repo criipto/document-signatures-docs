@@ -64,11 +64,11 @@ You can handle the entire sign-in flow with the Firebase SDK, or choose to handl
 
 ### Manual setup for handling the sign-in flow
 
-As mentioned above, you can choose the [manual setup](https://firebase.google.com/docs/auth/web/openid-connect#manual) and use the ID token directly to authenticate with Firebase if you've already implemented one of Criipto's SDKs in your application.
+As mentioned above, you can choose the [manual setup](https://firebase.google.com/docs/auth/web/openid-connect#manual) and use the ID token directly to authenticate with Firebase.
 
-If your application is written with `@criipto/verify-react`, you can use the `id_token` property of the `result` object to retrieve the ID token after the user signed in with Criipto Verify.
+In `@criipto/verify-react`, you can use the `id_token` property of the `result` object to retrieve the ID token after the user signed in with Criipto Verify.
 
-```js
+```jsx
 import { getAuth, signInWithCredential, OAuthProvider } from 'firebase/auth';
 
 const provider = new OAuthProvider('oidc.criipto');
@@ -95,7 +95,7 @@ if (claims) {
 
 With `@criipto/auth-js`, you can use the [match method](https://github.com/criipto/criipto-auth.js#match):
 
-```js
+```jsx
 import { getAuth, signInWithCredential, OAuthProvider } from 'firebase/auth';
 
 const provider = new OAuthProvider('oidc.criipto');
