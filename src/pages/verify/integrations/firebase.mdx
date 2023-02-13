@@ -54,6 +54,67 @@ Alternatively, you can follow Firebase documentation for [web applications](http
    ![Define new OIDC provide](./firebase/define-new-OIDC-provider.png)
 9. You will now configure the OIDC integration. Copy the Firebase Callback URL and add it to the "Callback URL" field in your Criipto Dashboard.
    ![Callback URL in Criipto Dashboard](./firebase/criipto-dashboard-callback-url.png)
-10. From this point, you can follow the steps for the platform of your choice to integrate Firebase into your application.
-    In a web application, you can handle the sign-in flow [with the Firebase SDK](https://firebase.google.com/docs/auth/web/openid-connect#handle_the_sign-in_flow_with_the_firebase_sdk), or [manually](https://firebase.google.com/docs/auth/web/openid-connect#manual).
-    These two options are also available on both [iOS](https://firebase.google.com/docs/auth/ios/openid-connect#handle_the_sign-in_flow_with_the_firebase_sdk) and [Android](https://firebase.google.com/docs/auth/android/openid-connect#handle_the_sign-in_flow_with_the_firebase_sdk).
+10. You are now ready to integrate Firebase into your application by following the steps for the platform of your choice:
+
+    - [Web applications](https://firebase.google.com/docs/auth/web/openid-connect)
+    - [iOS](https://firebase.google.com/docs/auth/ios/openid-connect)
+    - [Android](https://firebase.google.com/docs/auth/android/openid-connect)
+
+You can handle the entire sign-in flow with the Firebase SDK, or choose to handle it manually. The latter option is useful if you've already implemented one of Criipto's SDKs in your application.
+
+### Manual setup for handling the sign-in flow
+
+As mentioned above, you can choose the [manual setup](https://firebase.google.com/docs/auth/web/openid-connect#manual) and use the ID token directly to authenticate with Firebase if you've already implemented one of Criipto's SDKs in your application.
+
+If your application is written with `@criipto/verify-react`, you can use the `id_token` property of the `result` object to retrieve the ID token after the user signed in with Criipto Verify.
+
+```js
+import { getAuth, signInWithCredential, OAuthProvider } from 'firebase/auth';
+
+const provider = new OAuthProvider('oidc.criipto');
+
+if (claims) {
+  const credential = provider.credential({
+    idToken: result.id_token,
+  });
+
+  signInWithCredential(getAuth(), credential)
+    .then((result) => {
+      // User is signed in.
+      // IdP data available in result.additionalUserInfo.profile.
+
+      // Get the OAuth access token and ID Token
+      const credential = OAuthProvider.credentialFromResult(result);
+      const idToken = credential.idToken;
+    })
+    .catch((error) => {
+      // Handle error.
+    });
+}
+```
+
+With `@criipto/auth-js`, you can use the [match method](https://github.com/criipto/criipto-auth.js#match):
+
+```js
+import { getAuth, signInWithCredential, OAuthProvider } from 'firebase/auth';
+
+const provider = new OAuthProvider('oidc.criipto');
+const match = await criiptoAuth.match();
+
+const credential = provider.credential({
+  idToken: match.id_token,
+});
+
+signInWithCredential(getAuth(), credential)
+  .then((result) => {
+    // User is signed in.
+    // IdP data available in result.additionalUserInfo.profile.
+
+    // Get the OAuth access token and ID Token
+    const credential = OAuthProvider.credentialFromResult(result);
+    const idToken = credential.idToken;
+  })
+  .catch((error) => {
+    // Handle error.
+  });
+```
