@@ -69,31 +69,40 @@ As mentioned above, you can choose the [manual setup](https://firebase.google.co
 In `@criipto/verify-react`, you can use the `id_token` property of the `result` object to retrieve the ID token after the user signed in with Criipto Verify.
 
 ```jsx
+import { useCriiptoVerify } from '@criipto/verify-react';
 import { getAuth, signInWithCredential, OAuthProvider } from 'firebase/auth';
 
 const provider = new OAuthProvider('oidc.criipto');
 
-if (claims) {
-  const credential = provider.credential({
-    idToken: result.id_token,
-  });
+function App() {
+  const { claims, result } = useCriiptoVerify();
 
-  signInWithCredential(getAuth(), credential)
-    .then((result) => {
-      // User is signed in.
-      // IdP data available in result.additionalUserInfo.profile.
-
-      // Get the OAuth access token and ID Token
-      const credential = OAuthProvider.credentialFromResult(result);
-      const idToken = credential.idToken;
-    })
-    .catch((error) => {
-      // Handle error.
+  // Handle Firebase sign-in flow manually
+  useEffect(() => {
+    if (!claims) return;
+    const credential = provider.credential({
+      idToken: result.id_token,
     });
+
+    signInWithCredential(getAuth(), credential)
+      .then((result) => {
+        // User is signed in.
+        // IdP data available in result.additionalUserInfo.profile.
+
+        // Get the OAuth access token and ID Token
+        const credential = OAuthProvider.credentialFromResult(result);
+        const idToken = credential.idToken;
+      })
+      .catch((error) => {
+        // Handle error.
+      });
+  }, [claims, result]);
+
+  // ... render your component
 }
 ```
 
-With `@criipto/auth-js`, you can use the [match method](https://github.com/criipto/criipto-auth.js#match):
+Using `@criipto/auth-js` with redirect authorization, you can use the resulting ` id_token` from the `match()` call to pass to Firebase.
 
 ```jsx
 import { getAuth, signInWithCredential, OAuthProvider } from 'firebase/auth';
