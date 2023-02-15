@@ -53,13 +53,13 @@ A domain in Criipto Verify is the DNS domain on which you call our service to pe
 
 ### Bring your own domain
 
-For development and testing it is usually sufficient to just use the preconfigured `criipto.id` top-level domain, but for production you may wish to map a domain of your own, such as `login.secure-insurance.com`, to point to Criipto Verify. In some scenarios this is required for technical reasons, but you should also keep in mind the perception of your users. The may feel uncomfortable being taken to a third party domain to login. If instead you have mapped your own domain, your users may feel safer as they are being keept in the realm of your company and application.
+For development and testing it is usually sufficient to just use the preconfigured `criipto.id` top-level domain, but for production you may wish to map a domain of your own, such as `login.secure-insurance.com`, to point to Criipto Verify. In some scenarios this is required for technical reasons, but you should also keep in mind the perception of your users. They may feel uncomfortable being taken to a third party domain to login. If instead you have mapped your own domain, your users may feel safer as they are being kept in the realm of your company and application.
 
-If you choose to set up your own domain for production you must have access to your company's _DNS setup_ and be able to aquire a socalled _SSL certificate_ which must be uploaded to the Criipto Verify service (after setting up your DNS record).
+If you choose to set up your own domain for production you must have access to your company's _DNS setup_ and be able to acquire a so-called _SSL certificate_ which must be uploaded to the Criipto Verify service (after setting up your DNS record).
 
 ## Applications
 
-Once you've set up a tenant including the first test domain, you are ready to register your application to enable its use of our service for authentiation.  To that end, you must register each application. (We use the term **application** as defined in the _client_ role in [OAuth 2.0](https://tools.ietf.org/html/rfc6749#page-6)).
+Once you've set up a tenant including the first test domain, you are ready to register your application to enable its use of our service for authentication.  To that end, you must register each application. (We use the term **application** as defined in the _client_ role in [OAuth 2.0](https://tools.ietf.org/html/rfc6749#page-6)).
 
 When you create an application in the **Applications** section of the management UI, we ask you to fill out a few required fields.
 
@@ -67,7 +67,7 @@ Each application is assigned a **Client ID** upon creation. This ID is used as t
 
 <Highlight icon="exclamation" warning>
 
-  Note that although you may change the client ID later, you should be very careful not to do so with out careful consideration of the fact that the application(s) using this client ID will have to be re-configured at the same time or they will stop working.
+  Note that although you may change the client ID later, you should be very careful not to do so without careful consideration of the fact that the application(s) using this client ID will have to be re-configured at the same time or they will stop working.
 
 </Highlight>
 
@@ -85,7 +85,7 @@ Each Identity Source can be shared among multiple applications. You may use all 
 
 <Highlight icon="info">
 
-  Identity sources are already configured for test when you create a tenant. To be able to use an Identity Source in production you will - in most cases - have to enter into some sort of formal agreement with the the provider of the particular type of e-ID.
+  Identity sources are already configured for test when you create a tenant. To be able to use an Identity Source in production you will - in most cases - have to enter into some sort of formal agreement with the provider of the particular type of e-ID.
 
   In most cases this is handled through the intermediary of Criipto, although in some cases you will also have to set up direct agreements (in countries such as Denmark and the Netherlands).
 

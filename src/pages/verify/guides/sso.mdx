@@ -31,11 +31,11 @@ You can tweak this behavior on a per-authentication-request basis by specifying 
 
 If you send a `prompt=none` and the user has no session, an error response will be sent back to your supplied callback URL with an `error=login_required` value.
 
-_Note_ that if you are using WS-Federation, and hawe to use a library that supports only standard parameters, you can achieve the same effect via the `wfresh` parameter. Specify `wfresh=-1` for a `Silent check` and `wfresh=0` for a `Forced login`
+_Note_ that if you are using WS-Federation, and have to use a library that supports only standard parameters, you can achieve the same effect via the `wfresh` parameter. Specify `wfresh=-1` for a `Silent check` and `wfresh=0` for a `Forced login`
 
 ## Single LogOut (SLO)
 
-If you are using SSO across multiple applications, you should also offer users a way to actively terminate the sessions with each application. Depending on the authentication protocol you use, you can initiate a _Single Logout_, SLO, flow by sending the users browser to one of the following URL's:
+If you are using SSO across multiple applications, you should also offer users a way to actively terminate the sessions with each application. Depending on the authentication protocol you use, you can initiate a _Single Logout_, SLO, flow by sending the users browser to one of the following URLs:
 
 - OpenID Connect: `https://VERIFY_DOMAIN/oauth2/logout?post_logout_redirect_uri=a_pre-registered_callback_url`
 - WS-Federation: `https://VERIFY_DOMAIN/passive/federation?wa=wsignout1.0&wreply=a_pre-registered_callback_url`

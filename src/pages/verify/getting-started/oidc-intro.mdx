@@ -3,20 +3,20 @@ product: verify
 category: Getting Started
 sort: 2
 title: Using OpenID Connect
-subtitle: Learn the how Criipto supports the OpenID Connect protocol
+subtitle: Learn how Criipto supports the OpenID Connect protocol
 ---
 import Layout from '../../../layouts/mdx';
 
 export default Layout;
 
-## Using OpenID Connect to integrate vith Criipto Verify
+## Using OpenID Connect to integrate with Criipto Verify
 
-Criipto Verify is integrated through the authentcation API which follows the OpenID Connect and OAuth2 specifications. 
+Criipto Verify is integrated through the authentication API which follows the OpenID Connect and OAuth2 specifications. 
 
 <Highlight icon="file-lines">
 
 Criipto Verify supports the OAuth2 *authorization code flow*, the *PKCE flow* and the (obsolete) *implicit flow* as described below. The code flow is used for traditional, server based, web applications which can keep a secret and are able to make back-channel calls to the Criipto Verify service. The PKCE (pronounced _pixy_) flow can be used by _public clients_ such as single page applications, SPAs, and native applications that cannot keep a secret. Support for the traditional implicit flow is being discontinued, although
-it will continue to function on test domains for the foreseable future for simpler debugging during development.
+it will continue to function on test domains for the foreseeable future for simpler debugging during development.
 
 </Highlight>
 
@@ -155,7 +155,7 @@ The client id and secret are retrieved from the Criipto Verify management UI and
 
 <Highlight icon="exclamation" warning>
 
-Note that the back-channel exchange of the authorization code requires the use of the client secret, which is basically just a password, and therefore *must always* be made via a back-channel - server to server - and never from a public client like a browser or native appliction. Never include the secret in the frontend code.
+Note that the back-channel exchange of the authorization code requires the use of the client secret, which is basically just a password, and therefore *must always* be made via a back-channel - server to server - and never from a public client like a browser or native application. Never include the secret in the frontend code.
 
 For PKCE-enabled clients, the secret is generated on-the-fly, and no special handling of it is required by you.
 
@@ -163,7 +163,7 @@ For PKCE-enabled clients, the secret is generated on-the-fly, and no special han
 
 ## Authenticate with PKCE
 
-PKCE allows you use use one-time secrets to perform code exchange.
+PKCE allows you to use one-time secrets to perform code exchange.
 
 [@criipto/auth-js](https://github.com/criipto/criipto-auth.js) and [@criipto/verify-react](https://github.com/criipto/criipto-verify-react) support PKCE.
 
@@ -268,7 +268,7 @@ Consult the [authorize URL builder](/verify/guides/authorize-url-builder/#auth-m
 
 ## The 'login_hint' parameter
 
-Just as for [the `scope` parameter](#the-scope-parameter), the `login_hint` parameter can contain multiple values. Each value here must also separated by a single blank character.
+Just as for [the `scope` parameter](#the-scope-parameter), the `login_hint` parameter can contain multiple values. Each value here must also be separated by a single blank character.
 
 Criipto Verify supports controlling the runtime behavior in quite a few aspects by values sent in this parameter.
 We chose this approach as it is most often possible to send them through intermediaries if your architecture has such components (other OpenID Providers such as Azure AD or Auth0).
