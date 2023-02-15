@@ -1,0 +1,218 @@
+---
+product: verify
+category: Integrations
+sort: 0
+title: JavaScript
+subtitle: Accept MitID, NemID, Swedish BankID, Norwegian BankID and more logins in your Javascript app with @criipto-auth.js.
+---
+import Layout from '../../../layouts/mdx';
+export default Layout;
+
+This guide shows how to use Criipto Verify in a JavaScript application with plain HTML. 
+
+You can also use `@criipto-auth.js` with Vue.js, Angular and other frontend frameworks, and we will be adding more integration guides in the future. For React applications, you can use our [@criipto/verify-react library](/verify/integrations/react) instead.
+
+The full documentation is available [on Github](https://github.com/criipto/criipto-auth.js).
+
+## Register Your Application in Criipto Verify
+
+After you signed up for Criipto Verify, you must [register an application](https://dashboard.criipto.com/applications/add) before you can try logging in with any e-ID.
+
+Once your application is registered, the dashboard will contain the necessary details to configure your application to communicate with Criipto Verify. 
+You will need the following information from the General tab of your application settings: 
+
+- _Client ID_ to identify your application to Criipto Verify.
+- _Domain_ on which you will be communicating with Criipto Verify.
+
+### Register callback URLs
+
+Before you can start sending authentication requests to Criipto Verify, you need to register the URLs on which you want to receive the returned *JSON Web Token*, JWT.
+
+The Callback URL of your application is the URL where Criipto Verify will redirect to after the user has authenticated in order for the OpenID Connect middleware to complete the authentication process.
+
+You will need to add this URL to the list of allowed URLs for your application.
+
+If you are developing with plain HTML and running your application locally, your callback URL might look like this:
+
+```
+http://localhost:3000/example/index.html
+```
+
+When you deploy your application to a different URL, you will also need to ensure you add that URL to the Callback URLs field in your application settings. 
+
+## Install SDK
+
+Using [npm](https://npmjs.org/):
+
+```sh
+npm install --save @criipto/auth-js
+```
+
+Another option is to include the library in your HTML by loading it from [unpkg](https://www.npmjs.com/package/unpkg):
+
+```html
+<script src="https://unpkg.com/@criipto/auth-js"></script>
+```
+
+## Initialize SDK with your application details
+
+If using the library from unpkg, you will have access to the global variable `CriiptoAuth`:
+
+```js
+// index.js
+
+var criiptoAuth = new CriiptoAuth({
+  domain: '{YOUR_CRIIPTO_DOMAIN}',
+  clientID: '{YOUR_CRIIPTO_APPLICATION_ID}',
+  store: sessionStorage
+});
+```
+
+Or import the library if using npm:
+
+```js
+// index.js
+
+import CriiptoAuth from '@criipto/auth-js';
+
+var criiptoAuth = new CriiptoAuth({
+  domain: '{YOUR_CRIIPTO_DOMAIN}',
+  clientID: '{YOUR_CRIIPTO_APPLICATION_ID}',
+  store: sessionStorage
+});
+```
+
+`domain (required, string)`: The domain your Criipto Application belongs to, such as `example.criipto.id`.
+`clientID (required, string)`: The Client ID for your Criipto Application.
+Use your application's [domain and client ID](#register-your-application-in-criipto-verify) as the values for `domain` and `clientID` respectively.
+`store (string)`: when configured, the library will store the JWT tokens in the specified location.
+[Additional authorization parameters](#authorization-parameters) can be passed in the `CriiptoAuth` constructor as well.
+
+### Authorization parameters
+
+All [authorization methods](#authorization-methods) take a set of authorization parameters. 
+Authorization parameters can also be provided by default via the `CriiptoAuth` constructor.
+
+The code snippet below includes optional parameters `redirectUri` and `acrValues`:
+
+```js
+var criiptoAuth = new CriiptoAuth({
+  domain: '{YOUR_CRIIPTO_DOMAIN}',
+  clientID: '{YOUR_CRIIPTO_APPLICATION_ID}',
+  store: sessionStorage,
+  redirectUri: 'http://localhost:8000/example/index.html',
+  acrValues: 'urn:grn:authn:dk:nemid:poces'
+});
+```
+
+`redirectUri (string)`: The URL where Criipto will call back to with the result of a successful or failed authentication. It must be whitelisted in the "Callback URLs" section in your Criipto application settings.
+`acrValues (string)`: Which eID to use for authentication, such as `urn:grn:authn:dk:nemid:poces`; a list of acceptable values can be found at `https://{YOUR_CRIIPTO_DOMAIN}/.well-known/openid-configuration`
+
+## Authorization methods
+
+You can use the following methods to authorize the user:
+
+- [`criiptoAuth.popup.authorize`](#authorization-with-popup) - Opens a popup window to authenticate the user.
+- [`criiptoAuth.redirect.authorize`](#authorization-with-redirect) - Redirects the user to the Criipto Verify login page.
+- [`criiptoAuth.authorizeResponsive`](#authorization-with-popup-or-redirect-based-on-the-screen-size) - Opens a popup window if the user is on a mobile device, otherwise redirects the user to the Criipto Verify login page.
+
+### Authorization with popup
+
+#### authorize 
+
+```js
+document.getElementById('login-button-popup').addEventListener('click', () => {
+  criiptoAuth.popup.authorize({
+    width: 300,
+    height: 400,
+    redirectUri: 'http://localhost:8000/example/index.html',
+    acrValues: 'urn:grn:authn:dk:nemid:poces'
+  }).then((result) => {
+    console.log(result, result.id_token, result.claims);
+    document.getElementById('result').textContent = JSON.stringify(result);
+  });
+});
+```
+
+`width (optional, number)`: Popup width 
+`height (optional, number)`: Popup height 
+`redirectUri` and `acrValues` are [optional authorization parameters](#authorization-parameters)
+
+### Authorization with redirect
+
+#### authorize
+
+Redirects the users browser tab to the authorization url. After authorization, the user will be redirected back to the provided `redirectUri`.
+The `redirectUri` should be [whitelisted in the "Callback URLs" section](#register-callback-URLs) in your Criipto application settings.
+
+```js
+document.getElementById('login-button-redirect').addEventListener('click', () => {
+  criiptoAuth.redirect.authorize({
+    redirectUri: 'http://localhost:8000/example/index.html',
+    prompt: 'login'
+  });
+});
+```
+
+#### match
+
+Will check for the `code` or `id_token` parameter in the URL query parameters or hash of the current `window.location`.
+
+  * If the `id_token` parameter is present, it will return the result.
+  * If the `code` parameter is present, it will perform a PKCE token exchange and return the result. This is the case if using the [PKCE / OAuth2 code flow](TODO: add section and link).
+   
+As soon as the user has been redirected back to your application after authentication, you can call the `match` method to get the `id_token` or `code` parameter.
+
+```js
+const match = await criiptoAuth.redirect.match();
+console.log(match.code);
+console.log(match.id_token, match.claims);
+```
+
+Using `claims` to display the user name:
+
+```js
+// index.js
+
+criiptoAuth.redirect.match()
+  .then((result) => {
+    if (result && result.claims) {
+      const userName = document.getElementById('user-name');
+      userName.textContent = result.claims.name;
+    }
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+```
+
+### Authorization with popup or redirect based on the screen size
+
+This option provides a convenient way to choose authorization method based on a CSS media query (screen size).
+It will open a popup window if the user is on a mobile device or a tablet, otherwise redirect the user to the login page.
+
+```js
+// index.js
+
+document.getElementById('login-button-responsive').addEventListener('click', () => {
+  criiptoAuth.authorizeResponsive({
+    '(min-width: 768px)': {
+      via: 'popup',
+      redirectUri: window.location.origin + '/example/popup-callback.html',
+      acrValues: 'urn:grn:authn:dk:mitid:low',
+      width: 320,
+      height: 460
+    },
+    '(max-width: 767px)': {
+      via: 'redirect',
+      redirectUri: window.location.origin + '/example/index.html',
+      acrValues: 'urn:grn:authn:dk:mitid:low'
+    }
+  });
+});
+```
+
+## Logging user out
+
+
+## QRCode
