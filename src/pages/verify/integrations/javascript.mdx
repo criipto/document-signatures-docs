@@ -103,8 +103,8 @@ All [authorization methods](#authorization-methods) take a set of authorization 
 - `redirectUri (string)`: The URL where Criipto will call back to with the result of a successful or failed authentication. It must be whitelisted in the "Callback URLs" section in your Criipto application settings.
 - `acrValues (string)`: Which eID to use for authentication, such as `urn:grn:authn:dk:nemid:poces`; a list of acceptable values can be found at `https://{YOUR_CRIIPTO_DOMAIN}/.well-known/openid-configuration`.
 - `responseType (string)`: The type of response you want to receive from Criipto Verify. The default `id_token` will return a JWT token. You can also set the value to `code` for PKCE flow.
-- `scope (string)`: The scope of the authentication request. The default value is `openid profile email`, which will return the user's profile information. If you only want to receive the user's ID token, you can set the value to `openid`.
-- `prompt (string)`: The type of user interaction that is required. `prompt: 'login'` will ignore an existing session and force a new login. `prompt: 'none'` will check if the user has an existing session: Criipto Verify will never require any user interactions in this case. The default value is `login`, which will always force the user to re-authenticate. Read more [here](/guides/sso/#per-request-options).
+- `scope (string)`: Can be used to specify the user data you want on a per-authorize request basis. To start using this feature, activate the "Enable dynamic scopes" toggle in your application settings. Read more [here](./getting-started/oidc-intro/#the-scope-parameter).
+- `prompt (string)`: The type of user interaction that is required. `prompt: 'login'` will ignore an existing session and force a new login. `prompt: 'none'` will check if the user has an existing session: Criipto Verify will never require any user interactions in this case. The default value is `login`, which will always force the user to re-authenticate. Read more [here](./guides/sso/#per-request-options).
 
 ```js
       redirectUri: redirectUri!,
@@ -281,7 +281,7 @@ It will open a popup window if the user is on a mobile device or a tablet, other
 
 ## Logging user out
 
-If you have SSO enabled for your domain and you are not using prompt=login you can use logout() to clear the users SSO session.
+If you have SSO enabled for your domain and you are not using `prompt='login'` you can use `logout()` to clear the users SSO session.
 
 ```js
 criiptoAuth.logout({
