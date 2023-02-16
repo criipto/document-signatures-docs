@@ -17,7 +17,7 @@ const noVippsScopes = ['email', 'phone', 'address', 'birthdate', 'ssn']
 
 export const PROVIDERS : Provider[] = [
   {
-    title: 'Finnish e-ID',
+    title: 'Finnish Trust Network',
     authMethods: [
       {
         title: 'BankID',
@@ -32,7 +32,7 @@ export const PROVIDERS : Provider[] = [
         acrValue: 'urn:grn:authn:fi:all'
       }
     ],
-    page: '/verify/e-ids/finnish-trust-network'
+    page: '/verify/eids/finnish-trust-network'
   },
   {
     title: 'Danish NemID',
@@ -51,7 +51,7 @@ export const PROVIDERS : Provider[] = [
         acrValue: 'urn:grn:authn:dk:nemid:moces:codefile'
       }
     ],
-    page: '/verify/e-ids/danish-nemid'
+    page: '/verify/eids/danish-nemid'
   },
   {
     title: 'Danish MitID',
@@ -67,7 +67,7 @@ export const PROVIDERS : Provider[] = [
         scopes: dkScopes
       }
     ],
-    page: '/verify/e-ids/danish-mitid'
+    page: '/verify/eids/danish-mitid'
   },
   {
     title: 'Swedish BankID',
@@ -81,7 +81,7 @@ export const PROVIDERS : Provider[] = [
         acrValue: 'urn:grn:authn:se:bankid:another-device:qr'
       }
     ],
-    page: '/verify/e-ids/swedish-bankid'
+    page: '/verify/eids/swedish-bankid'
   },
   {
     title: 'ItsME',
@@ -95,7 +95,7 @@ export const PROVIDERS : Provider[] = [
         acrValue: 'urn:grn:authn:itsme:advanced'
       }
     ],
-    page: '/verify/e-ids/itsme'
+    page: '/verify/eids/itsme'
   },
   {
     title: 'Norwegian BankID',
@@ -109,7 +109,7 @@ export const PROVIDERS : Provider[] = [
       acrValue: 'urn:grn:authn:no:bankid:substantial',
       scopes: noBankIdScopes
     }],
-    page: '/verify/e-ids/norwegian-bankid'
+    page: '/verify/eids/norwegian-bankid'
   },
   {
     title: 'Norwegian Vipps',
@@ -118,17 +118,17 @@ export const PROVIDERS : Provider[] = [
       acrValue: 'urn:grn:authn:no:vipps',
       scopes: noVippsScopes
     }],
-    page: '/verify/e-ids/norwegian-vipps'
+    page: '/verify/eids/norwegian-vipps'
   },
   {
     title: 'Belgium',
     authMethods: [
       {
-        title: 'Verified e-ID',
+        title: 'Verified eID',
         acrValue: 'urn:grn:authn:be:eid:verified'
       }
     ],
-    page: '/verify/e-ids/belgian-eid'
+    page: '/verify/eids/belgian-eid'
   },
   {
     title: 'Germany',
@@ -138,6 +138,6 @@ export const PROVIDERS : Provider[] = [
         acrValue: 'urn:grn:authn:de:sofort'
       }
     ],
-    page: '/verify/e-ids/sofort'
+    page: '/verify/eids/sofort'
   }
 ];

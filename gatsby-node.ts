@@ -17,13 +17,13 @@ export const createPages : GatsbyNode["createPages"] = ({ actions }) => {
   const { createRedirect } = actions;
   createRedirect({
     fromPath: '/getting-started/dk-mitid',
-    toPath: '/verify/e-ids/danish-mitid', 
+    toPath: '/verify/eids/danish-mitid', 
     isPermanent: true, 
     force: true
   });
   createRedirect({
     fromPath: '/getting-started/no-bankid',
-    toPath: '/verify/e-ids/norwegian-bankid', 
+    toPath: '/verify/eids/norwegian-bankid', 
     isPermanent: true, 
     force: true
   });
@@ -53,49 +53,49 @@ export const createPages : GatsbyNode["createPages"] = ({ actions }) => {
   });
   createRedirect({
     fromPath: '/eid-specifics/order-dk-nemid',
-    toPath: '/verify/e-ids/danish-nemid/#order-nemid-for-production',
+    toPath: '/verify/eids/danish-nemid/#order-nemid-for-production',
     isPermanent: true, 
     force: true
   });
   createRedirect({
     fromPath: '/eid-specifics/mitid-ux-reqs',
-    toPath: '/verify/e-ids/danish-mitid/#mitid-user-interface-requirements',
+    toPath: '/verify/eids/danish-mitid/#mitid-user-interface-requirements',
     isPermanent: true, 
     force: true
   });
   createRedirect({
     fromPath: '/eid-specifics/order-dk-mitid',
-    toPath: '/verify/e-ids/danish-mitid/#order-mitid-for-production',
+    toPath: '/verify/eids/danish-mitid/#order-mitid-for-production',
     isPermanent: true, 
     force: true
   });
   createRedirect({
     fromPath: '/eid-specifics/order-no-bankid',
-    toPath: '/verify/e-ids/norwegian-bankid/#ordering-norwegian-bankid',
+    toPath: '/verify/eids/norwegian-bankid/#ordering-norwegian-bankid',
     isPermanent: true, 
     force: true
   });
   createRedirect({
     fromPath: '/eid-specifics/order-no-vipps',
-    toPath: '/verify/e-ids/norwegian-vipps/#ordering-norwegian-vipps-login',
+    toPath: '/verify/eids/norwegian-vipps/#ordering-norwegian-vipps-login',
     isPermanent: true, 
     force: true
   });
   createRedirect({
     fromPath: '/eid-specifics/order-se-bankid',
-    toPath: '/verify/e-ids/swedish-bankid/#ordering-swedish-bankid',
+    toPath: '/verify/eids/swedish-bankid/#ordering-swedish-bankid',
     isPermanent: true, 
     force: true
   });
   createRedirect({
     fromPath: '/eid-specifics/order-fi-bankid',
-    toPath: '/verify/e-ids/finnish-trust-network/#ordering-a-production-agreement',
+    toPath: '/verify/eids/finnish-trust-network/#ordering-a-production-agreement',
     isPermanent: true, 
     force: true
   });
   createRedirect({
     fromPath: "/eid-specifics", 
-    toPath: "/verify/e-ids", 
+    toPath: "/verify/eids", 
     isPermanent: true, 
     force: true
   });
@@ -125,7 +125,7 @@ export const createPages : GatsbyNode["createPages"] = ({ actions }) => {
   });
   createRedirect({
     fromPath: "/how-to/test-users/",
-    toPath: "/verify/e-ids",
+    toPath: "/verify/eids",
     isPermanent: true, 
     force: true
   });

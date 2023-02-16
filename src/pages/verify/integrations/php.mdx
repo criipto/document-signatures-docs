@@ -40,7 +40,7 @@ $oidc = new OpenIDConnectClient('https://{{YOUR_CRIIPTO_DOMAIN}}',
                                 '{{YOUR_CLIENT_SECRET}}');
 
 $oidc->authenticate();
-// Or any other available claim based on your used authentication method: https://docs.criipto.com/verify/e-ids/
+// Or any other available claim based on your used authentication method: https://docs.criipto.com/verify/eids/
 $name = $oidc->getVerifiedClaims('name');
 ```
 

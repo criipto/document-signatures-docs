@@ -92,7 +92,7 @@ As an example, your HTML snippet for your authorization URL when adding login to
 </a>
 ```
 
-You can <a href="https://acme-corp.criipto.id/oauth2/authorize?response_type=id_token&client_id=urn:debug:jwt.io&acr_values=urn:grn:authn:no:bankid&redirect_uri=https://jwt.io&scope=openid&state=etats" target="_blank">try the above URL</a> right now if you have a [test user for Norwegian BankID](/verify/e-ids/norwegian-bankid/#test-users).
+You can <a href="https://acme-corp.criipto.id/oauth2/authorize?response_type=id_token&client_id=urn:debug:jwt.io&acr_values=urn:grn:authn:no:bankid&redirect_uri=https://jwt.io&scope=openid&state=etats" target="_blank">try the above URL</a> right now if you have a [test user for Norwegian BankID](/verify/eids/norwegian-bankid/#test-users).
 
 For more about how to handle the implicit flow, see below. 
 
@@ -280,7 +280,7 @@ Go to these specific use cases where `login_hint` is used to specify behaviour o
 - [Prefilled fields](/verify/guides/prefilled-fields/)
 - [Quirks mode](/verify/guides/authorize-url-builder)
 - ['Dynamic' styling](/verify/guides/custom-styling/#dynamic-style-sheets)
-- [DK MitID for business](/verify/e-ids/danish-mitid/#business)
+- [DK MitID for business](/verify/eids/danish-mitid/#business)
 - [Action specifiers](#action-specifiers)
 
 ## Action specifiers
@@ -298,7 +298,7 @@ Sending, say, `action:approve` will change "Login at ..." worded elements to "Ap
 
 <Highlight icon="info">
 
-Note that specifically for [Danish MitID](/verify/e-ids/danish-mitid), you may also send a base64-url-encoded message via `message:BASE64URL(...text...)`, which will be shown to the end user in the MitID app.
+Note that specifically for [Danish MitID](/verify/eids/danish-mitid), you may also send a base64-url-encoded message via `message:BASE64URL(...text...)`, which will be shown to the end user in the MitID app.
 For example, if you want to show a *Transfer EUR 100 to IBAN DK123456781234* message to the user, add a `message:VHJhbnNmZXIgRVVSIDEwMCB0byBJQkFOIERLMTIzNDU2NzgxMjM0` value to the `login_hint`.
 
 [Authorize URL builder example](/verify/guides/authorize-url-builder/?acr_values=urn:grn:authn:dk:mitid:low&action=approve&message=Transfer%20EUR%20100%20to%20IBAN%20DK123456781234)

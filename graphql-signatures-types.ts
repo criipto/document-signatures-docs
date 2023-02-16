@@ -158,10 +158,10 @@ export type CreateApplicationOutput = {
 };
 
 export type CreateSignatureOrderInput = {
-  /** By default signatories will be prompted to sign with a Criipto Verify based e-ID, this setting disables it. */
+  /** By default signatories will be prompted to sign with a Criipto Verify based eID, this setting disables it. */
   disableVerifyEvidenceProvider?: InputMaybe<Scalars['Boolean']>;
   documents: Array<DocumentInput>;
-  /** Define evidence providers for signature order if not using built-in Criipto Verify for e-IDs */
+  /** Define evidence providers for signature order if not using built-in Criipto Verify for eIDs */
   evidenceProviders?: InputMaybe<Array<EvidenceProviderInput>>;
   /** When this signature order will auto-close/expire. Default 90 days. */
   expiresInDays?: InputMaybe<Scalars['Int']>;
@@ -220,7 +220,7 @@ export type CriiptoVerifyProviderInput = {
   alwaysRedirect?: InputMaybe<Scalars['Boolean']>;
   /** Messages displayed when performing authentication (only supported by DKMitID currently). */
   message?: InputMaybe<Scalars['String']>;
-  /** Enforces that signatories sign by unique evidence by comparing the values of previous evidence on the key you define. For Criipto Verify you likely want to use `sub` which is a unique pseudonym value present in all e-ID tokens issued. */
+  /** Enforces that signatories sign by unique evidence by comparing the values of previous evidence on the key you define. For Criipto Verify you likely want to use `sub` which is a unique pseudonym value present in all eID tokens issued. */
   uniqueEvidenceKey?: InputMaybe<Scalars['String']>;
 };
 
