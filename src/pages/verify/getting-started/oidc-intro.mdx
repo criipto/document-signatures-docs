@@ -76,7 +76,7 @@ If you want to receive the response in another way you must specify the `respons
 | `response_mode` | (optional) Specifies how you want your result delivered via the `redirect_uri`: Use `query` to return the `code`/`id_token` as a query parameter, `fragment` to have it delivered on a URL fragment, and finally `form_post` to have it posted back to your `redirect_uri`.  <br />  <br /> Default values are `query` for `response_type=code` and `query` for `response_type=id_token`. |
 | `state`         | (optional but recommended) An opaque arbitrary alphanumeric string your app adds to the initial request that Criipto includes when redirecting back to your application. |
 | `login_hint`    | (optional) Various use cases leverage this parameter. You can read more about them [here](#the-loginhint-parameter).|
-| `prompt`        | (optional) Specifies whether the user will be forced to re-authenticate. Possible values are `none` (default) and `login`. More information is available [here](/verify/guides/sso/#per-request-options). |
+| `prompt`        | (optional) Specifies whether the user will be forced to re-authenticate. Possible values are `none`, `login`, `consent`, and `consent_revoke`. More information is available in our [SSO guide](/verify/guides/sso/#per-request-options) and in our [authorize URL builder](/verify/guides/authorize-url-builder/). |
 
 As an example, your HTML snippet for your authorization URL when adding login to your app might look like:
 
