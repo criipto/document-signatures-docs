@@ -41,7 +41,7 @@ import CodeFlowSnippet from '../../../snippets/oauth2-code-flow.mdx';
 
 ## Create Auth0 connections
 
-To integrate Criipto Verify with Auth0, you create an Auth0 OpenID Connect connection to communicate with Criipto Verify. Because Auth0 will not pass the `acr_values` to Criipto Verify, you will have to create a new connection for every e-ID option that you intend to use. (`acr_values` is a parameter in the `/authorize` request to Criipto Verify needed to specify which kind of e-ID is requested)
+To integrate Criipto Verify with Auth0, you create an Auth0 OpenID Connect connection to communicate with Criipto Verify. Because Auth0 will not pass the `acr_values` to Criipto Verify, you will have to create a new connection for every eID option that you intend to use. (`acr_values` is a parameter in the `/authorize` request to Criipto Verify needed to specify which kind of eID is requested)
 
 For those cases, you can leverage our login-method specific metadata endpoints. Each of these contain an embedded and base64-encoded variant of the "raw" value normally supplied in the `acr_values`.
 

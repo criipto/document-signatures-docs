@@ -44,7 +44,7 @@ export default function Header(props: {path: string | undefined, className?: str
                 >
                   {isVerify ? (
                     <React.Fragment>
-                      Verify (e-IDs)
+                      Verify (eIDs)
 
                       <svg width="6" height="3" className="ml-2 overflow-visible" aria-hidden="true">
                         <path d="M0 0L3 3L6 0" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"></path>
@@ -66,7 +66,7 @@ export default function Header(props: {path: string | undefined, className?: str
                   <div className="absolute top-full mt-1 py-2 w-60 rounded-lg bg-white shadow ring-1 ring-gray-900/5 text-sm leading-6 font-semibold text-gray-700 z-60">
                     <Link to="/verify">
                       <span className="flex items-center justify-between px-3 py-1 text-blue">
-                        Verify (e-IDs)
+                        Verify (eIDs)
                         {isVerify && (
                           <svg width="24" height="24" fill="none"><path d="m7.75 12.75 2.25 2.5 6.25-6.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path></svg>
                         )}

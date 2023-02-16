@@ -371,10 +371,10 @@ export default function AuthorizeURLBuilder() {
 
       <H3>Auth methods / acr values</H3>
       <Paragraph>
-        You can click the individual e-ID headlines or use the navigation to your left to learn more about each e-ID.
+        You can click the individual eID headlines or use the navigation to your left to learn more about each eID.
       </Paragraph>
       <Paragraph>
-        If you select multiple (or zero) e-IDs the user will be presented with a landing page where they can use their e-ID of choice.
+        If you select multiple (or zero) eIDs the user will be presented with a landing page where they can use their eID of choice.
       </Paragraph>
       <Paragraph>
         Some features, like <strong>input prefill</strong> and <strong>acr_values quirk handling</strong> is only available if you only select a <strong>single acr_values</strong>

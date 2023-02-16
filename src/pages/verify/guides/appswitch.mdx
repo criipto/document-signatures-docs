@@ -11,11 +11,11 @@ export default Layout;
 
 ## Native apps
 
-If you are building a native app, and would like to get the smoothest possible UX, you can use Criipto Verify's app-switching capabilities (for e-ID's that support it).
+If you are building a native app, and would like to get the smoothest possible UX, you can use Criipto Verify's app-switching capabilities (for eID's that support it).
 
 This will require that you take on a bit more work to orchestrate the login process in comparison with just going with the browser-based flow, but the net result is a much better UX.
 
-You should always start by detecting the presence of the native e-ID app on the users device. See below for [app-detection examples](#app-detection).
+You should always start by detecting the presence of the native eID app on the users device. See below for [app-detection examples](#app-detection).
 
 If the desired app is present on the users device, you must augment the authorize request you send to Criipto Verify so it contains one of the following values (also OS dependent)
 
@@ -150,7 +150,7 @@ Once the flow completes, the MitID app will perform an app-switch back to your a
 It is not entirely intuitive how the switchback / resume flow can be handled on this OS.
 The following setup has been observed to work:
 
-1. Set a dedicated activity for the e-ID login UI flow, and set the following properties in your applications `Manifest.xml`.
+1. Set a dedicated activity for the eID login UI flow, and set the following properties in your applications `Manifest.xml`.
 
 <Highlight icon="exclamation">
 

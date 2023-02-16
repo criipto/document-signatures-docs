@@ -15,7 +15,7 @@ Examples include the CPR number in Denmark for personal NemID and SSN ("personnu
 
 By default the user is prompted for this data when needed, but if you would like to avoid these dialogs, you can specify the values up-front in the request for authentication, via the `login_hint` query parameter. This works for both OpenID Connect and WS-Federation.
 
-The actual support for controlling the input data varies by e-ID method:
+The actual support for controlling the input data varies by eID method:
 
 1. Danish NemID: Use `login_hint=sub:<CPR>` where `<CPR>` has the format `DDMMYYXXXX`
 2. Swedish BankID: Use `login_hint=sub:<SSN>` where `<SSN>` has the format `YYYYMMDDXXXX`

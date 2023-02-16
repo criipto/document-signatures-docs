@@ -75,7 +75,7 @@ By using the `documents` input array for `addSignatory` you can limit what docum
 
 For scenarios where you are displaying the PDFs to the users in your own UI you can opt to create a signatory with the documents preapproved.
 
-By preapproving documents for a signatory they are immediately sent to e-ID login to sign and skip the frontend approval flow.
+By preapproving documents for a signatory they are immediately sent to eID login to sign and skip the frontend approval flow.
 
 When using preapproval document-scoping is automatically used so make sure that you pass all documents from the signature order to the signatory.
 
@@ -112,7 +112,7 @@ Signature apperance (inside the PDF/document) can be configured via the `signatu
 
 The example below shows how you might configure it to show the `social number / cpr number` instead of a GUID for any SE/DK/NO login while also accounting for simple and complex claim types.
 
-If dealing with a single e-ID (like Swedish BankID) and only simple claims you can configure it as simply `identifierFromEvidence: ["ssn"]`
+If dealing with a single eID (like Swedish BankID) and only simple claims you can configure it as simply `identifierFromEvidence: ["ssn"]`
 
 <GraphQLExample example={{...createSignatureOrderExample, variables: createSignatureOrderExample.signatureAppearanceExampleVariables}} />
 
@@ -148,9 +148,9 @@ If for any reason you no longer need a signature order you can abandon it by usi
 
 <GraphQLExample example={cancelSignatureOrderExample} />
 
-## Requiring unique e-IDs for each signatory
+## Requiring unique eIDs for each signatory
 
-If you do not wish signatories to be able to sign multiple times (i.e. not using a "role" system or just have issues with persons sharing e-ID)
+If you do not wish signatories to be able to sign multiple times (i.e. not using a "role" system or just have issues with persons sharing eID).
 you can configure the Criipto Verify evidence provider to enforce uniqueness via the `uniqueEvidenceKey: 'sub'` setting.
 
 <GraphQLExample example={{...createSignatureOrderExample, variables: createSignatureOrderExample.uniqueEvidenceExampleVariables}} />
@@ -179,7 +179,7 @@ You can define `evidenceProviders` with `enabledByDefault: false` and then selec
 
 ### Sign acting as a signatory
 
-The common case is to let signatories sign via their browser with an e-ID, this also provides the highest level of evidence.
+The common case is to let signatories sign via their browser with an eID, this also provides the highest level of evidence.
 
 However if you wish to sign acting as a signatory, for example to automatically counter-sign documents with a specific image, you can use the `signActingAs` mutation.
 

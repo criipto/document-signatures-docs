@@ -3,7 +3,7 @@ product: verify
 category: Integrations
 sort: 0
 title: ASP.NET Core 3.1
-subtitle: Accept MitID, Swedish BankID, Norwegian BankID and other e-ID logins with ASP.NET Core 3.1 and Criipto Verify
+subtitle: Accept MitID, Swedish BankID, Norwegian BankID and other eID logins with ASP.NET Core 3.1 and Criipto Verify
 ---
 import Layout from '../../../layouts/mdx';
 export default Layout;
@@ -17,9 +17,9 @@ Four steps are required to complete your first test login:
 3. [Configure your application to use Criipto Verify](#configure-your-application-to-use-criipto-verify)
 4. [Trigger authentication in your application](#trigger-login-and-logout-in-your-application)
 
-This explains how to set up your application and test with test users. To use real e-IDs for login the setup is the same, but you must be [set up for Production](#setting-up-for-production)
+This explains how to set up your application and test with test users. To use real eIDs for login the setup is the same, but you must be [set up for Production](#setting-up-for-production)
 
-And note that you need test e-ID users to see your code in action. How to get those is [described further down](#test-users).
+And note that you need test eID users to see your code in action. How to get those is [described further down](#test-users).
 
 You may get a completed and ready to run [sample from GitHub](https://github.com/criipto/dotnet-core-v3.x-sample) showing the below recipe in the simplest of ASP.NET Core MVC applications.
 
@@ -27,7 +27,7 @@ To modify your existing application to work with Criipto Verify follow the steps
 
 ## Register Your Application in Criipto Verify
 
-After you signed up for Criipto Verify, you must register an application before you can actually try logging in with any e-ID.
+After you signed up for Criipto Verify, you must register an application before you can actually try logging in with any eID.
 
 Once you register your application you will also need some of the information for communicating with Criipto Verify. You get these details from the settings of the application in the dashboard.
 
@@ -80,7 +80,7 @@ Go to the `ConfigureServices` method of your `Startup` class. To add the authent
 
 Next, configure the OIDC authentication handler. Add a call to `AddOpenIdConnect`. Configure the necessary parameters, such as `ClientId`, `ClientSecret`, `ResponseType`, and not least the `Authority`. The latter is used by the middleware to get the metadata describing the relevant endpoints, the signing keys etc.
 
-The OIDC middleware requests both the `openid` and `profile` scopes by default, but note that Criipto Verify by nature returns only the information derived from the underlying e-ID service. Changing the scopes does not affect the amount and nature of information delivered from the user information endpoint.
+The OIDC middleware requests both the `openid` and `profile` scopes by default, but note that Criipto Verify by nature returns only the information derived from the underlying eID service. Changing the scopes does not affect the amount and nature of information delivered from the user information endpoint.
 
 ```csharp
 // Startup.cs

@@ -71,8 +71,8 @@ If you want to receive the response in another way you must specify the `respons
 | `response_type` | Denotes the kind of credential that Criipto will return (`code` or `id_token`). If you are integrating a traditional server based web application (back-channel flow) or a *PKCE-enabled* client, use `code`. Use `id_token` for legacy single page applications using a front-channel flow. |
 | `client_id`     | Your application's Client ID. You can find this value in the Criipto Verify UI in the settings for actual application. |
 | `redirect_uri`  | The URL to which Criipto will redirect the browser after authentication has been completed. The authorization code and the `id_token` will be available in the `code` and `id_token` URL parameter for the back-channel flow and on a URL query parameter for the front-channel flow. This URL must be pre-registered as a valid callback URL in your application settings.<br /> <br /> **Warning:** Per the [OAuth 2.0 Specification](https://tools.ietf.org/html/rfc6749#section-3.1.2), Criipto removes everything after the hash and does *not* honor any fragments. |
-| `scope`         | For applications configured with a `static` scope strategy, specify `openid`. This gets you the information configured in the management dashboard for each kind of e-ID (where applicable).  <br />  <br />  For applications configured with a `dynamic` scope strategy, you must specify scope tokens for the types of data you want, in addition to the `openid` scope token. Possible values are described in the individual e-ID articles.<br /> <br />You can read more about this parameter [here](#the-scope-parameter) |
-| `acr_values`    | Identifies which e-ID identity service you want to use. You can only specify one value, and it must identify the exact type of identity service, as some countries have, for example, both a mobile and web based service. Possible values can be found in the [authorize request builder](/verify/guides/authorize-url-builder/#auth-methods--acr-values). |
+| `scope`         | For applications configured with a `static` scope strategy, specify `openid`. This gets you the information configured in the management dashboard for each kind of eID (where applicable).  <br />  <br />  For applications configured with a `dynamic` scope strategy, you must specify scope tokens for the types of data you want, in addition to the `openid` scope token. Possible values are described in the individual eID articles.<br /> <br />You can read more about this parameter [here](#the-scope-parameter) |
+| `acr_values`    | Identifies which eID identity service you want to use. You can only specify one value, and it must identify the exact type of identity service, as some countries have, for example, both a mobile and web based service. Possible values can be found in the [authorize request builder](/verify/guides/authorize-url-builder/#auth-methods--acr-values). |
 | `response_mode` | (optional) Specifies how you want your result delivered via the `redirect_uri`: Use `query` to return the `code`/`id_token` as a query parameter, `fragment` to have it delivered on a URL fragment, and finally `form_post` to have it posted back to your `redirect_uri`.  <br />  <br /> Default values are `query` for `response_type=code` and `query` for `response_type=id_token`. |
 | `state`         | (optional but recommended) An opaque arbitrary alphanumeric string your app adds to the initial request that Criipto includes when redirecting back to your application. |
 | `login_hint` | (optional) Various use cases leverage this parameter. You can read more about them [here](#the-loginhint-parameter).|
@@ -240,9 +240,9 @@ You can use the `scope` query parameter to specify which user data you want on a
 <Highlight icon="file-lines">
 
 You must explicitly enable this feature [per application](https://dashboard.criipto.com/applications). 
-By default, Criipto Verify uses the configured settings per e-ID (thus effectively ignoring any other `scope` values than `openid`).
+By default, Criipto Verify uses the configured settings per eID (thus effectively ignoring any other `scope` values than `openid`).
 Activate the "Enable dynamic scopes" toggle on an application to start using this feature.
-Once you do that, Criipto Verify will switch from using the per e-ID configured scope options to the ones you specify in the authorize request.
+Once you do that, Criipto Verify will switch from using the per eID configured scope options to the ones you specify in the authorize request.
 
 </Highlight>
 
@@ -257,7 +257,7 @@ The `scope` value must always contain the value `openid`, and it may also contai
 - `birthdate`
 - `ssn`
 
-You can see which values are supported for the various e-IDs in the [authorize URL builder](/verify/guides/authorize-url-builder/#auth-methods--acr-values) or in the individual e-ID articles.
+You can see which values are supported for the various eIDs in the [authorize URL builder](/verify/guides/authorize-url-builder/#auth-methods--acr-values) or in the individual eID articles.
 
 <Highlight icon="file-lines">
 

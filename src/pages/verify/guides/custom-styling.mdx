@@ -10,7 +10,7 @@ import previews from './images/preview-sebankid.png';
 import customStyling from './images/custom-styling.png';
 export default Layout;
 
-Some of the e-ID methods require additional dialogs outside of those of the actual eID service.
+Some of the eID methods require additional dialogs outside of those of the actual eID service.
 These may be styled to you liking using CSS as described below.
 
 ## Preview of the user-facing dialogs
@@ -19,7 +19,7 @@ You can see a preview of the dialogs in the `Styling` tab for your tenant in the
 
 ![Previews](./images/preview-sebankid.png)
 
-Each e-ID method supports a specific set of languages - see [UI Language](/verify/guides/choose-language) for details. You can change the language used to generate the previews in the dropdown.
+Each eID method supports a specific set of languages - see [UI Language](/verify/guides/choose-language) for details. You can change the language used to generate the previews in the dropdown.
 
 Each of the previews is shown in mobile device size by default, but you can expand each of the previews to desktop size by clicking on the dashed square shown just above each preview. In desktop mode, all dialogs will have a customizable common header and footer structure, as well as the elements presented for mobile devices.
 
@@ -74,7 +74,7 @@ These appear in both common and dialog-specific HTML elements. The structure is 
     </span>
 ```
 The wording can be change via CSS selectors in your custom style sheet - see below for examples.
-Depending on the e-ID, the `lang-sv` class will be replaced with `lang-da`, `lang-nb` etc.
+Depending on the eID, the `lang-sv` class will be replaced with `lang-da`, `lang-nb` etc.
 
 ## Desktop screen sizes
 
@@ -188,7 +188,7 @@ If you want to show text in one of the hidden-by-default `<p>` elements, you can
 ## CSS classes
 ### Generally available
 Each `<body>` element has up to 5 CSS classes attached to it:
-1. Indicator of the e-ID method in use - such as `sebankid`.
+1. Indicator of the eID method in use - such as `sebankid`.
 2. Indicator that this is a page from Criipto Verify - `broker`. This makes it possible to target our pages specifically, even if you use the same CSS file for different websites.
 3. Indicator of the flow in use - authentication (`auth`) or signature (`sign`).
 4. Indicator of which DNS name the page is loaded on.
