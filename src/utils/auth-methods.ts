@@ -17,7 +17,7 @@ const noVippsScopes = ['email', 'phone', 'address', 'birthdate', 'ssn']
 
 export const PROVIDERS : Provider[] = [
   {
-    title: 'Finnish e-ID',
+    title: 'Finnish Trust Network',
     authMethods: [
       {
         title: 'BankID',

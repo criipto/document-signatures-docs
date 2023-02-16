@@ -1,6 +1,6 @@
 ---
 product: verify
-category: e-IDs
+category: eIDs
 sort: 0
 title: eIDS supported by Criipto Verify
 ---
@@ -16,7 +16,7 @@ export const pageQuery = gatsbyGraphql`
       filter: {
         frontmatter: {
           product: { eq: "verify" }
-          category: { eq: "e-IDs" }
+          category: { eq: "eIDs" }
         }
       }
       sort: { fields: [frontmatter___sort], order: ASC }
