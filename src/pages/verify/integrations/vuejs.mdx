@@ -2,16 +2,14 @@
 product: verify
 category: Integrations
 sort: 0
-title: JavaScript
-subtitle: Accept MitID, NemID, Swedish BankID, Norwegian BankID and more eID logins in your JavaScript application with @criipto/auth-js.
+title: Vue.js
+subtitle: Accept MitID, NemID, Swedish BankID, Norwegian BankID and more eID logins in your Vue.js application with @criipto/auth-js.
 ---
 
 import Layout from '../../../layouts/mdx';
 export default Layout;
 
-This guide shows how to use Criipto Verify in a JavaScript application with plain HTML.
-
-You can also use `@criipto/auth-js` [with Vue.js](/verify/integrations/vuejs), Angular and other frontend frameworks. For React applications, you can use our [@criipto/verify-react library](/verify/integrations/react) instead.
+This guide shows how to use Criipto Verify in a Vue.js application.
 
 The full documentation is available [on Github](https://github.com/criipto/criipto-auth.js).
 
@@ -27,31 +25,23 @@ You will need the following information from the General tab of your application
 
 ### Register callback URLs
 
-Before you can start sending authentication requests to Criipto Verify, you need to register the URLs on which you want to receive the returned *JSON Web Token*, JWT.
+Before you can start sending authentication requests to Criipto Verify, you need to register the URLs on which you want to receive the returned _JSON Web Token_, JWT.
 
 The Callback URL of your application is the URL where Criipto Verify will redirect to after the user has authenticated in order for the OpenID Connect middleware to complete the authentication process.
 
 You will need to add this URL to the list of allowed URLs for your application.
 
-If you are developing with plain HTML and running your application locally, your callback URL might look like this:
+If you are running your application locally, your callback URL might look like this:
 
 ```
-http://localhost:3000/example/index.html
+http://localhost:5173
 ```
 
 When you deploy your application to a different URL, you will also need to ensure you add that URL to the Callback URLs field in your application settings.
 
 ## Install SDK
 
-You can include the library directly into your HTML file by loading it from [unpkg](https://www.npmjs.com/package/unpkg):
-
-```html
-<!-- index.html -->
-
-<script type="text/javascript" src="https://unpkg.com/@criipto/auth-js"></script>
-```
-
-Or install the package using [npm](https://npmjs.org/):
+Using [npm](https://npmjs.org/):
 
 ```sh
 npm install --save @criipto/auth-js
@@ -59,22 +49,8 @@ npm install --save @criipto/auth-js
 
 ## Initialize SDK with your application details
 
-If using the library from `unpkg`, you will have access to the global variable `CriiptoAuth`:
-
 ```javascript
-// index.js
-
-var criiptoAuth = new CriiptoAuth({
-  domain: '{YOUR_CRIIPTO_DOMAIN}',
-  clientID: '{YOUR_CRIIPTO_APPLICATION_ID}',
-  store: sessionStorage,
-});
-```
-
-Or import the library if you are using npm:
-
-```javascript
-// index.js
+// App.vue
 
 import CriiptoAuth from '@criipto/auth-js';
 
@@ -107,31 +83,43 @@ Will open a popup window to authenticate the user.
 
 #### authorize
 
-```html
-<!-- index.html -->
-...
-<button id="login-button-popup">Login</button>
-<div id="result"></div>
-...
+```javascript
+// App.vue
+// Using the reactive method and Composition API of Vue.js 3
 
-<script type="text/javascript">
-  document
-    .getElementById('login-button-popup')
-    .addEventListener('click', () => {
-      criiptoAuth.popup
-        .authorize({
-          width: 300,
-          height: 400,
-          redirectUri: 'http://localhost:8000/example/index.html',
-          acrValues: 'urn:grn:authn:dk:nemid:poces',
-        })
-        .then((result) => {
-          console.log(result, result.id_token, result.claims);
-          document.getElementById('result').textContent =
-            JSON.stringify(result);
-        });
-    });
+<script setup lang="ts">
+import CriiptoAuth from '@criipto/auth-js';
+import { reactive } from 'vue';
+
+...
+const state = reactive({
+  claims: {},
+});
+
+const loginWithEid = () => {
+   criiptoAuth.popup.authorize({
+    width: 300,
+    height: 400,
+    redirectUri: 'http://localhost:5173',
+    acrValues: 'urn:grn:authn:dk:nemid:poces',
+   })
+   .then((result) => {
+    console.log(result, result.id_token, result.claims);
+    state.claims = result.claims;
+};
+...
 </script>
+
+<template>
+  ...
+    <button @click="loginWithEid">Login with eID</button>
+    <ul>
+      <li v-for="(value, key) in state.claims" :key="key">
+        {{ key }}: {{ value }}
+      </li>
+    </ul>
+  ...
+</template>
 ```
 
 ### Authorization with redirect
@@ -153,47 +141,66 @@ Will check for the `code` or `id_token` parameter in the URL query parameters or
 As soon as the user has been redirected back to your application after authentication, you can call the `match` method to get the `id_token` or `code` parameter.
 
 ```javascript
-const match = await criiptoAuth.redirect.match();
-console.log(match.code);
-console.log(match.id_token, match.claims);
-```
+// Login.vue
 
-```html
-<!-- index.html -->
+<script setup lang="ts">
+import criiptoAuth from '../criipto-auth';
 ...
-<button id="login-button-redirect">Login</button>
-<div id="result"></div>
-...
-
-<script type="text/javascript">
-  document
-    .getElementById('login-button-redirect')
-    .addEventListener('click', () => {
-      criiptoAuth.redirect.authorize({
-        redirectUri: 'http://localhost:8000/callback.html',
-        prompt: 'login',
-      });
+const loginWithEid = () => {
+  criiptoAuth.redirect
+    .authorize({
+      redirectUri: 'http://localhost:5173/profile',
+      prompt: 'login',
+    })
+    .then((result) => {
+      console.log('result', result);
+    })
+    .catch((error) => {
+      console.log(error);
     });
+};
+...
 </script>
 
-<!-- callback.html -->
-...
-<h2>Hello, <span id="user-name">user</span></h2>
-...
+<template>
+    ...
+    <button @click="loginWithEid">Login with eID</button>
+    ...
+</template>
 
-<script type="text/javascript">
+// Profile.vue
+<script setup lang="ts">
+import { reactive, onMounted } from 'vue';
+import criiptoAuth from '../criipto-auth';
+
+const state = reactive({
+  userName: 'user',
+});
+
+function matchCallback() {
   criiptoAuth.redirect
     .match()
     .then((result) => {
       if (result && result.claims) {
-        const userName = document.getElementById('user-name');
-        userName.textContent = result.claims.name;
+        state.userName = result.claims.name;
+        console.log('result', result);
       }
     })
     .catch((error) => {
       console.log(error);
     });
+}
+
+onMounted(() => {
+  matchCallback();
+});
 </script>
+
+<template>
+  ...
+    <h1>Hello, {{state.name}}</h1>
+  ...
+</template>
 ```
 
 `prompt: 'login'` will force the user to re-authenticate even if they have already logged in. See [the list of supported parameters](/verify/getting-started/oidc-intro/#example-authentication-url) for more information.
@@ -204,6 +211,6 @@ If you have SSO enabled for your domain and you are not using `prompt='login'` y
 
 ```javascript
 criiptoAuth.logout({
-  redirectUri: 'http://localhost:8000/example/index.html',
+  redirectUri: 'http://localhost:5173',
 });
 ```
