@@ -82,8 +82,8 @@ Note that there is no `certsubject` returned when using Biometrics.
 
 Two types of Norwegian BankID are available:
 
-1. _Web based BankID with a hardware token_. Also called _Netcentric_ accounts, test users from this type of BankID may be created and used on the fly
-2. _Mobile BankID_. Norwegian mobile BankID is based on a socalled _SIM card application_ which means you need a special SIM card issued by one of the Norwegian carriers. 
+1. _Web based BankID with a hardware token_. Also called _Netcentric_ accounts, test users from this type of BankID may be created and used on the fly.
+2. _Mobile BankID_. Norwegian mobile BankID is based on a so-called _SIM card application_ which means you need a special SIM card issued by one of the Norwegian carriers.
 
 ### Creating netcentric test users
 
@@ -91,9 +91,9 @@ Test users are created through the web page at [https://ra-preprod.bankidnorge.n
 
 1. Go to the "TEST NUMBER GENERATOR" to generate a random, valid SSN
 2. It now says "Could not find any bankIDs for ..."
-3. Fill out the first name, last name, and BankID friendly name.
+3. Fill out the first name, last name, and BankID friendly name
 4. Click "Order" to initiate the process
-5. Once the process complete you now have a test user. User name is the generated SSN, one time password (OTP) is always "otp", and password is always "qwer1234"  
+5. Once the process is complete, you will have a test user. User name is the generated SSN, one time password (OTP) is always "otp", and password is always "qwer1234"
 
 <Highlight icon="info">
 
@@ -106,7 +106,7 @@ You can test it out at [our authentication demo site](https://verify-login.azure
 ### Testing BankID Biometric
 Start by creating a netcentric test user as described above, and add an email and a phone number to the user.
 
-Install the test-version of the BankID App (on `iOS`, it is distributed via `TestFlight`).
+You will then need to install the test version of the BankID App. To get access to the `iOS` or `Android` version of the test app, please contact our support team. (On `iOS`, the test version is distributed via `TestFlight`).
 
 The app must be activated before first use:
 
@@ -120,7 +120,7 @@ The app must be activated before first use:
 8. Open the following page to get your activation codes (after replacing the `{yourTestSsn}` placeholder with your actual test-SSN): https://ra-preprod.bankidnorge.no/notification-console/content/{yourTestSsn}
 9. Type the one-time code that is shown on the website into the app and press the Next button
 10. Press the Next button in the "Is this your email?” screen
-11. Type the code words that is shown on the website into the app and press the Next button
+11. Type the code words that are shown on the website into the app and press the Next button
 12. Press the Next button in the "Log in using BankID to complete the activation” screen
 13. Wait until BankID client has loaded in the browser. Pick BankID app in the method list if it is not already preselected.
 14. Type "qwer1234” as personal password and click the blue arrow button to the right
@@ -128,7 +128,7 @@ The app must be activated before first use:
 16. Enable biometrics (which will take you through a flow where you must agree to the terms and conditions).
 17. Run your first biometrics-based login.
 
-### Testing Mobile BankID 
+### Testing Mobile BankID
 
 For testing you may order up to three test SIM cards through Criipto once you have signed up for Norwegian BankID.
 
@@ -226,7 +226,7 @@ Or feel free to reach out, either on [Slack](https://tiny.cc/criipto-slack) or v
 
 ### Ordering the client credentials
 
-To order production credentials please send a request to 
+To order production credentials please send a request to
 
 <p style="text-indent: 50px"><a href="mailto:support@criipto.com?subject=NO BankID for ...">support@criipto.com</a></p>
 
@@ -252,7 +252,7 @@ with answers to these questions:
 
 After Criipto has received the above information, we order the client credntials from your bank by filling out an online agreement, which is then sent to the appointed persons at your company for signing. Criipto will also sign the agreement
 
-When all signatures are in place the signed agreement is sent to your bank for further processing and eventual issuance of your client credentials. 
+When all signatures are in place the signed agreement is sent to your bank for further processing and eventual issuance of your client credentials.
 
 Once you have received credentials, they must be entered into the Criipto Verify management UI to configure your NO BankID integration.
 
