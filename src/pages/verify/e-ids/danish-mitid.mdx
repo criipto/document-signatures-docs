@@ -303,7 +303,7 @@ Also, Criipto may request that you submit a URL where we can verify that you are
 
 With MitID everything happens on a page hosted by Criipto. Specifically, MitID cannot be iframed, only shown in full page view.
 
-You will therefore redirect the current page to Criipto (alternatively [open a web view](#mitid-branding-in-a-native-app) in a native app), or you may open up a popup window. The latter is only relevant on the desktop and is typically not recommended by Criipto.
+You will therefore redirect the current page to Criipto (alternatively [open a browsing component](#mitid-branding-in-a-native-app) in a native app), or you may open up a popup window. The latter is only relevant on the desktop and is typically not recommended by Criipto.
 
 In the test environment, the MitID landing page will be hosted on a Criipto provided domain: `criipto.pp.mitid.dk`. In production, you will [apply for your own domain](#apply-for-production-access).
 
@@ -372,7 +372,7 @@ The text inside the button must be from the set of approved texts:
 
 ### MitID branding in a native app
 
-Just as illustrated above, your app must show a call to action which will open a webview hosting the MitID landing page:
+Just as illustrated above, your app must show a call to action which must open a MitID-compatible browsing component to host the MitID landing page:
 
 <ImageContainer maxWidth={300}>
 
@@ -380,7 +380,7 @@ Just as illustrated above, your app must show a call to action which will open a
 
 </ImageContainer>
 
-Your app must use a platform-specific web view (Custom Tab on Android and Safari View Controller on iOS) which clearly reassures the user that they 
+Your app must use a platform-specific, MitID-compatible browsing component which clearly reassures the user that they 
 are on a legitimate mitid.dk domain with appropriate security (TLS and the padlock symbol):
 
 <ImageContainer maxWidth={300}>
@@ -388,6 +388,12 @@ are on a legitimate mitid.dk domain with appropriate security (TLS and the padlo
   ![MitID CTA in native app](./images/mitid-native-app-browser-with-address-visible.png)
 
 </ImageContainer>
+
+<Highlight icon="file-lines">
+  
+You can read more about the details of [MitID-compatible browsing components here](/verify/guides/appswitch/#danish-mitid). 
+
+</Highlight>
 
 ## Disable NemID login
 
