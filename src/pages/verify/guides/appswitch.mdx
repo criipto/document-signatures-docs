@@ -28,19 +28,18 @@ Your app is responsible for sending the appropriate value for the platform it is
 
 ### App detection
 
-The following code and configuration snippets illustrates how you can detect the presence of both the Danish MitID and the Swedish BankID apps.
+<Highlight icon="exclamation">
+
+From June 6, 2023 (MitID Release 11) and onwards, app-detection for MitID is no longer relevant.
+After that date, end users will be presented with "Open MitID app" buttons in the MitID Core Client, regardless of any effort by the SP's app to detect the presence of the MitID app.
+We have therefore removed the previous guidance for MitID app detection from our documentation.
+
+</Highlight>
+
+The following code and configuration snippets illustrates how you can detect the presence of the Swedish BankID app.
 
 #### Android
 ```java
-public boolean deviceHasDKMitApp() {
-  try {
-    getPackageManager().getPackageInfo("dk.mitid.app.android", 0);
-    return true;
-  } catch (PackageManager.NameNotFoundException e) {
-    return false;
-  }
-}
-
 public boolean deviceHasSEBankIdApp() {
   try {
     getPackageManager().getPackageInfo("com.bankid.bus", 0);
@@ -53,14 +52,13 @@ public boolean deviceHasSEBankIdApp() {
 
 <Highlight icon="exclamation">
 
-From Android 11, your applications `Manifest.xml` must contain the following to be able to perform these queries:
+From Android 11, your applications `Manifest.xml` must contain the following to be able to perform this query:
 
 </Highlight>
 
 ```xml
 <manifest ...>
   <queries>
-    <package android:name="dk.mitid.app.android" />
     <package android:name="com.bankid.bus" />
   </queries>
   <application .... />
@@ -70,13 +68,6 @@ From Android 11, your applications `Manifest.xml` must contain the following to 
 #### iOS
 
 ```swift
-func canOpenDKMitIDApp() -> Bool {
-  guard let url = URL(string: "https://appswitch.mitid.nets.eu/.well-known/apple-app-site-association") else {
-    return false
-  }
-  return UIApplication.shared.canOpenURL(url)
-}
-
 func canOpenSEBankIDApp() -> Bool {
   guard let url = URL(string: "https://app.bankid.com/.well-known/apple-app-site-association") else {
     return false
