@@ -74,14 +74,14 @@ func canOpenDKMitIDApp() -> Bool {
   guard let url = URL(string: "https://appswitch.mitid.nets.eu/.well-known/apple-app-site-association") else {
     return false
   }
-  return UIApplication.shared.canOpenUrl(url)
+  return UIApplication.shared.canOpenURL(url)
 }
 
 func canOpenSEBankIDApp() -> Bool {
   guard let url = URL(string: "https://app.bankid.com/.well-known/apple-app-site-association") else {
     return false
   }
-  return UIApplication.shared.canOpenUrl(url)
+  return UIApplication.shared.canOpenURL(url)
 }
 ```
 
