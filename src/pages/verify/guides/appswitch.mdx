@@ -201,23 +201,14 @@ override fun onNewIntent(intent: Intent?) {
 
 ### Danish MitID #web-apps-danish-mitid
 
-The MitID login UX to web apps can also benefit from app-switching. 
-When using this flow, a "Start the MitID app" button will be presented to the user after they have entered their username, just as in the case for native app targets.
-Clicking this button will launch the MitID app - so the user does not have to find it and open it manually.
+The MitID login UX to web apps also benefits from app-switching, though only in the switch from the browser to the MitID app.
+The user must still manually switch back to the browser once they have approved the login in their MitID app.
 
-You can activate this behavior by adding a `target:web` token in the `login_hint` query parameter.
+<Highlight icon="exclamation">
 
-<Highlight icon="file-lines">
-
-You must also add the platform-specific `appswitch:...` token as described above for native apps.
+This has changed with on June 6, 2023 (with MitID Release 11). Previously, automated switchback to the browser could be achieved on iOS, but that is no longer the case.
 
 </Highlight>
-
-Your web application is responsible for detecting if the user is browsing your site on a mobile device.
-You will need that information to determine whether to send `appswitch:ios` or `appswitch:android`.
-
-In contrast to native apps, there is no way that your web app can determine if the native MitID app is installed on the device.
-Only the end user knows this - so you need to let them choose between the 2 flow options in your web app.
 
 #### Working with the test-version(s) of the MitID app
 The test version(s) can be found here: [https://pp.mitid.dk/mitid-app/index.html](https://pp.mitid.dk/mitid-app/index.html).
