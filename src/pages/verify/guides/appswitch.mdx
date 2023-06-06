@@ -215,8 +215,3 @@ The test version(s) can be found here: [https://pp.mitid.dk/mitid-app/index.html
 Note that on Android, the test version cannot co-exist with the production version, so you need a dedicated Android device for testing.
 On iOS, the 2 app versions can co-exist, but doing so can lead to surprising behaviour at runtime. The app-switching is (sometimes) done to the "latest active" version of the app, so you might end up in your production app while testing.
 We recommend that you always close the production version of the  MitID app before running any tests.
-
-#### Android caveat
-The login flow pauses in the MitID app after the user has authenticated, and the user must manually switch back to the browser.
-The login process will automatically complete after the manual switch-back. 
-This is the same behavior that end-users are familiar with from NemID app-based logins.
