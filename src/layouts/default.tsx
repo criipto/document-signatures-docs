@@ -5,6 +5,7 @@ import cx from 'classnames';
 import {DesktopNavigation, MobileNavigation} from '../components/Navigation';
 import Header from '../components/Header';
 import { PageNavigationItem } from '../components/PageNavigation';
+import { Link } from 'gatsby';
 
 function upperFirst(input: string) {
   if (!input) return input;
@@ -12,7 +13,12 @@ function upperFirst(input: string) {
 }
 
 
-export default function DefaultLayout(props: {children: React.ReactNode, location: Location, pageContext: any, pageNavigationItems?: PageNavigationItem[]}) {
+export default function DefaultLayout(props: {
+  children: React.ReactNode,
+  location: Location,
+  pageContext: any,
+  pageNavigationItems?: PageNavigationItem[]
+}) {
   const {frontmatter} = props.pageContext;
   const description = frontmatter.description || frontmatter.subtitle;
   const suffix = 
@@ -30,6 +36,10 @@ export default function DefaultLayout(props: {children: React.ReactNode, locatio
 
     window.parent.postMessage(`height:${document.body.offsetHeight}`, '*');
   }, [isEmbedded]);
+
+  const breadcrumb = 
+    props.location.pathname.startsWith('/verify/articles') ? {href: '/verify/articles', label: 'Articles'} :
+    props.location.pathname.startsWith('/signatures/articles') ? {href: '/signatures/articles', label: 'Articles'} : null
 
   return (
     <div>
@@ -58,7 +68,17 @@ export default function DefaultLayout(props: {children: React.ReactNode, locatio
           {frontmatter && (
             <header id="header" className="relative z-20 mb-8">
               <div>
-                {frontmatter.category && (<p className="mb-2 text-lg leading-6 font-sans font-semibold text-gray-ash-500 uppercase">{frontmatter.category}</p>)}
+                {frontmatter.category && (
+                  <p className="mb-2 text-lg leading-6 font-sans font-semibold text-gray-ash-500 uppercase">
+                    {breadcrumb ? (
+                      <React.Fragment>
+                        <Link to={breadcrumb.href}>{breadcrumb.label}</Link>
+                        &nbsp;/&nbsp;
+                      </React.Fragment>
+                    ) : null}
+                    {frontmatter.category}
+                  </p>
+                )}
                 <h1 className="inline-block text-display-xl font-medium text-deep-purple-900 tracking-tight">{frontmatter.title}</h1>
               </div>
               {frontmatter.subtitle && (<p className="mt-2 text-lg text-gray-ash-700 max-w-screen-sm">{frontmatter.subtitle}</p>)}

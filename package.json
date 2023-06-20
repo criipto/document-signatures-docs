@@ -46,6 +46,7 @@
     "gatsby-plugin-sitemap": "^5.4.0",
     "graphiql": "^1.5.16",
     "graphql-tag": "^2.12.6",
+    "lodash": "^4.17.21",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-helmet": "^6.1.0",

@@ -1,0 +1,55 @@
+---
+title: Articles
+subtitle: Articles & help regarding Criipto Verify
+---
+import Layout from '../../../layouts/mdx';
+export default Layout;
+
+import {isIndexPage} from '../../../utils';
+import {groupBy} from 'lodash';
+import { graphql as gatsbyGraphql, Link } from "gatsby";
+
+export const pageQuery = gatsbyGraphql`
+  query verifyArticles {
+    pages: allMdx(
+      filter: {
+        frontmatter: {
+          articles: { eq: "verify" }
+        }
+      }
+      sort: { fields: [frontmatter___category], order: ASC }
+    ) {
+      edges {
+        node {
+          __typename
+          id
+          slug
+          fileAbsolutePath
+          frontmatter {
+            title
+            subtitle
+            category
+          }
+        }
+      }
+    }
+  }
+`;
+
+
+
+<React.Fragment>
+  {Object.entries(groupBy(props.data.pages.edges.map(edge => edge.node), 'frontmatter.category')).map(([category, pages]) => (
+    <React.Fragment key={category}>
+      <h2>{category}</h2>
+      <ul>
+        {pages.filter(node => !isIndexPage(node)).map(node => (
+          <li key={node.id}>
+            <Link to={`/${node.slug}/`}>{node.frontmatter.title}</Link><br />
+            {node.frontmatter.subtitle}
+          </li>
+        ))}
+      </ul>
+    </React.Fragment>
+  ))}
+</React.Fragment>

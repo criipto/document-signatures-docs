@@ -114,6 +114,12 @@ export default function Navigation(props: Props) {
                 </Link>
               </li>
             ))}
+            <Link
+              to="/verify/articles"
+              className="block border-l pl-4 py-1 lg:py-0 -ml-px border-transparent hover:border-gray-400 text-primary-600 hover:text-deep-purple-900 hover:font-medium"
+            >
+              Articles
+            </Link>
           </ul>
         </li>
         <li className="mt-8">
@@ -150,6 +156,14 @@ export default function Navigation(props: Props) {
             <h5 className="mb-3 font-medium text-primary-600">{category}</h5>
           )}
           <ul className="space-y-2 border-l border-gray-100 text-md font-normal">
+            {isVerify && category === 'Guides & Tools' && (
+              <Link
+                to="/verify/articles"
+                getProps={(props) => ({className: `block border-l pl-4 py-1 lg:py-0 -ml-px border-transparent ${props.isCurrent ? 'text-deep-purple-900 border-current font-medium' : 'hover:border-gray-400 text-primary-600 hover:text-deep-purple-900 hover:font-medium'}`})}
+              >
+                Articles
+              </Link>
+            )}
             {pages.filter(node => !isIndexPage(node) && node.frontmatter?.category === category).map(page => (
               <li key={page.id}>
                 <Link
