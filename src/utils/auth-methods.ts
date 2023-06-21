@@ -65,6 +65,11 @@ export const PROVIDERS : Provider[] = [
         title: 'Substantial',
         acrValue: 'urn:grn:authn:dk:mitid:substantial',
         scopes: dkScopes
+      },
+      {
+        title: 'MitID Erhverv',
+        acrValue: 'urn:grn:authn:dk:mitid:business',
+        scopes: dkScopes
       }
     ],
     page: '/verify/e-ids/danish-mitid'

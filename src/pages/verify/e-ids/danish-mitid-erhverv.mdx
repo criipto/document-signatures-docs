@@ -56,15 +56,16 @@ The `sub`, `nameidentifier` and `uuid` values here will not be the same as for a
 
 ## Request business logins
 
-You can request a login in business context by sending a `login_hint=business` or `login_hint=business_optional` query parameter in the authorize request.
-This will allow company signatories to log in to your site or application with their personal MitID.
+You can request a login in business context via the following acr_values: `urn:grn:authn:dk:mitid:business`.  
+Alternatively, you can send a `login_hint=business` or `login_hint=business_optional` query parameter in the authorize request.  
+This will allow *company signatories* to log in to your site or application with their personal MitID.
 
 `login_hint=business` will allow logging in as a business user.  
 `login_hint=business_optional` will give an option to choose to log in as a private individual, or a business user, depending on CVR registrations. 
 
 <Highlight icon="info">
 
-In the very near future, this will also allow employees to log in, either with their personal MitID or with a dedicated MitID.
+In the very near future, this will also allow *employees* to log in, either with their personal MitID or with a dedicated MitID.
 
 </Highlight>
 
