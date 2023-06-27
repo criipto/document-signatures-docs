@@ -61,11 +61,11 @@ You must also register a Callback URL on your Criipto Application matching the U
 // server.js
 
 const express = require('express');
-const expressSesssion = require('express-session');
+const expressSession = require('express-session');
 const app = express();
 
 app.use(
-  expressSesssion({
+  expressSession({
     secret: '{{YOUR_SESSION_SECRET}}',
     resave: false,
     saveUninitialized: true
