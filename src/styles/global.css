@@ -65,3 +65,7 @@ html {
 input[type="search"]::-webkit-search-cancel-button {
   display: none;
 }
+
+abbr[title] {
+  text-underline-offset: 3px;
+}

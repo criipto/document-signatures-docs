@@ -35,6 +35,14 @@ const config : GatsbyConfig = {
               linkImagesToOriginal: false,
             },
           },
+          {
+            resolve: `gatsby-remark-acronyms`,
+            options: {
+              acronyms: {
+                TU: `Tjenesteudbyder (Service provider)`
+              },
+            },
+          },
         ],
       },
     },

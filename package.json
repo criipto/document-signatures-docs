@@ -72,6 +72,7 @@
     "gatsby-plugin-netlify": "^4.1.0",
     "gatsby-plugin-postcss": "^5.4.0",
     "gatsby-plugin-sharp": "^4.10.0",
+    "gatsby-remark-acronyms": "^1.2.1",
     "gatsby-remark-images": "^6.9.0",
     "gatsby-source-filesystem": "^4.4.0",
     "gatsby-transformer-sharp": "^4.10.0",
