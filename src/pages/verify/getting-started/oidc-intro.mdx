@@ -15,13 +15,19 @@ Criipto Verify is integrated through the authentication API which follows the Op
 
 <Highlight icon="file-lines">
 
-Criipto Verify supports the OAuth2 *authorization code flow*, the *PKCE flow* and the (obsolete) *implicit flow* as described below. The code flow is used for traditional, server based, web applications which can keep a secret and are able to make back-channel calls to the Criipto Verify service. The PKCE (pronounced _pixy_) flow can be used by _public clients_ such as single page applications, SPAs, and native applications that cannot keep a secret. Support for the traditional implicit flow is being discontinued, although
-it will continue to function on test domains for the foreseeable future for simpler debugging during development.
+Criipto Verify supports three different OpenID Connect flows: the OAuth2 **authorization code flow**, the **PKCE flow**, and the (now deprecated) **implicit flow**. 
+
+**The authorization code flow** is used for *traditional server-based web applications*. These applications can securely store a client secret and establish back-channel communication with the Criipto Verify service. This facilitates a secure [code-for-token exchange](#exchange-the-code-for-a-token) during authentication.
+
+**The PKCE flow** (pronounced _pixy_) can be used by _public clients_ such as single page applications(SPAs) and native applications that cannot keep a secret. With PKCE flow, a one-time secret is generated and used for the code exchange.
+
+The traditional **implicit flow** returns a token directly in the browser. Support for this flow is being discontinued, although it will continue to function on test domains for the foreseeable future for simpler debugging during development.
+
+*When implementing Criipto Verify, consider your application's architecture and requirements in order to select and implement the appropriate OpenID Connect flow.*
 
 </Highlight>
 
-
-The following describes the two flows and introduces the parameters to configure the authentication and subsequent user information retrieval.
+The following sections describe the three flows and introduce the parameters to configure the authentication and subsequent user information retrieval.  
 
 <Highlight icon="info">
 
