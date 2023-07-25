@@ -1,8 +1,8 @@
 ---
 product: verify
 category: Integrations
-sort: 0
-title: React Native | Expo
+sort: 1
+title: Expo (React Native)
 subtitle: Accept MitID, NemID, Swedish BankID, Norwegian BankID and more eID logins in your Expo (React Native) app with @criipto/verify-expo.
 ---
 
@@ -11,33 +11,36 @@ export default Layout;
 
 Read the [full documentation](https://github.com/criipto/criipto-verify-expo) or [download a sample application from GitHub](https://github.com/criipto/criipto-verify-expo/tree/master/example).
 
-## App switch support
+## Register Your Application in Criipto Verify
 
-`@criipto/verify-expo` supports app switching for Swedish BankID and Danish MitID.
+After you signed up for Criipto Verify, you must [register an application](https://dashboard.criipto.com/applications/add) before you can try logging in with any eID.
 
-### Danish MitID + Android
+Once your application is registered, the dashboard will contain the necessary details to configure your application to communicate with Criipto Verify.
+You will need the following information from the General tab of your application settings:
 
-Switchback from the Danish MitID mobile application will only work if you are using a universal link / app link as your redirect_uri.
+- _Client ID_ to identify your application to Criipto Verify.
+- _Domain_ on which you will be communicating with Criipto Verify.
 
-[Guide to Expo universal links](https://docs.expo.dev/guides/deep-linking/).
+### Register callback URLs
 
-Enable switchback on Android by adding the following to your `app.json`:
+Before you can start sending authentication requests to Criipto Verify, you need to register the URLs on which you want to receive the returned _JSON Web Token_, [JWT](verify/getting-started/token-contents/).
 
-```json
-"plugins": [
-  ["@criipto/verify-expo", {
-    "androidAppLinks": [
-      "https://..."
-    ]
-  }]
-]
-```
+The callback URL of your application is the URL where Criipto Verify will redirect to after the user has authenticated in order for the OpenID Connect middleware to complete the authentication process.
 
-#### Expo Go
+You will need to add this URL to the list of allowed URLs for your application.
 
-Danish MitID on Android will not work with Expo Go due to the use of `createTask: false`. You must use a build to test, for instance with `npx expo run:android`
+For example, if you are running your application locally, the callback URL could be `http://localhost:19006/`. Alternatively, if developing in Expo Go, the callback URL may look like this: `exp://127.0.0.1:8081`.
 
-## Installation
+When you deploy your application to a different URL, you will also need to ensure you add that URL to the Callback URLs field in your application settings.
+
+<Highlight icon="info">
+
+  If you wish to support [app switch with Danish MitID](#app-switch-support), you must use universal/app links.
+
+</Highlight>
+
+
+## Install SDK
 
 Using [npm](https://npmjs.org/):
 
@@ -45,7 +48,7 @@ Using [npm](https://npmjs.org/):
 npm install @criipto/verify-expo
 ```
 
-## Getting Started
+## Initialize SDK with your application details
 
 Setup the Criipto Verify SDK by wrapping your application in `CriiptoVerifyProvider`:
 
@@ -69,6 +72,12 @@ export default function App() {
   );
 }
 
+```
+
+Add a `LoginButton` to your application.  
+Here, you have an option to pass [`acr_values`](/verify/guides/authorize-url-builder/#auth-methods--acr-values) for the eIDs you want to use in your code. Alternatively, you can configure the relevant eIDs on the method selector page of your Criipro Dashboard.
+
+```jsx
 // src/LoginButton.jsx
 export default function LoginButton() {
   const {login, claims, error} = useCriiptoVerify();
@@ -99,15 +108,28 @@ export default function LoginButton() {
 }
 ```
 
-## Local development
+## App switch support
 
-```sh
-#in root
-npm run build && npm run pack
+`@criipto/verify-expo` supports app switching for [Swedish BankID](/verify/guides/appswitch/#swedish-bankid) and [Danish MitID](/verify/guides/appswitch/#danish-mitid).
+
+### Danish MitID + Android
+
+Switchback from the Danish MitID mobile application will only work if you are using a universal link / app link as your `redirect_uri`.
+
+[Guide to Expo universal links](https://docs.expo.dev/guides/deep-linking/).
+
+You can enable switchback on Android by adding the following to your `app.json`:
+
+```json
+"plugins": [
+  ["@criipto/verify-expo", {
+    "androidAppLinks": [
+      "https://..."
+    ]
+  }]
+]
 ```
 
-```sh
-#in example
-npm install ../criipto-verify-expo-1.0.0.tgz
-npm start
-```
+#### Expo Go
+
+Danish MitID on Android will not work with Expo Go due to the use of `createTask: false`. You must use a build to test, for instance with `npx expo run:android`
