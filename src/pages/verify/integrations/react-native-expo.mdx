@@ -29,7 +29,7 @@ The callback URL of your application is the URL where Criipto Verify will redire
 
 You will need to add this URL to the list of allowed URLs for your application.
 
-For example, if you are developing your application in Expo Go, the callback URL may look like this: `exp://127.0.0.1:8081`.
+For example, if you are developing your application in Expo Go, the callback URL may look like this: `exp://127.0.0.1:8081`. Or if you've setup a custom URL scheme, it may look like `yourscheme://auth/callback`.
 
 When you deploy your application to a different URL, you will also need to ensure you add that URL to the Callback URLs field in your application settings.
 
@@ -89,7 +89,7 @@ export default function LoginScreen() {
   const handlePress = async (acrValues) => {
     try {
       // Call the login function with necessary parameters
-      const redirectUri = Linking.createURL('/auth/criipto');
+      const redirectUri = Linking.createURL('/auth/callback');
       const result = await login(acrValues, redirectUri);
       console.log(result);
       // Do something with the authentication result
@@ -113,7 +113,7 @@ export default function LoginScreen() {
 
   const handlePress = async (acrValues) => {
     try {
-      const redirectUri = Linking.createURL('/auth/criipto');
+      const redirectUri = Linking.createURL('/auth/callback');
       const result = await login(acrValues, redirectUri);
       console.log(result);
     } catch (error) {
