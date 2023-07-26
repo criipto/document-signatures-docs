@@ -29,16 +29,15 @@ The callback URL of your application is the URL where Criipto Verify will redire
 
 You will need to add this URL to the list of allowed URLs for your application.
 
-For example, if you are running your application locally, the callback URL could be `http://localhost:19006/`. Alternatively, if developing in Expo Go, the callback URL may look like this: `exp://127.0.0.1:8081`.
+For example, if you are developing your application in Expo Go, the callback URL may look like this: `exp://127.0.0.1:8081`.
 
 When you deploy your application to a different URL, you will also need to ensure you add that URL to the Callback URLs field in your application settings.
 
 <Highlight icon="info">
 
-  If you wish to support [app switch with Danish MitID](#app-switch-support), you must use universal/app links.
+If you wish to support [app switch with Danish MitID](#app-switch-support), you must use <a href="https://docs.expo.dev/guides/deep-linking/" target="_blank">universal/app links</a>.
 
 </Highlight>
-
 
 ## Install SDK
 
@@ -54,10 +53,9 @@ Setup the Criipto Verify SDK by wrapping your application in `CriiptoVerifyProvi
 
 ```jsx
 // src/App.jsx
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { View} from 'react-native';
+import LoginScreen from './LoginScreen.jsx';
 import {CriiptoVerifyProvider, useCriiptoVerify} from '@criipto/verify-expo';
-
-import LoginButton from './LoginButton.jsx';
 
 export default function App() {
   return (
@@ -66,45 +64,87 @@ export default function App() {
       clientID="{YOUR_CRIIPTO_APPLICATION_CLIENT_ID}"
     >
       <View>
-        <LoginButton />
+        <LoginScreen />
+        ...
       </View>
     </CriiptoVerifyProvider>
   );
 }
-
 ```
 
-Add a `LoginButton` to your application.  
-Here, you have an option to pass [`acr_values`](/verify/guides/authorize-url-builder/#auth-methods--acr-values) for the eIDs you want to use in your code. Alternatively, you can configure the relevant eIDs on the method selector page of your Criipro Dashboard.
+### Use the useCriiptoVerify() custom hook
+
+You can now utilize the `useCriiptoVerify()` custom hook to handle the authentication flow in your application.
+`useCriiptoVerify()` provides access to: 
+- the `login` method, which initiates the authentication process. It requires two arguments: [`acrValues`](/verify/guides/authorize-url-builder/#auth-methods--acr-values) to define the eIDs you want to use, and `redirectUri` for the [callback URL](#register-callback-urls).
+- `claims` variable that allows to retrieve information about the user's [JWT claims](/verify/getting-started/token-contents/) once they are available.
+- `error` variable for any potential authentication errors.
 
 ```jsx
-// src/LoginButton.jsx
-export default function LoginButton() {
-  const {login, claims, error} = useCriiptoVerify();
+// src/LoginScreen.jsx
+export default function LoginScreen() {
+  const { login, claims, error } = useCriiptoVerify();
+
+  // Your function to handle the authentication process
+  const handlePress = async (acrValues) => {
+    try {
+      // Call the login function with necessary parameters
+      const redirectUri = Linking.createURL('/auth/criipto');
+      const result = await login(acrValues, redirectUri);
+      console.log(result);
+      // Do something with the authentication result
+    } catch (error) {
+      // Handle errors that may occur during authentication
+      console.error('Authentication Error:', error);
+    }
+  };
+  ...
+}
+```
+
+### Implement the UI components
+
+You can now implement the UI components (buttons, links, etc.) to enable your users to log in with the eID of your choice.
+In the sample code below we used buttons, but you can choose the appropriate UI elements based on your application's requirements.
+
+```jsx
+export default function LoginScreen() {
+  const { login, claims, error } = useCriiptoVerify();
 
   const handlePress = async (acrValues) => {
-    // The generated redirectUri must be registered as an allowed URL on your application via the Criipto Dashboard.
-    // Use a https:// universal/app link if you wish to support appswitch with Danish MitID
-    const redirectUri = Linking.createURL('/auth/criipto');
-    const result = await login(acrValues, redirectUri);
+    try {
+      const redirectUri = Linking.createURL('/auth/criipto');
+      const result = await login(acrValues, redirectUri);
+      console.log(result);
+    } catch (error) {
+      console.error('Authentication Error:', error);
+    }
   };
 
   return (
     <>
-      <Button onPress={() => handlePress('urn:grn:authn:dk:mitid:substantial')} title="Login with Danish MitID" />
-      <Button onPress={() => handlePress('urn:grn:authn:se:bankid:same-device')} title="Login with Swedish BankID" />
-      <Button onPress={() => handlePress('urn:grn:authn:fi:bank-id')} title="Login with Finnish BankID" />
-      <Button onPress={() => handlePress('urn:grn:authn:no:bankid:substantial')} title="Login with Norwegian BankID" />
+      <Button
+        onPress={() => handlePress('urn:grn:authn:dk:mitid:substantial')}
+        title="Login with Danish MitID"
+      />
+      <Button
+        onPress={() => handlePress('urn:grn:authn:se:bankid:same-device')}
+        title="Login with Swedish BankID"
+      />
+      <Button
+        onPress={() => handlePress('urn:grn:authn:fi:bank-id')}
+        title="Login with Finnish BankID"
+      />
+      <Button
+        onPress={() => handlePress('urn:grn:authn:no:bankid:substantial')}
+        title="Login with Norwegian BankID"
+      />
 
-      {error ? (
-        <Text>An error occurred: {error.toString()}</Text>
-      ) : null}
+      {error ? <Text>An error occurred: {error.toString()}</Text> : null}
 
-      {claims ? (
-        <Text>{JSON.stringify(claims, null, 2)}</Text>
-      ) : null}
+      {claims ? <Text>{JSON.stringify(claims, null, 2)}</Text> : null}
     </>
-  )
+  );
 }
 ```
 
@@ -116,7 +156,7 @@ export default function LoginButton() {
 
 Switchback from the Danish MitID mobile application will only work if you are using a universal link / app link as your `redirect_uri`.
 
-[Guide to Expo universal links](https://docs.expo.dev/guides/deep-linking/).
+<a href="https://docs.expo.dev/guides/deep-linking/" target="_blank">Guide to Expo universal links</a>.
 
 You can enable switchback on Android by adding the following to your `app.json`:
 
