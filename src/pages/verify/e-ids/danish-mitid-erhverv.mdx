@@ -47,6 +47,7 @@ import JwtPayloadViewer from '../../../components/JwtPayloadViewer';
       "cvrNumberIdentifier": "12345678",
       "2.5.4.10": "Testorganisation nr. 12345678",
       "name": "Firstname Lastname",
+      "employee" : "true",
       "country": "DK"
     }
   }
@@ -65,6 +66,10 @@ This will allow *company signatories* and *employees* to log in to your site or 
 
 You can read more about the [`login_hint` here](/verify/getting-started/oidc-intro/#the-loginhint-parameter).
 
+You can determine which kind of option the user selected by inspecting the claim values in the JWT payload.
+- Employee logins will have an `employee` claim with value `true`.
+- Company signatory logins will have a `companySignatory` claim with value `true`.
+- Private logins will have neither of the above.
 
 ## Test users 
 
