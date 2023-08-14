@@ -66,7 +66,7 @@ You can handle the entire sign-in flow with the Firebase SDK, or choose to handl
 
 As mentioned above, you can choose the [manual setup](https://firebase.google.com/docs/auth/web/openid-connect#manual) and use the ID token directly to authenticate with Firebase.
 
-In `@criipto/verify-react`, you can use the `id_token` property of the `result` object to retrieve the ID token after the user signed in with Criipto Verify.
+[In `@criipto/verify-react`](/verify/integrations/react/), you can use the `id_token` property of the `result` object to retrieve the ID token after the user signed in with Criipto Verify.
 
 ```jsx
 import { useCriiptoVerify } from '@criipto/verify-react';
@@ -102,7 +102,7 @@ function App() {
 }
 ```
 
-Using `@criipto/auth-js` with redirect authorization, you can use the resulting ` id_token` from the `match()` call to pass to Firebase.
+[Using `@criipto/auth-js`](/verify/integrations/javascript/) with redirect authorization, you can use the resulting ` id_token` from the `match()` call to pass to Firebase.
 
 ```jsx
 import { getAuth, signInWithCredential, OAuthProvider } from 'firebase/auth';
