@@ -11,7 +11,7 @@ export default Layout;
 
 ## Native apps
 
-If you are building a native app, and would like to get the smoothest possible UX, you can use Criipto Verify's app-switching capabilities (for eID's that support it).
+If you are building a native app, and would like to get the smoothest possible UX, you can use Criipto Verify's app-switching capabilities (for eIDs that support it).
 
 This will require that you take on a bit more work to orchestrate the login process in comparison with just going with the browser-based flow, but the net result is a much better UX.
 
@@ -22,7 +22,7 @@ If the desired app is present on the users device, you must augment the authoriz
  - `login_hint=appswitch:ios`
  - `login_hint=appswitch:android`
 
-The value must be sent in the `login_hint` query parameter. Further details on this (and other) parameters in an authorize request can be found [here](/verify/getting-started/oidc-intro#authorize-request-parameters)
+The value must be sent in the `login_hint` query parameter. Further details on this (and other) parameters in an authorize request can be found [here](/verify/getting-started/oidc-intro#authorize-request-parameters).
 
 Your app is responsible for sending the appropriate value for the platform it is deployed on.
 
@@ -36,7 +36,7 @@ We have therefore removed the previous guidance for MitID app detection from our
 
 </Highlight>
 
-The following code and configuration snippets illustrates how you can detect the presence of the Swedish BankID app.
+The following code and configuration snippets illustrate how you can detect the presence of the Swedish BankID app.
 
 #### Android
 ```java
@@ -110,7 +110,8 @@ The `cancelUrl` can be used to to stop an active authentication request.
 This can be useful in case 
 - You are pre-filling the SSN
 - The user does not complete the authentication in the BankID application
-- The user navigates manually back to your app
+- The user navigates manually back to your app  
+
 When that happens, the BankID login for the specified SSN is blocked for a few minutes, unless you cancel the login.
 
 When control returns to your app, issue an HTTP GET to the `completeUrl` (without any modifications).
@@ -119,7 +120,7 @@ Depending on the value of the `response_mode` you use in your authorize request,
 
 - `200 OK`: (when sending `response_mode=json`) The response payload will be a JSON literal with a string-valued `location` property. The value will be a URL where the relevant response parameters are in the query section. You should start by checking for errors (an `error` query parameter will be present in the response). If not an error, pick out the `code` and `state` parameters and use your OIDC library to exhange the `code` to an `id_token`.
 
-- `302 Redirect`: (when sending `response_mode=query`) The Location response header value value will be a URL where the relevant response parameters are in the query section. You should perform the same OAuth2-response processing as described for the `200 OK` case.
+- `302 Redirect`: (when sending `response_mode=query`) The Location response header value will be a URL where the relevant response parameters are in the query section. You should perform the same OAuth2-response processing as described for the `200 OK` case.
 
 - `400 Bad Request`: Can have several causes, we recommend that you invoke the `cancelUrl` and present the user with the option to login again.
 
@@ -142,7 +143,7 @@ Assuming your `redirect_uri` is also pointing to your native app, you will need 
 one initial from MitID with no parameters, and a second one from Criipto with parameters.
 
 You can define a seperate URL for the MitID resume operation by using a `appswitch:resumeUrl:{UNIVERSAL LINK}` login_hint.
-MitID will only resume to a universal link, but if you define a seperate `resumeUrl` your `redirect_uri` can be a custom scheme.
+MitID will only resume to a universal link, but if you define a separate `resumeUrl` your `redirect_uri` can be a custom scheme.
 
 The `resumeUrl` login_hint must be combined with your other appswitch login_hints, for example `appswitch:android%20appswitch:resumeUrl:{UNIVERSAL LINK}`
 
@@ -157,7 +158,7 @@ The following setup has been observed to work:
 
 Remember to replace the values of the `android.host` and `android.pathPattern` properties in the `data` node.
 These values must correspond to the [App Link for your app](https://developer.android.com/training/app-links).
-You can read more about [how App Links work here](https://developer.android.com/training/app-links/verify-site-associations)
+You can read more about [how App Links work here](https://developer.android.com/training/app-links/verify-site-associations).
 
 </Highlight>
 
