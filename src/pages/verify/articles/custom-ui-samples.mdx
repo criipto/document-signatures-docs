@@ -2,8 +2,149 @@
 title: Verify Custom UI examples
 category: Customization
 ---
+
 import Layout from '../../../layouts/mdx';
 
 export default Layout;
 
-TODO: Add examples
+## Sample 1: additional content on the right
+
+![Sidebox content](/images/custom-html-example-sidebox-right.png)
+
+```html
+<header class="header-wrapper">
+  <img
+    class="header-logo"
+    src="https://demo-cool-energy-react.netlify.app/logo-text.png"
+    alt="logo"
+  />
+</header>
+<div class="content-wrapper">
+  <div class="criipto-verify">
+    <criipto-verify />
+  </div>
+  <div class="sidebox">
+    <h1 class="sidebox-heading">Logging in with eID</h1>
+    <p>
+      We use eIDs to confirm your identity and prevent any unauthorized sign-ins
+      in your name.
+    </p>
+    <ul class="sidebox-links">
+      <li class="sidebox-link"><a href="#">Need help logging in?</a></li>
+      <li class="sidebox-link">
+        <a href="#">Business customer? Login with MitID Erhverv</a>
+      </li>
+      <li class="sidebox-link">
+        <a href="#">Log in with Norwegian BankID instead</a>
+      </li>
+    </ul>
+  </div>
+</div>
+```
+
+```css
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@100;300;400;600;700&display=swap');
+
+body {
+  position: relative;
+  font-family: 'IBM Plex Sans', sans-serif;
+  background-color: #edeefb;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+}
+
+.header-wrapper {
+  padding: 20px;
+  margin-bottom: 50px;
+}
+
+.header-logo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 5vh;
+  width: auto;
+  padding: 20px;
+}
+
+.content-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  max-width: 800px;
+  margin-top: 20px;
+}
+
+.criipto-verify,
+.sidebox {
+  margin: 5px 0;
+  flex: 1;
+}
+
+.sidebox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.sidebox-heading {
+  margin-top: 0;
+}
+
+.sidebox-links {
+  padding: 0;
+  list-style: none;
+}
+
+.sidebox-link {
+  margin-bottom: 20px;
+}
+
+.sidebox-link a {
+  text-decoration: none;
+  color: #604fec;
+  font-weight: bold;
+}
+
+.sidebox-link a:hover {
+  text-decoration: underline;
+}
+
+@media only screen and (min-width: 601px) {
+  .header-wrapper {
+    padding-left: 40px;
+  }
+
+  .header-logo {
+    margin-bottom: 20px;
+  }
+
+  .content-wrapper {
+    flex-direction: row;
+    align-items: stretch;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .sidebox {
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .criipto-verify {
+    margin-right: 25px;
+    margin-left: 25px;
+  }
+}
+```

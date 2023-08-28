@@ -99,7 +99,7 @@ export const Code = (props: {className?: string, children: string, style?: React
   if (language && SyntaxHighlighter.supportedLanguages.includes(language) || language === 'html') {
     return (
       <SyntaxHighlighter
-        language={language}
+        language={language === 'html' ? 'xml' : language}
         style={vs2015}
         customStyle={{
           padding: '0.85em 1.14em',
