@@ -9,7 +9,7 @@ export default Layout;
 
 ## Sample 1: additional content on the right
 
-![Sidebox content](/images/custom-html-example-sidebox-right.png)
+![Right sidebox sample](/images/custom-html-example-sidebox-right.png)
 
 ```html
 <header class="header-wrapper">
@@ -148,3 +148,188 @@ body {
   }
 }
 ```
+
+<Highlight icon="info">
+
+If using custom fonts or images, remember to add them to the style origins of your tenant to avoid potential Content Security Policy violations. 
+From the Dashboard go to Styling -> General, and add the host names as Style origins:
+
+![Right sidebox sample](/images/style-origins.png)
+
+</Highlight>
+
+## Sample 2: additional content on the left
+
+![Left sidebox sample](/images/custom-html-example-sidebox-left.png)
+
+```html
+<div class="content-wrapper">
+  <div class="infobox">
+    <div class="infobox-content">
+      <img
+        class="infobox-logo"
+        src="https://demo-cool-energy-react.netlify.app/logo-white.png"
+        alt="logo"
+      />
+      <div class="infobox-text">
+        <h1 class="sidebox-heading">
+          Hey! <span>Log in</span> to your Cool Energy profile
+        </h1>
+        <p>
+          Don't have BankID? <br />
+          Log in using a one-time code sent to your email or your confirmed
+          mobile number.<br /><br />
+          Don't have a Cool Energy profile? Open one now by contacting your
+          agent or logging in with BankID.
+        </p>
+      </div>
+      <div class="infobox-footer">
+        <p>coolenergy.dk · <a href="#">Cookie Policy and Handling of Personal Data</a></p>
+        <p>© Cool Energy Inc. 2022-2023</p>
+      </div>
+    </div>
+  </div>
+  <div class="criipto-verify">
+    <div class="inner">
+      <criipto-verify />
+    </div>
+  </div>
+</div>
+```
+
+```css
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@100;300;400;600;700&display=swap');
+
+body {
+  font-family: 'IBM Plex Sans', sans-serif;
+  margin: 0;
+  background-color: white;
+}
+
+.content-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.infobox {
+  display: flex;
+  justify-content: center;
+  background-color: #6050ed;
+  color: white;
+}
+
+.criipto-verify,
+.infobox {
+  padding: 10px 30px;
+}
+
+.infobox span {
+  color: #fffdac;
+}
+
+.infobox-logo {
+  display: none;
+}
+
+.infobox-footer {
+  display: none;
+}
+
+.criipto-verify {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media only screen and (min-width: 601px) {
+  .content-wrapper {
+    flex-direction: row;
+    align-items: stretch;
+    min-height: 100vh;
+    gap: 20px;
+  }
+
+  .infobox {
+    min-height: 100vh;
+  }
+
+  .criipto-verify {
+    flex: 2 1 50%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    margin: 0 2rem;
+    padding: 0 2rem;
+  }
+
+  .inner {
+    height: 80%;
+  }
+
+  .infobox {
+    display: flex;
+    flex: 1 2 33%;
+    padding: 0 2rem;
+    align-items: center;
+  }
+
+  .infobox-logo {
+    display: block;
+    width: 8rem;
+  }
+
+  .infobox-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    min-height: calc(100vh - 50px);
+  }
+
+  .infobox-footer {
+    display: block;
+    font-size: 0.8rem;
+    padding: 0;
+  }
+
+  .infobox-footer p {
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
+
+  .infobox-footer a {
+    text-decoration: underline;
+    color: white;
+  }
+
+  /* Font above the Criipto Verify frame */
+  .broker header,
+  .broker #headline {
+    font-family: 'IBM Plex Sans', sans-serif;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .infobox {
+    padding: 0 12rem;
+  }
+
+  .infobox-logo {
+    width: 12rem;
+  }
+
+  .infobox-footer {
+    margin-bottom: 20px;
+  }
+}
+```
+<Highlight icon="info">
+
+If using custom fonts or images, remember to add them to the style origins of your tenant to avoid potential Content Security Policy violations. 
+From the Dashboard go to Styling -> General, and add the host names as Style origins:
+
+![Right sidebox sample](/images/style-origins.png)
+
+</Highlight>
