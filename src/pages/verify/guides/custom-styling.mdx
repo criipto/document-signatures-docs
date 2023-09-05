@@ -11,11 +11,18 @@ import customStyling from './images/custom-styling.png';
 export default Layout;
 
 Some of the eID methods require additional dialogs outside of those of the actual eID service.
-These may be styled to you liking using CSS as described below.
+These may be styled and enhanced to you liking using one of the following approaches: 
 
-## Preview of the user-facing dialogs
+1. [Adding custom CSS](#custom-css), if your goal is to add basic styling
+2. [Adding custom HTML](#custom-html) for creating more complex UIs (e.g. a layout with extra information around the Criipto login box).
 
-You can see a preview of the dialogs in the `Styling` tab for your tenant in the management dashboard on [dashboard.criipto.com](https://dashboard.criipto.com/styling) - such as the ones for SE BankID:
+## Custom CSS
+
+Custom CSS can be configured from the `Styling` -> `General` tab of your management dashboard on [dashboard.criipto.com](https://dashboard.criipto.com/styling).
+
+### Preview of the user-facing dialogs
+
+In the `General` tab, you can see a preview of the user-facing dialogs  - such as the ones for SE BankID:
 
 ![Previews](./images/preview-sebankid.png)
 
@@ -27,7 +34,7 @@ You can enter a URL to your own (self-hosted) style sheet just above the preview
 
 ![Custom Styling](./images/custom-styling.png)
 
-## 'Dynamic' style sheets
+### 'Dynamic' style sheets
 
 In some cases, bundling all of your CSS in just one style sheet can be tricky and/or infeasible. Criipto Verify supports overriding the _path_ part of the style sheet URL on a per-authorize request basis.
 
@@ -40,7 +47,7 @@ If you have not configured a custom style sheet URL, Criipto Verify ignores the 
 
 </Highlight>
 
-### Example
+#### Example
 
 If you have configured, say,
 ```
@@ -61,9 +68,9 @@ You can specify more than 1 query parameter in the `css_path` token. In this cas
 
 </Highlight>
 
-## Common HTML structures found in user-facing dialogs
+### Common HTML structures found in user-facing dialogs
 
-## Localizable texts
+### Localizable texts
 These appear in both common and dialog-specific HTML elements. The structure is the same everywhere:
 ```html
     <span class="lang lang-sv">
@@ -76,9 +83,9 @@ These appear in both common and dialog-specific HTML elements. The structure is 
 The wording can be change via CSS selectors in your custom style sheet - see below for examples.
 Depending on the eID, the `lang-sv` class will be replaced with `lang-da`, `lang-nb` etc.
 
-## Desktop screen sizes
+### Desktop screen sizes
 
-### Above the Criipto Verify frame
+#### Above the Criipto Verify frame
 ```html
 <header id="header" class="default-hidden desktop-show">
     <div class="inner"></div>
@@ -104,7 +111,7 @@ You can change the texts in the `<h1 id="headline">` element via the following C
     content: "...other english words...";
 }
 ```
-### Below the Criipto Verify frame
+#### Below the Criipto Verify frame
 ```html
 <aside id="description" class="centered default-hidden desktop-show">
     <p>
@@ -185,8 +192,8 @@ If you want to show text in one of the hidden-by-default `<p>` elements, you can
 ```
 ***Note*** The first selector is needed to "undo" the effect of the `default-hidden` class on the third `<p>` element.
 
-## CSS classes
-### Generally available
+### CSS classes
+#### Generally available
 Each `<body>` element has up to 5 CSS classes attached to it:
 1. Indicator of the eID method in use - such as `sebankid`.
 2. Indicator that this is a page from Criipto Verify - `broker`. This makes it possible to target our pages specifically, even if you use the same CSS file for different websites.
@@ -207,11 +214,11 @@ you will have the following CSS class content on the `body` tag:
 
 You can use these dynamically added CSS classes to customize the UI on a per-application basis, which may be quite practical for, say, Single Sign-On scenarios where you re-use a Criipto Verify DNS domain across web applications with very different branding requirements.
 
-### Dialog specific
+#### Dialog specific
 Each of the dialogs have their own HTML/CSS structure, and you can inspect the details with your browsers developer tools.
 You get the best overview if you expand the preview first.
 
-## Example: Replacing headline texts in the signature flow for SE BankID
+### Example: Replacing headline texts in the signature flow for SE BankID
 If you expand the `Another Device: Prompt for SSN` preview, you'll se a `{Log in with BankId | Logga in med BankId}` headline text (actual text will depend on the currently selected language for the SE BankID previews).
 
 Should you also want to change the wording for signature flow, you could add the following selectors to your custom style sheet:
@@ -226,6 +233,26 @@ Should you also want to change the wording for signature flow, you could add the
     content: "Sign with Bank-ID";
 }
 ```
+
+## Custom HTML
+
+You can create your preferred webpage structure around the login box on the Criipto login screens by adding custom HTML (with accompanying CSS). 
+
+This can be done from the `Styling` -> `Custom UI` tab of your management dashboard on [dashboard.criipto.com](https://dashboard.criipto.com/styling).
+
+![Custom HTML](./images/custom-ui.png)
+
+The preview of the user-facing dialogs with your custom HTML will be rendered as you save your code (`Save draft`). You can see the preview with different eIDs and screen sizes by selecting the desired values from the dropdowns: 
+
+![Custom HTML Preview](./images/custom-ui-preview.png)
+
+Your HTML must always include the `<criipto-verify />` element, as this will define the position of the Criipto login box on the login screen.
+
+import StyleOriginsSnippet from '../../../snippets/style-origins.mdx';
+
+<StyleOriginsSnippet />
+
+For inspiration, you can check out various examples of custom UIs [here](/verify/articles/custom-ui-samples). 
 
 ## Original (now obsolete) HTML/CSS version
 For tenants that were created before the beginning of October 2020, it is possible to toggle between the original and the current HTML/CSS structure. We recommend moving to the current version as soon as possible, as the original structure is now obsolete, and will only be updated with bugfixes.
