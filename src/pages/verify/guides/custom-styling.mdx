@@ -13,12 +13,12 @@ export default Layout;
 Some of the eID methods require additional dialogs outside of those of the actual eID service.
 These may be styled and enhanced to you liking using one of the following approaches: 
 
-1. [Adding custom CSS](#custom-css), if your goal is to add basic styling
-2. [Adding custom HTML](#custom-html) for creating more complex UIs (e.g. a layout with extra information around the Criipto login box).
+1. [Adding your own stylesheet](#custom-css): if your goal is to apply basic styling, including a custom CSS file is all you need. 
+2. [Adding custom HTML and CSS](#custom-html): can be used for creating more complex UIs (e.g. a layout with extra information around the Criipto login box).
 
-## Custom CSS
+## Custom CSS (adding a stylesheet)
 
-Custom CSS can be configured from the `Styling` -> `General` tab of your management dashboard on [dashboard.criipto.com](https://dashboard.criipto.com/styling).
+You can add your own stylesheet from the `Styling` -> `General` tab of your management dashboard on [dashboard.criipto.com](https://dashboard.criipto.com/styling).
 
 ### Preview of the user-facing dialogs
 
@@ -242,7 +242,11 @@ This can be done from the `Styling` -> `Custom UI` tab of your management dashbo
 
 ![Custom HTML](./images/custom-ui.png)
 
-The preview of the user-facing dialogs with your custom HTML will be rendered as you save your code (`Save draft`). You can see the preview with different eIDs and screen sizes by selecting the desired values from the dropdowns: 
+### Developing 
+
+You can use the built-in code editor to add your custom HTML and CSS. 
+
+The preview of the user-facing dialogs will be rendered as you save your code (`Save draft`). You can see the preview with different eIDs and screen sizes by selecting the desired values from the dropdowns: 
 
 ![Custom HTML Preview](./images/custom-ui-preview.png)
 
@@ -252,7 +256,18 @@ import StyleOriginsSnippet from '../../../snippets/style-origins.mdx';
 
 <StyleOriginsSnippet />
 
-For inspiration, you can check out various examples of custom UIs [here](/verify/articles/custom-ui-samples). 
+### Publishing 
 
-## Original (now obsolete) HTML/CSS version
-For tenants that were created before the beginning of October 2020, it is possible to toggle between the original and the current HTML/CSS structure. We recommend moving to the current version as soon as possible, as the original structure is now obsolete, and will only be updated with bugfixes.
+You can publish your draft code when ready by clicking on `Publish to test` / `Publish to produciton`. This will make it immediately active on logins running within the environment you're developing in.
+
+### UI examples
+
+For inspiration, take a look at various examples of custom UIs [here](/verify/articles/custom-ui-samples). 
+
+### Feedback
+
+We're working on adding differnt versions of the custom HTML depending on the selected eID.  
+
+Your feedback on this feature is highly appreciated. Don't hesitate to react out via [Slack](https://tiny.cc/criipto-slack) or [email](mailto:support@criipto.com) with any suggestions or comments.
+
+
