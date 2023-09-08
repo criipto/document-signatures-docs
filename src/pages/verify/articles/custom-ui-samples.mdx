@@ -58,14 +58,14 @@ body {
 
 .header-wrapper {
   padding: 20px;
-  margin-bottom: 50px;
+  margin-bottom: 3vh;
 }
 
 .header-logo {
   position: absolute;
   top: 0;
   left: 0;
-  height: 5vh;
+  height: 30px;
   width: auto;
   padding: 20px;
 }
@@ -88,7 +88,7 @@ body {
 .sidebox {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   padding: 20px;
 }
@@ -116,6 +116,12 @@ body {
   text-decoration: underline;
 }
 
+/* Font above the Criipto Verify frame */
+.broker header,
+.broker #headline {
+  font-family: 'IBM Plex Sans', sans-serif;
+}
+
 @media only screen and (min-width: 601px) {
   .header-wrapper {
     padding-left: 40px;
@@ -123,6 +129,7 @@ body {
 
   .header-logo {
     margin-bottom: 20px;
+    height: 4vh;
   }
 
   .content-wrapper {
@@ -131,6 +138,7 @@ body {
     background-color: white;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    max-height: 93vh;
   }
 
   .sidebox {
@@ -145,6 +153,21 @@ body {
   .criipto-verify {
     margin-right: 25px;
     margin-left: 25px;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .header-logo {
+    height: 50px;
+    margin-bottom: 20px;
+  }
+
+  .content-wrapper {
+    max-width: 1200px;
+  }
+
+  .header-wrapper {
+    margin-bottom: 60px;
   }
 }
 ```
@@ -243,6 +266,12 @@ body {
   align-items: center;
 }
 
+/* Font above the Criipto Verify frame */
+.broker header,
+.broker #headline {
+  font-family: 'IBM Plex Sans', sans-serif;
+}
+
 @media only screen and (min-width: 601px) {
   .content-wrapper {
     flex-direction: row;
@@ -262,10 +291,6 @@ body {
     align-items: flex-start;
     margin: 0 2rem;
     padding: 0 2rem;
-  }
-
-  .inner {
-    height: 80%;
   }
 
   .infobox {
@@ -302,12 +327,6 @@ body {
   .infobox-footer a {
     text-decoration: underline;
     color: white;
-  }
-
-  /* Font above the Criipto Verify frame */
-  .broker header,
-  .broker #headline {
-    font-family: 'IBM Plex Sans', sans-serif;
   }
 }
 
