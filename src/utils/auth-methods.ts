@@ -134,15 +134,5 @@ export const PROVIDERS : Provider[] = [
       }
     ],
     page: '/verify/e-ids/belgian-eid'
-  },
-  {
-    title: 'Germany',
-    authMethods: [
-      {
-        title: 'Sofort (with Schufa check)',
-        acrValue: 'urn:grn:authn:de:sofort'
-      }
-    ],
-    page: '/verify/e-ids/sofort'
   }
 ];
