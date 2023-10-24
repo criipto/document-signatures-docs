@@ -3,7 +3,7 @@ product: verify
 category: Integrations
 sort: 0
 title: Vue.js
-subtitle: Accept MitID, NemID, Swedish BankID, Norwegian BankID and more eID logins in your Vue.js application with @criipto/auth-js.
+subtitle: Accept Danish MitID, Swedish BankID, Norwegian BankID and more eID logins in your Vue.js application with @criipto/auth-js.
 ---
 
 import Layout from '../../../layouts/mdx';
@@ -101,7 +101,7 @@ const loginWithEid = () => {
     width: 300,
     height: 400,
     redirectUri: 'http://localhost:5173',
-    acrValues: 'urn:grn:authn:dk:nemid:poces',
+    acrValues: 'urn:grn:authn:dk:mitid:substantial',
    })
    .then((result) => {
     console.log(result, result.id_token, result.claims);

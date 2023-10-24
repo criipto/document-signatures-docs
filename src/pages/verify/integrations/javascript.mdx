@@ -3,7 +3,7 @@ product: verify
 category: Integrations
 sort: 0
 title: JavaScript
-subtitle: Accept MitID, NemID, Swedish BankID, Norwegian BankID and more eID logins in your JavaScript application with @criipto/auth-js.
+subtitle: Accept Danish MitID, Swedish BankID, Norwegian BankID and more eID logins in your JavaScript application with @criipto/auth-js.
 ---
 
 import Layout from '../../../layouts/mdx';
@@ -123,7 +123,7 @@ Will open a popup window to authenticate the user.
           width: 300,
           height: 400,
           redirectUri: 'http://localhost:8000/example/index.html',
-          acrValues: 'urn:grn:authn:dk:nemid:poces',
+          acrValues: 'urn:grn:authn:dk:mitid:substantial',
         })
         .then((result) => {
           console.log(result, result.id_token, result.claims);
