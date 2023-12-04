@@ -272,4 +272,34 @@ We're working on adding differnt versions of the custom HTML depending on the se
 
 Your feedback on this feature is highly appreciated. Don't hesitate to react out via [Slack](https://tiny.cc/criipto-slack) or [email](mailto:support@criipto.com) with any suggestions or comments.
 
+### Internationalization and localization
 
+A custom `<i18n>` tag is available, to help provide language-specific texts in the custom HTML.
+
+The language is selected based on [either ui_locales or Accept-Language](http://localhost:8000/verify/guides/choose-language/)
+and supports `da`, `en`, `sv`, `se`, `fi`, `nb` and a `default` parameter when no language is matched.
+
+For example, if we wanted to provide a danish text, but fall back to english otherwise, we could use the `i18n` tag as follows:
+
+```html
+<i18n
+  da="Ved at logge ind accepterer du vores vildkår for brug"
+  default="By logging in you accept our terms of use"
+/>
+```
+
+If the browser is set to danish, or you explicitely use `ui_locales=da`, the danish text will render - otherwise the default (english).
+
+Full example of possible attributes:
+
+```html
+<i18n
+  da="[danish text]"
+  en="[english text]"
+  sv="[swedish text]"
+  se="[swedish text]"
+  fi="[finnish text]"
+  nb="[norwegian text]"
+  default="[fallback text]"
+/>
+```
