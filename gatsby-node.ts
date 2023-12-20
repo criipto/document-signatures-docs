@@ -52,12 +52,6 @@ export const createPages : GatsbyNode["createPages"] = ({ actions }) => {
     force: true
   });
   createRedirect({
-    fromPath: '/eid-specifics/order-dk-nemid',
-    toPath: '/verify/e-ids/danish-nemid/#order-nemid-for-production',
-    isPermanent: true, 
-    force: true
-  });
-  createRedirect({
     fromPath: '/eid-specifics/mitid-ux-reqs',
     toPath: '/verify/e-ids/danish-mitid/#mitid-user-interface-requirements',
     isPermanent: true, 

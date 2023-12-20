@@ -35,25 +35,6 @@ export const PROVIDERS : Provider[] = [
     page: '/verify/e-ids/finnish-trust-network'
   },
   {
-    title: 'Danish NemID',
-    authMethods: [
-      {
-        title: 'Personal with code card',
-        acrValue: 'urn:grn:authn:dk:nemid:poces',
-        scopes: dkScopes
-      },
-      {
-        title: 'Employee with code card',
-        acrValue: 'urn:grn:authn:dk:nemid:moces'
-      },
-      {
-        title: 'Employee with code file',
-        acrValue: 'urn:grn:authn:dk:nemid:moces:codefile'
-      }
-    ],
-    page: '/verify/e-ids/danish-nemid'
-  },
-  {
     title: 'Danish MitID',
     authMethods: [
       {
