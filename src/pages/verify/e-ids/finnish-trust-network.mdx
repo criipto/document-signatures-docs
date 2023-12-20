@@ -6,7 +6,7 @@ title: Finnish Trust Network
 subtitle: Learn more about Finnish Trust Network token contents, how to create test users and how to gain access to production.
 ---
 import Layout from '../../../layouts/mdx';
-import JwtPayloadViewer from '../../../components/JwtPayloadViewer';
+import FtnJwtSnippet from '../../../snippets/jwt-payloads/finnish-trust-network'
 
 export default Layout;
 
@@ -20,22 +20,7 @@ The level of assurance for all Finnish authenticators is: Substantial
 
 ### BankID
 
-<JwtPayloadViewer
-  payload={
-    {
-      "identityscheme": "fitupas",
-      "nameidentifier": "788eb5abb2f84c0994a4d359f416f7ca",
-      "sub": "{788eb5ab-b2f8-4c09-94a4-d359f416f7ca}",
-      "name": "_19cfbd642c4a82b08613b841caf0e153c5956c14",
-      "country": "FI",
-      "given_name": "Väinö",
-      "family_name": "Tunnistus",
-      "birthdate": "1970-07-07",
-      "satu": "",
-      "hetu": "070770-905D"
-    }
-  }
-/>
+<FtnJwtSnippet />
 
 ### Mobillivarmenne
 
