@@ -9,7 +9,7 @@ subtitle: This tutorial demonstrates how to integrate Criipto Verify with Auth0.
 import Layout from '../../../layouts/mdx';
 export default Layout;
 
-This tutorial demonstrates how to integrate Criipto Verify with Auth0. Following steps are required to complete your first login:
+This tutorial demonstrates how to integrate Criipto Verify with Auth0. The following steps are required to complete your first login:
 
 1. [Register your Auth0 tenant in Criipto Verify](#register-your-auth0-tenant-in-criipto-verify)
 2. [Configure your OAuth2 flow](#configure-the-oauth2-code-flow)
@@ -30,7 +30,7 @@ Specifically you need the following information to integrate with Auth0:
 - _Client ID_ to identify your Auth0 tenant to Criipto Verify. In the case below we chose `urn:criipto:samples:no1`
 - _Domain_ on which you will be communicating with Criipto Verify. Could be for example `samples.criipto.id`
 - _Client secret_ is needed if you choose the *Back Channel* approach - which we do recommend. 
-The secret is generated and copied as describe further down.
+The secret is generated and copied as described further down.
 
 ![Register App](./images/register-app.png)
 
@@ -60,7 +60,7 @@ For example, the `acr_values` of Norwegian BankID login method is `urn:grn:authn
 
 #### Choose the specific login method
 
-Below is a list of supported login methods with corresponding base64 encoded `acr_values`. Choose the once you intend to use.
+Below is a list of supported login methods with the corresponding base64 encoded `acr_values`. Choose the ones you intend to use.
 
 import LoginMethodsSnippet from '../../../snippets/login-methods-and-path-encoded.mdx';
 
@@ -106,7 +106,7 @@ To test your OpenID Connect connection, go back to the list of all OpenID Connec
 
 ### Custom Social Connection
 
-Alternatively, you can leverge a <a href="https://auth0.com/docs/authenticate/identity-providers/social-identity-providers/oauth2" target="_blank">Custom Social Connection</a> to integrate with Criipto Verify via OpenID Connect.
+Alternatively, you can leverage a <a href="https://auth0.com/docs/authenticate/identity-providers/social-identity-providers/oauth2" target="_blank">Custom Social Connection</a> to integrate with Criipto Verify via OpenID Connect.
 
 #### Create the OIDC connection
 
