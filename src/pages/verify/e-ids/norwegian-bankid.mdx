@@ -193,13 +193,17 @@ Biometrics is always included in the basis agreement.
 
 Due to new terms and conditions in the agreement, you must send us an updated application if you wish to use BankID Biometrics.
 
-### About BankID Biometrics
+### BankID Biometrics assurance level
 
 BankID Biometrics assurance level is “Substantial”.
 
 [Learn more about assurance levels](https://ec.europa.eu/digital-building-blocks/wikis/display/DIGITAL/eIDAS+Levels+of+Assurance).
 
 If you can only use assurance level “High” in your login flow, you must explicitly specify the [login_hint=BID](/verify/guides/prefilled-fields/) in your authorize requests to Criipto Verify. _Please note that using `login_hint=BID` will disable biometrics in the BankID app._  
+
+### Modifying user flows
+
+By default, the user flow is controlled by the user-defined settings of the BankID app: no additional configurations required. If necessary, you can adjust the user flow by adding a `login_hint` to the [authorize URL](/verify/guides/authorize-url-builder/).
 
 The table below provides a list of options for using `login_hint` with Norwegian BankID, and the resulting user flows. Check [our guide on prefilled fields](https://docs.criipto.com/verify/guides/prefilled-fields/) to learn more.
 

@@ -13,7 +13,7 @@ export default Layout;
 - **Signature order is created:** When you create a signature order with `createSignatureOrder` you send along document blobs with it,
 upon receiving it we validate it and then [double-encrypt](#encryption-and-storage) it and store it on Azure servers.
 - **Signatory signs:** Whenever a signatory needs to sign a document we download and decrypt it to show it to the user,
-once the user signs we embed the signatory evidence (usually eID claims returned by Criipto Verify inside the PDF and seal it with Criiptos AATL certificate.
+once the user signs we embed the signatory evidence (usually eID claims returned by Criipto Verify) inside the PDF and seal it with Criiptos AATL certificate.
 After sealing the PDF we then again [double-encrypt](#encryption-and-storage) it and store it on Azure servers, ready for the next person to sign.
 - **Signature order is closed:** Upon closing a signature order we apply a final document timestamp to the PDF to ensure that the data inside is valid for multiple years.
 You should always request document blobs as part of the close response as this is the last time they will be available. After closing the documents will be deleted from Criipto servers.
