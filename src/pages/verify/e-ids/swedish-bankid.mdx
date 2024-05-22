@@ -66,15 +66,15 @@ _Note_ that, as is also described on the website, using test BankID users does r
 
 ### Overview
 
-The Phone authentication flow is designed for scenarios where a customer is talking with your customer service representative over the phone, and you need to verify that the caller is who they say they are. 
+The Phone authentication flow is designed for scenarios where a user is talking with your customer service agent over the phone, and you need to verify that the caller is who they say they are. 
 This is commonly used when a customer contacts their bank or when a call center agent needs to verify the caller's identity.
 
 #### The process looks as follows:
 
-1. The customer service agent enters the customer's personal identification number (SSN) in their system.
-2. The agent specifies if the call was initiated by the customer or by the company they represent, and initiates authentication request. 
-3. The Swedish BankID app displays a phone icon and the company’s name, prompting the user with a Yes/No security check question.
-4. If the user selects Yes, they can proceed by identifying themselves with a security code or biometrics. If the user selects No, they can cancel the identification process.
+1. SSN Input: The customer service agent enters the customer's personal identification number (SSN) in their system, or the customer is prompted to input their SSN via an automated PBX system.
+2. Authentication request: The customer service agent (if applicable) indicates whether the call was initiated by the customer or the company they represent, then initiates authentication request. 
+3. Security check: The Swedish BankID app displays a phone icon and the company’s name, prompting the user with a Yes/No security check question.
+4. User Response: If the user selects Yes, they can proceed by identifying themselves with a security code or biometrics. If the user selects No, they can cancel the identification process.
 
 ![CIBA security check](./images/se-bankid-phone-auth.png)
 
@@ -100,12 +100,12 @@ The CIBA flow is only available to traditional server-based web applications (co
 
 1. Make an `HTTP POST` request to the `/ciba/bc-authorize` endpoint:
 
-```javascript
+```sh
 # Replace `$client_assertion` with your JWT assertion
 # Replace `YOUR_DOMAIN.criipto.id` with your Criipto domain
 # Replace `SSN` with a valid Swedish BankID SSN
 # Replace `BINDING_MESSAGE` with the text that will be presented to the end user
-# `callInitiator` must be either "RP"("Relying Party", e.g. a bank agent) or "user", depending on who initiated the call.
+# `callInitiator` must be either "RP"("Relying Party", e.g. a customer service agent) or "user", depending on who initiated the call.
 
 HTTP POST https://YOUR_DOMAIN.criipto.id/ciba/bc-authorize
 Content-Type: application/x-www-form-urlencoded
@@ -121,7 +121,7 @@ scope=openid
 
 2. A successful response will look something like this:
 
-```javascript
+```sh
 { 
   "auth_req_id" : "3857f8ff-21b9-48ae-a732-a3bd8128a7ae",
   "expires_in" : 120 
@@ -131,7 +131,7 @@ scope=openid
 3. Poll the token endpoint (`/oauth2/token`) to get a response with an ID token.  
    The `auth_req_id` is used to construct a poll request on the token endpoint:
 
-```javascript
+```sh
 # Replace `AUTH_REQ_ID` with the id returned by authentication response
 # Replace `$client_assertion` with your JWT assertion
 
@@ -144,21 +144,24 @@ auth_req_id=AUTH_REQ_ID
 &client_assertion=$client_assertion
 ```
 
-**Polling Frequency**
-
-Bear in mind, that the authentication process requires interacting multiple times with the end-user, so the identification process could take some time. Consequently, the token endpoint should be polled every 5 seconds.
+_**Polling Frequency**: Bear in mind, that the authentication process requires interacting multiple times with the end-user, so the identification process could take some time. Consequently, the token endpoint should be polled every 5 seconds._
 
 4. The result of a poll request will depend on the state of the process:
 
-* On successful user identification, a successful token response is returned, e.g.:
+On successful user identification, a successful token response is returned, e.g.:
 
-```javascript
-eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjgyN0Q5QTNFOTg2MTY0OTVBQzZGRTE3MUFFNkRBM0IzQ0ExNDE5MjEifQ.eyJpc3MiOiJodHRwczovL25hdGFsaWEtZGV2LXRlc3QuY3JpaXB0by5pbyIsImF1ZCI6InVybjpjaWJhIiwiaWRlbnRpdHlzY2hlbWUiOiJzZWJhbmtpZCIsImF1dGhlbnRpY2F0aW9udHlwZSI6InVybjpncm46YXV0aG46c2U6YmFua2lkIiwiYXV0aGVudGljYXRpb25tZXRob2QiOiJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6YWM6Y2xhc3NlczpTb2Z0d2FyZVBLSSIsImF1dGhlbnRpY2F0aW9uaW5zdGFudCI6IjIwMjQtMDUtMjFUMDg6NDg6NTcuMDM2WiIsIm5hbWVpZGVudGlmaWVyIjoiYmI5YzIzNjRkZmFlNDRmM2JjZmQ5OTkwNTNkOTRmOWUiLCJzdWIiOiJ7YmI5YzIzNjQtZGZhZS00NGYzLWJjZmQtOTk5MDUzZDk0ZjllfSIsInNlc3Npb25pbmRleCI6IjQ1OWJiMzEzLTlkYTAtNDc3MS04ZTBiLTczMzEwMjA2ZDkyOSIsInNzbiI6IjE5NjgwMjAyMDU3NSIsIm5hbWUiOiJUZXJuZSBQYXVsc2VuIiwiZ2l2ZW5uYW1lIjoiVGVybmUiLCJnaXZlbl9uYW1lIjoiVGVybmUiLCJzdXJuYW1lIjoiUGF1bHNlbiIsImZhbWlseV9uYW1lIjoiUGF1bHNlbiIsImlwYWRkcmVzcyI6IjE4NS4xNTcuMTM0LjEzNCIsImNvdW50cnkiOiJTRSIsImlhdCI6MTcxNjI4MTMzNywibmJmIjoxNzE2MjgxMzM3LCJleHAiOjE3MTYyODI1Mzd9.DtJGqyFSGY9jCHCO_o4YB6XdkOXQRJO_lLDPF48zPakeepwhONRAEI4R3EuXZRgK9wEg6PPi_LCuK8tT9A7vibMKkW7s15ZxylAu0kL95dzaVU6rVjg5327tBRl2pK1yrGQNwZYiyTPy8897LyaGBV0UwzTWM4Quf5Tezh-jUawoIg9s6oe4GlZfS3fkEra9cbu2sMogYXejRnRh033I6MRYXSnme8fU5dP0s8qZJj_EW0M3D-70TL67BZLOrQEfLbVdJD3MKttfOgkaWpBoR4qJSlITmINmAfH_Ouj4xp-y956NkYkYnmQaHu3dZqMwqjPs3R1IHT4tbo8XgwmJXQ
+```sh
+{
+  token_type: 'Bearer',
+  expires_in: '120',
+  id_token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjgyN0Q5QTNFOTg2MTY0OTVBQzZGRTE3MUFFNkRBM0IzQ0ExNDE5MjEifQ.eyJpc3MiOiJodHRwczovL25hdGFsaWEtZGV2LXRlc3QuY3JpaXB0by5pbyIsImF1ZCI6InVybjpjaWJhIiwiaWRlbnRpdHlzY2hlbWUiOiJzZWJhbmtpZCIsImF1dGhlbnRpY2F0aW9udHlwZSI6InVybjpncm46YXV0aG46c2U6YmFua2lkIiwiYXV0aGVudGljYXRpb25tZXRob2QiOiJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6YWM6Y2xhc3NlczpTb2Z0d2FyZVBLSSIsImF1dGhlbnRpY2F0aW9uaW5zdGFudCI6IjIwMjQtMDUtMjJUMTA6NDE6NDEuMzYxWiIsIm5hbWVpZGVudGlmaWVyIjoiYmI5YzIzNjRkZmFlNDRmM2JjZmQ5OTkwNTNkOTRmOWUiLCJzdWIiOiJ7YmI5YzIzNjQtZGZhZS00NGYzLWJjZmQtOTk5MDUzZDk0ZjllfSIsInNlc3Npb25pbmRleCI6ImI2NWYxMWI2LWViYTctNDg4Mi05MDBhLTVmMmQ5M2EzOGRiYSIsInNzbiI6IjE5NjgwMjAyMDU3NSIsIm5hbWUiOiJUZXJuZSBQYXVsc2VuIiwiZ2l2ZW5uYW1lIjoiVGVybmUiLCJnaXZlbl9uYW1lIjoiVGVybmUiLCJzdXJuYW1lIjoiUGF1bHNlbiIsImZhbWlseV9uYW1lIjoiUGF1bHNlbiIsImlwYWRkcmVzcyI6IjE4NS4xNTcuMTM0LjEzNCIsImNvdW50cnkiOiJTRSIsImlhdCI6MTcxNjM3NDUwMSwibmJmIjoxNzE2Mzc0NTAxLCJleHAiOjE3MTYzNzU3MDF9.RVQnlukfoH597uXzE1Gays5DElGzAr8xgOmi7ZWppaL3QPGhV4vK2o6qLhxXg_-FKG9xCwHR6gEhnNzWA3W3B6Q2zJeQTYh9okUvTmmhAFIyDL7lEtfWVVKUKvauDisYVZDjAxJQS_1zbgPEi5I-UJ6_kvMGH-wC13MAD2bZGTGR2dR-ZevBUn7plOt0PKXrIZD3vwxDfebTMPQqX_9SNT5F7GLjCcpeVK-T5LOgmUMFcTAbHvNyklqP5ymRHsZLDw_ib4I7ZqODhR-3uISWo1NvG4Y84iBcqv50WRNlmMUm004LfPw1flM5DNsVyUWCqYW8m7eBEwLp5va-6OQG4w',
+  access_token: 'cf1ce646-7fbe-4740-9c56-fe3f0891f6c6'
+}
 ```
 
-- The user has not yet interacted with the Swedish BankID app:
+The user has not yet interacted with the Swedish BankID app:
 
-```javascript
+```sh
 HTTP/1.1 400 Bad Request
 {
   "error": "authorization_pending",
@@ -166,9 +169,9 @@ HTTP/1.1 400 Bad Request
 }
 ```
 
-- The user has been presented with a message requesting to confirm if they can acknowledge that a request for identification is warranted:
+The user has been presented with a message requesting to confirm if they can acknowledge that a request for identification is warranted:
 
-```javascript
+```sh
 HTTP/1.1 400 Bad Request
 {
   "error": "authorization_pending",
@@ -176,9 +179,9 @@ HTTP/1.1 400 Bad Request
 }
 ```
 
-- The user has acknowledged the request, but has not yet identified themselves:
+The user has acknowledged the request, but has not yet identified themselves:
 
-```javascript
+```sh
 HTTP/1.1 400 Bad Request
 {
   "error": "authorization_pending",
@@ -186,9 +189,9 @@ HTTP/1.1 400 Bad Request
 }
 ```
 
-- The user did not acknowledge that the identification request warranted or canceled the request before identification was performed:
+The user did not acknowledge that the identification request warranted or canceled the request before identification was performed:
 
-```javascript
+```sh
 HTTP/1.1 400 Bad Request
 {
   "error": "access_denied",
