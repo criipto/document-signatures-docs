@@ -60,6 +60,142 @@ For more information on how to configure your device for test and setup test use
 
 _Note_ that, as is also described on the website, using test BankID users does require a reconfiguration of the BankID application. This means it cannot be used for real BankID. So if you are Swedish and already have BankID on your phone, you may want to use a spare phone for testing.
 
+## BankID Phone Authentication
+
+<a href="https://www.bankid.com/en/foretag/telephone-identification" target="_blank">BankID in telephone calls</a> facilitates user authentication during a phone call.
+
+### Overview
+
+The Phone authentication flow is designed for scenarios where a customer is talking with your customer service representative over the phone, and you need to verify that the caller is who they say they are. 
+This is commonly used when a customer contacts their bank or when a call center agent needs to verify the caller's identity.
+
+#### The process looks as follows:
+
+1. The customer service agent enters the customer's personal identification number (SSN) in their system.
+2. The agent specifies if the call was initiated by the customer or by the company they represent, and initiates authentication request. 
+3. The Swedish BankID app displays a phone icon and the company’s name, prompting the user with a Yes/No security check question.
+4. If the user selects Yes, they can proceed by identifying themselves with a security code or biometrics. If the user selects No, they can cancel the identification process.
+
+![CIBA security check](./images/se-bankid-phone-auth.png)
+
+The example above demonstrates what it looks like when the customer is calling the service. A different security check is shown when the service is calling the customer.
+
+### The underlying CIBA flow
+
+Criipto Verify facilitates Swedish BankID phone authentication via CIBA flow.
+
+<Highlight icon="file-lines">
+
+  Client-Initiated Backchannel Authentication (<a href="https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html" target="_blank">CIBA</a>) is a new authentication flow where the client application initiates the authentication process on behalf of the end-user. 
+  
+  The caller provides a hint that can be used to send an authentication request to the caller's authentication device, typically a phone. The user can then approve the request and complete the authentication process as usual. 
+
+  CIBA is an extension to OpenID Connect. However, unlike other OpenID Connect flows, there is a direct communication between the Relying Party and the OpenID Provider, without redirects through the user's browser.
+
+</Highlight>
+
+### Implementing BankID Phone Authentication
+
+The CIBA flow is only available to traditional server-based web applications (confidential clients) and requires client validation for authentication requests. We'll use [private key JWTs](/verify/guides/privatekey-jwt/) for authenticaiton in the example below. An alternative (*less secure*) approach is to use `client_secret` for authentication.
+
+1. Make an `HTTP POST` request to the `/ciba/bc-authorize` endpoint:
+
+```javascript
+# Replace `$client_assertion` with your JWT assertion
+# Replace `YOUR_DOMAIN.criipto.id` with your Criipto domain
+# Replace `SSN` with a valid Swedish BankID SSN
+# Replace `BINDING_MESSAGE` with the text that will be presented to the end user
+# `callInitiator` must be either "RP"("Relying Party", e.g. a bank agent) or "user", depending on who initiated the call.
+
+HTTP POST https://YOUR_DOMAIN.criipto.id/ciba/bc-authorize
+Content-Type: application/x-www-form-urlencoded
+
+scope=openid
+&callInitiator=RP
+&login_hint=sub:ssn:SSN
+&acr_values=urn:grn:authn:se:bankid
+&binding_message=BINDING_MESSAGE
+&client_assertion_type=urn:ietf:params:oauth:client-assertion-type:jwt-bearer
+&client_assertion=$client_assertion
+```
+
+2. A successful response will look something like this:
+
+```javascript
+{ 
+  "auth_req_id" : "3857f8ff-21b9-48ae-a732-a3bd8128a7ae",
+  "expires_in" : 120 
+}
+```
+
+3. Poll the token endpoint (`/oauth2/token`) to get a response with an ID token.  
+   The `auth_req_id` is used to construct a poll request on the token endpoint:
+
+```javascript
+# Replace `AUTH_REQ_ID` with the id returned by authentication response
+# Replace `$client_assertion` with your JWT assertion
+
+HTTP POST https://YOUR_DOMAIN.criipto.id/oauth2/token
+Content-Type: application/x-www-form-urlencoded
+
+auth_req_id=AUTH_REQ_ID
+&grant_type=urn:openid:params:grant-type:ciba
+&client_assertion_type=urn:ietf:params:oauth:client-assertion-type:jwt-bearer
+&client_assertion=$client_assertion
+```
+
+**Polling Frequency**
+
+Bear in mind, that the authentication process requires interacting multiple times with the end-user, so the identification process could take some time. Consequently, the token endpoint should be polled every 5 seconds.
+
+4. The result of a poll request will depend on the state of the process:
+
+* On successful user identification, a successful token response is returned, e.g.:
+
+```javascript
+eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjgyN0Q5QTNFOTg2MTY0OTVBQzZGRTE3MUFFNkRBM0IzQ0ExNDE5MjEifQ.eyJpc3MiOiJodHRwczovL25hdGFsaWEtZGV2LXRlc3QuY3JpaXB0by5pbyIsImF1ZCI6InVybjpjaWJhIiwiaWRlbnRpdHlzY2hlbWUiOiJzZWJhbmtpZCIsImF1dGhlbnRpY2F0aW9udHlwZSI6InVybjpncm46YXV0aG46c2U6YmFua2lkIiwiYXV0aGVudGljYXRpb25tZXRob2QiOiJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6YWM6Y2xhc3NlczpTb2Z0d2FyZVBLSSIsImF1dGhlbnRpY2F0aW9uaW5zdGFudCI6IjIwMjQtMDUtMjFUMDg6NDg6NTcuMDM2WiIsIm5hbWVpZGVudGlmaWVyIjoiYmI5YzIzNjRkZmFlNDRmM2JjZmQ5OTkwNTNkOTRmOWUiLCJzdWIiOiJ7YmI5YzIzNjQtZGZhZS00NGYzLWJjZmQtOTk5MDUzZDk0ZjllfSIsInNlc3Npb25pbmRleCI6IjQ1OWJiMzEzLTlkYTAtNDc3MS04ZTBiLTczMzEwMjA2ZDkyOSIsInNzbiI6IjE5NjgwMjAyMDU3NSIsIm5hbWUiOiJUZXJuZSBQYXVsc2VuIiwiZ2l2ZW5uYW1lIjoiVGVybmUiLCJnaXZlbl9uYW1lIjoiVGVybmUiLCJzdXJuYW1lIjoiUGF1bHNlbiIsImZhbWlseV9uYW1lIjoiUGF1bHNlbiIsImlwYWRkcmVzcyI6IjE4NS4xNTcuMTM0LjEzNCIsImNvdW50cnkiOiJTRSIsImlhdCI6MTcxNjI4MTMzNywibmJmIjoxNzE2MjgxMzM3LCJleHAiOjE3MTYyODI1Mzd9.DtJGqyFSGY9jCHCO_o4YB6XdkOXQRJO_lLDPF48zPakeepwhONRAEI4R3EuXZRgK9wEg6PPi_LCuK8tT9A7vibMKkW7s15ZxylAu0kL95dzaVU6rVjg5327tBRl2pK1yrGQNwZYiyTPy8897LyaGBV0UwzTWM4Quf5Tezh-jUawoIg9s6oe4GlZfS3fkEra9cbu2sMogYXejRnRh033I6MRYXSnme8fU5dP0s8qZJj_EW0M3D-70TL67BZLOrQEfLbVdJD3MKttfOgkaWpBoR4qJSlITmINmAfH_Ouj4xp-y956NkYkYnmQaHu3dZqMwqjPs3R1IHT4tbo8XgwmJXQ
+```
+
+- The user has not yet interacted with the Swedish BankID app:
+
+```javascript
+HTTP/1.1 400 Bad Request
+{
+  "error": "authorization_pending",
+  "error_description": "awaiting first user interaction"
+}
+```
+
+- The user has been presented with a message requesting to confirm if they can acknowledge that a request for identification is warranted:
+
+```javascript
+HTTP/1.1 400 Bad Request
+{
+  "error": "authorization_pending",
+  "error_description": "awaiting user request acknowledgement"
+}
+```
+
+- The user has acknowledged the request, but has not yet identified themselves:
+
+```javascript
+HTTP/1.1 400 Bad Request
+{
+  "error": "authorization_pending",
+  "error_description": "awaiting user identification"
+}
+```
+
+- The user did not acknowledge that the identification request warranted or canceled the request before identification was performed:
+
+```javascript
+HTTP/1.1 400 Bad Request
+{
+  "error": "access_denied",
+  "error_description": "user declined"
+}
+```
+
 ## Ordering Swedish BankID
 
 To start accepting real users with Swedish BankID, you must first request a certificate to identify your organization.
