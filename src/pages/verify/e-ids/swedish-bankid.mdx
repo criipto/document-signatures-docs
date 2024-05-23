@@ -82,17 +82,7 @@ The example above demonstrates what it looks like when the customer is calling t
 
 ### The underlying CIBA flow
 
-Criipto Verify facilitates Swedish BankID phone authentication via CIBA flow.
-
-<Highlight icon="file-lines">
-
-  Client-Initiated Backchannel Authentication (<a href="https://openid.net/specs/openid-client-initiated-backchannel-authentication-core-1_0.html" target="_blank">CIBA</a>) is a new authentication flow where the client application initiates the authentication process on behalf of the end-user. 
-  
-  The caller provides a hint that can be used to send an authentication request to the caller's authentication device, typically a phone. The user can then approve the request and complete the authentication process as usual. 
-
-  CIBA is an extension to OpenID Connect. However, unlike other OpenID Connect flows, there is a direct communication between the Relying Party and the OpenID Provider, without redirects through the user's browser.
-
-</Highlight>
+Criipto Verify facilitates Swedish BankID phone authentication via the [CIBA flow](/verify/getting-started/oidc-intro/#authenticate-with-ciba).
 
 ### Implementing BankID Phone Authentication
 
