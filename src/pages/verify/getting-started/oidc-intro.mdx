@@ -252,7 +252,8 @@ Criipto Verify supports CIBA for the [Swedish BankID Phone Authentication](/veri
 
 ### Example request #example-request-ciba
 
-The CIBA flow is only available for confidential clients, and the example below uses [private key JWTs](/verify/guides/privatekey-jwt/) for client authentication. 
+The client application shall make an `HTTP POST` request to the backchannel authentication endpoint to ask for end-user authentication. 
+_The CIBA flow is only available for confidential clients, and the example below uses [private key JWTs](/verify/guides/privatekey-jwt/) for client authentication._ 
 
 ```text
 HTTP POST https://YOUR_SUBDOMAIN.criipto.id/ciba/bc-authorize

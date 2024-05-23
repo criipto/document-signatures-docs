@@ -134,7 +134,9 @@ auth_req_id=AUTH_REQ_ID
 &client_assertion=$client_assertion
 ```
 
-_**Polling Frequency**: Bear in mind, that the authentication process requires interacting multiple times with the end-user, so the identification process could take some time. Consequently, the token endpoint should be polled every 5 seconds._
+_**Polling Frequency:** Bear in mind, that the authentication process requires interacting multiple times with the end-user, so the identification process could take some time. Consequently, the token endpoint should be polled every 5 seconds._
+
+_**Token Delivery Modes:** CIBA allows three token delivery methods: Poll, Ping and Push. Criipto Verify only supports the Poll mode at the moment._
 
 4. The result of a poll request will depend on the state of the process:
 
