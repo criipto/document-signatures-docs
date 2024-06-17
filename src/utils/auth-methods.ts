@@ -123,10 +123,10 @@ export const PROVIDERS : Provider[] = [
         title: 'Age verification',
         acrValue: 'urn:age-verification',
         scopes: [
+          'is_over_15',
           'is_over_16',
           'is_over_18',
-          'is_over_21',
-          'is_over_65',
+          'is_over_21'
         ]
       }
     ],
