@@ -1,0 +1,71 @@
+---
+product: verify
+category: Guides & Tools
+sort: 0
+title: Setup age verification
+subtitle: How to setup age verification through Criipto Verify to verify user ages without storing any personal data.
+---
+import Layout from '../../../layouts/mdx';
+
+export default Layout;
+
+## Setting up your tenant
+
+If you don't already have your own Criipto tenant,
+[go ahead and create one](https://docs.criipto.com/verify/getting-started/basics/#tenants) -
+it's free while you're testing.
+
+### Pick an environment
+
+Pick the environment you want to implement. If you are just beginning, we recommend the test environment
+(this is also the only one available before you purchase a subscription).
+
+In test, some eIDs will let you define the birthdate when creating new test users,
+which will let you test interactions with underage (or of-age) users.
+
+### Setup application
+
+Setup a [domain and application](/verify/getting-started/basics/#domains).
+
+For "Callback URLs" you should add the URL of your own system.
+If the exact paths in your own system are yet unknown,
+you can use `https://jwt.io/` while testing.
+
+### Enable the age verification extension
+
+*If you do not see the "Extensions" tab in your main navigation, please contact Criipto*
+
+1. Click on the "Extensions" tab
+2. Select "Catalogue"
+3. Find the "Age verification" extension
+4. Install it
+
+## Integration
+
+### Parameters
+
+Integrating age verification is done via our [standard OpenID Connect offering](/verify/getting-started/oidc-intro/)
+with the follow specifics:
+
+- `acr_values=urn:age-verification`
+- `login_hint=country:{country}`, `{country}` can be one of DK|SE|NO|FI
+- `scope=openid is_over_18`, values such as `is_over_16` and `is_over_18` are also supported, see extension documentation for full list.
+
+### Example JWT
+
+import JwtSnippet from '../../../snippets/jwt-payloads/age-verification';
+
+<JwtSnippet />
+
+*Be aware that the `sub` field is random for each login and cannot be used to correlate the user*
+
+## Authorize URL Builder
+
+import AuthorizeURLBuilder from '../../../components/AuthorizeURLBuilder';
+
+<AuthorizeURLBuilder
+  acr_values={["urn:age-verification"]}
+  login_hint="country:DK"
+  scope={['openid', 'is_over_18']}
+  quirks={false}
+/>

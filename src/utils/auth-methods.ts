@@ -115,5 +115,21 @@ export const PROVIDERS : Provider[] = [
       }
     ],
     page: '/verify/e-ids/belgian-eid'
+  },
+  {
+    title: 'Age verification',
+    authMethods: [
+      {
+        title: 'Age verification',
+        acrValue: 'urn:age-verification',
+        scopes: [
+          'is_over_16',
+          'is_over_18',
+          'is_over_21',
+          'is_over_65',
+        ]
+      }
+    ],
+    page: '/verify/guides/age-verification/'
   }
 ];

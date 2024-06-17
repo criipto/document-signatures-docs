@@ -58,20 +58,26 @@ function randomUUID() {
   return (Math.random() + 1).toString(36).substring(2) + (Math.random() + 1).toString(36).substring(2) + (Math.random() + 1).toString(36).substring(2);
 }
 
-export default function AuthorizeURLBuilder() {
+export default function AuthorizeURLBuilder(props: {
+  acr_values?: string[]
+  login_hint?: string
+  scope?: string[]
+
+  quirks?: boolean
+}) {
   const [options, setOptions] = useState<AuthorizeURLOptions>({
     domain: 'criipto-verify-prod.criipto.id',
     client_id: 'urn:criipto:dev',
     redirect_uri: 'https://jwt.io',
     response_type: 'id_token',
     response_mode: 'fragment',
-    acr_values: [],
+    acr_values: props.acr_values ?? [],
     acr_values_quirk: "none",
     nonce: `ecnon-${randomUUID()}`,
     state: null,
-    login_hint: null,
+    login_hint: props.login_hint ?? null,
     availableScopes: [],
-    selectedScopes : [],
+    selectedScopes : props.scope ?? [],
     scopes_quirk : 'none',
     prompt: null,
     action: null,
@@ -132,31 +138,37 @@ export default function AuthorizeURLBuilder() {
         acr_values = acr_values.concat([acrValue]);
       }
 
-      let scopeCandidates =
-        acr_values.flatMap(acrValue => {
-          return PROVIDERS.flatMap(provider => {
-            return provider.authMethods.filter(am => am.acrValue === acrValue);
-          })
-        }).map(authMethod => authMethod.scopes || []);
-
-      let seed = scopeCandidates.shift() || [];
-      let availableScopes = scopeCandidates.reduce((memo, ary) => {
-        return memo.filter(i => ary.includes(i));
-      }, seed);
-
-      let selectedScopes =
-        options.selectedScopes.filter(selScope => {
-          return availableScopes.includes(selScope);
-        });
-
       return {
         ...options,
-        acr_values,
-        availableScopes,
-        selectedScopes
+        acr_values
       };
-    })
+    });
   }
+
+  useEffect(() => {
+    let scopeCandidates =
+      options.acr_values.flatMap(acrValue => {
+        return PROVIDERS.flatMap(provider => {
+          return provider.authMethods.filter(am => am.acrValue === acrValue);
+        })
+      }).map(authMethod => authMethod.scopes || []);
+
+    let seed = scopeCandidates.shift() || [];
+    let availableScopes = scopeCandidates.reduce((memo, ary) => {
+      return memo.filter(i => ary.includes(i));
+    }, seed);
+
+    let selectedScopes =
+      options.selectedScopes.filter(selScope => {
+        return availableScopes.includes(selScope);
+      });
+
+    setOptions(options => ({
+      ...options,
+      availableScopes,
+      selectedScopes
+    }))
+  }, [options.acr_values]);
 
   const toggleScope = (scope : string) => {
     setOptions(options => {
@@ -358,51 +370,75 @@ export default function AuthorizeURLBuilder() {
           <small>Can be any value supplied by your application, often used to carry information about the original users session.</small>
         </div>
 
-        <div>
-          <label className="block text-gray-700 text-sm font-medium mb-2" htmlFor="login_hint">
-            Login hint
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="login_hint"
-            type="text"
-            placeholder="login_hint"
-            value={options.login_hint ?? ''}
-            onChange={(event) => updateOption('login_hint', event)}
-          />
-          <small>Login hints are used for <a href="/verify/guides/prefilled-fields/">prefilling values</a>, <a href="/verify/guides/appswitch/">triggering appswitch</a> and eID unique features like `message` (see example below after picking MitID)</small>
-        </div>
-      </div>
-
-      <H3>Auth methods / acr values</H3>
-      <Paragraph>
-        You can click the individual eID headlines or use the navigation to your left to learn more about each eID.
-      </Paragraph>
-      <Paragraph>
-        If you select multiple (or zero) eIDs the user will be presented with a landing page where they can use their eID of choice.
-      </Paragraph>
-      <Paragraph>
-        Some features, like <strong>input prefill</strong> and <strong>acr_values quirk handling</strong> is only available if you only select a <strong>single acr_values</strong>
-      </Paragraph>
-      <div className="mb-4 grid grid-cols-4 gap-4">
-        {PROVIDERS.map(provider => (
+        {props.acr_values && props.acr_values.every(s => s === 'urn:age-verification') ? (
           <div>
-            <Link to={provider.page} className="font-medium no-underline text-sm" title={`Learn more about ${provider.title}`} target="_blank">{provider.title}</Link><br />
-            {provider.authMethods.map(authMethod => (
-              <label className="text-gray-700 text-sm block my-2">
-                <input
-                  type="checkbox"
-                  id={authMethod.acrValue}
-                  className="mr-2"
-                  checked={options.acr_values.includes(authMethod.acrValue)}
-                  onChange={() => toggleAcrValue(authMethod.acrValue)}
-                />
-                {authMethod.title}
-              </label>
+            <label className="block text-gray-700 text-sm font-medium mb-2" htmlFor="country">
+              Country
+            </label>
+            <select
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="country"
+              placeholder="Country"
+              value={options.login_hint ?? undefined}
+              onChange={(event) => updateOption('login_hint', event)}
+            >
+              <option value="country:DK">DK</option>
+              <option value="country:SE">SE</option>
+              <option value="country:NO">NO</option>
+              <option value="country:FI">FI</option>
+            </select>
+          </div>
+        ) : (
+          <div>
+            <label className="block text-gray-700 text-sm font-medium mb-2" htmlFor="login_hint">
+              Login hint
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="login_hint"
+              type="text"
+              placeholder="login_hint"
+              value={options.login_hint ?? ''}
+              onChange={(event) => updateOption('login_hint', event)}
+            />
+            <small>Login hints are used for <a href="/verify/guides/prefilled-fields/">prefilling values</a>, <a href="/verify/guides/appswitch/">triggering appswitch</a> and eID unique features like `message` (see example below after picking MitID)</small>
+          </div>
+        )}
+      </div>
+        
+      {props.acr_values === undefined ? (
+        <>
+          <H3>Auth methods / acr values</H3>
+          <Paragraph>
+            You can click the individual eID headlines or use the navigation to your left to learn more about each eID.
+          </Paragraph>
+          <Paragraph>
+            If you select multiple (or zero) eIDs the user will be presented with a landing page where they can use their eID of choice.
+          </Paragraph>
+          <Paragraph>
+            Some features, like <strong>input prefill</strong> and <strong>acr_values quirk handling</strong> is only available if you only select a <strong>single acr_values</strong>
+          </Paragraph>
+          <div className="mb-4 grid grid-cols-4 gap-4">
+            {PROVIDERS.map(provider => (
+              <div>
+                <Link to={provider.page} className="font-medium no-underline text-sm" title={`Learn more about ${provider.title}`} target="_blank">{provider.title}</Link><br />
+                {provider.authMethods.map(authMethod => (
+                  <label className="text-gray-700 text-sm block my-2">
+                    <input
+                      type="checkbox"
+                      id={authMethod.acrValue}
+                      className="mr-2"
+                      checked={options.acr_values.includes(authMethod.acrValue)}
+                      onChange={() => toggleAcrValue(authMethod.acrValue)}
+                    />
+                    {authMethod.title}
+                  </label>
+                ))}
+              </div>
             ))}
           </div>
-        ))}
-      </div>
+        </>
+      ) : null}
 
       {options.availableScopes.length > 0 ? (
         <div>
@@ -425,7 +461,7 @@ export default function AuthorizeURLBuilder() {
       ) : null}
 
       <div className="mb-4 grid grid-cols-2 gap-4">
-        {options.availableScopes.length > 0 ? (
+        {props.quirks !== false && options.availableScopes.length > 0 ? (
           <div>
             <label className="block text-gray-700 text-sm font-medium mb-2" htmlFor="scopes_quirk">
               scopes quirk handling
@@ -445,7 +481,7 @@ export default function AuthorizeURLBuilder() {
           </div>
         ) : null}
 
-        {options.acr_values.length == 1 ? (
+        {props.quirks !== false && options.acr_values.length == 1 ? (
           <div>
             <label className="block text-gray-700 text-sm font-medium mb-2" htmlFor="acr_values_quirk">
               acr_values quirk handling
