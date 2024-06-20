@@ -28,16 +28,11 @@ You can install the Age Verification Extension from your [Criipto Dashboard](htt
 
 ![Extensions Catalogue](./images/age-verification.png)
 
-<Highlight icon="file-lines">
-
-**Optional: use your own MitID service provider**  
-If you prefer to use your own MitID service provider instead of the one provided by Criipto, you have the option to do so.  
-Flip the **Use own MitID** setting to enabled, and then ensure that your Criipto application has allowed `https://{YOUR_CRIIPTO_DOMAIN}/extensions/ext_ageverification/api/callback` as a callback URL.
-![Extensions Catalogue](./images/age-verification-own-MitID.png)
-
-</Highlight>
+<Highlight icon="info">
 
 _If you encounter an error during installation, ensure that your user account has been granted the necessary permissions to work with extensions._
+
+</Highlight>
 
 ## Implementation
 
@@ -73,3 +68,12 @@ import AuthorizeURLBuilder from '../../../components/AuthorizeURLBuilder';
   scope={['openid', 'is_over_18']}
   quirks={false}
 />
+
+<Highlight icon="file-lines">
+
+**OPTIONAL: use your own MitID service provider**  
+If you prefer to use your own MitID service provider instead of the one provided by Criipto, you have the option to do so.  
+[During installation](/verify/guides/age-verification/#installation), flip the **Use own MitID** setting to enabled, and then ensure that your Criipto application has allowed `https://{YOUR_CRIIPTO_DOMAIN}/extensions/ext_ageverification/api/callback` as a callback URL.
+![Extensions Catalogue](./images/age-verification-own-MitID.png)
+
+</Highlight>

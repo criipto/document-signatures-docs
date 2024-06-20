@@ -296,7 +296,7 @@ export default function AuthorizeURLBuilder(props: {
             <option value="code">code</option>
             <option value="id_token">id_token</option>
           </select>
-          <small>`code` is the recommended response_type and enables PKCE and back-channel flows. `id_token` is deprecated but usefull for debugging with `https://jwt.io`</small>
+          <small>`code` is the recommended response_type and enables PKCE and back-channel flows. `id_token` is deprecated but useful for debugging with `https://jwt.io`</small>
         </div>
 
         <div>
@@ -367,7 +367,7 @@ export default function AuthorizeURLBuilder(props: {
             value={options.state ?? ''}
             onChange={(event) => updateOption('state', event)}
           />
-          <small>Can be any value supplied by your application, often used to carry information about the original users session.</small>
+          <small>Can be any value supplied by your application, often used to carry information about the original user's session.</small>
         </div>
 
         {props.acr_values && props.acr_values.every(s => s === 'urn:age-verification') ? (
