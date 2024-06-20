@@ -2,62 +2,66 @@
 product: verify
 category: Guides & Tools
 sort: 0
-title: Setup age verification
-subtitle: How to setup age verification through Criipto Verify to verify user ages without storing any personal data.
+title: Age Verification
+subtitle: How to leverage Criipto Verify's Age Verification extension
 ---
+
 import Layout from '../../../layouts/mdx';
 
 export default Layout;
 
-## Setting up your tenant
+With the Age Verification extension, you can verify user ages without collecting personal data.
+The authentication result will simply confirm if the user meets the age requirement, without including sensitive information such as their full name or birthdate.
 
-If you don't already have your own Criipto tenant,
-[go ahead and create one](https://docs.criipto.com/verify/getting-started/basics/#tenants) -
-it's free while you're testing.
+## Prerequisites
 
-### Pick an environment
+You'll need a [Criipto tenant](https://docs.criipto.com/verify/getting-started/basics/#tenants), [domain](https://dashboard.criipto.com/domains) and [application](https://dashboard.criipto.com/applications) to get started. When ready, please contact us via [Slack](https://tiny.cc/criipto-slack) or [email](mailto:support@criipto.com), and we'll enable the Extensions feature for your tenant.
 
-Pick the environment you want to implement. If you are just beginning, we recommend the test environment
-(this is also the only one available before you purchase a subscription).
+## Installation
 
-In test, some eIDs will let you define the birthdate when creating new test users,
-which will let you test interactions with underage (or of-age) users.
+You can install the Age Verification Extension from your [Criipto Dashboard](https://dashboard.criipto.com) by following these steps:
 
-### Setup application
+1. Click on the **Extensions** tab
+2. Navigate to the **Catalogue** section
+3. Select the **Age Verification** extension to open it
+4. Proceed by clicking **Install**
 
-Setup a [domain and application](/verify/getting-started/basics/#domains).
+![Extensions Catalogue](./images/age-verification.png)
 
-For "Callback URLs" you should add the URL of your own system.
-If the exact paths in your own system are yet unknown,
-you can use `https://jwt.io/` while testing.
+<Highlight icon="file-lines">
 
-### Enable the age verification extension
+**Optional: use your own MitID service provider**  
+If you prefer to use your own MitID service provider instead of the one provided by Criipto, you have the option to do so.  
+Flip the **Use own MitID** setting to enabled, and then ensure that your Criipto application has allowed `https://{YOUR_CRIIPTO_DOMAIN}/extensions/ext_ageverification/api/callback` as a callback URL.
+![Extensions Catalogue](./images/age-verification-own-MitID.png)
 
-*If you do not see the "Extensions" tab in your main navigation, please contact Criipto*
+</Highlight>
 
-1. Click on the "Extensions" tab
-2. Select "Catalogue"
-3. Find the "Age verification" extension
-4. Install it
+_If you encounter an error during installation, ensure that your user account has been granted the necessary permissions to work with extensions._
 
-## Integration
+## Implementation
 
-### Parameters
+### Triggering Age Verification
 
-Integrating age verification is done via our [standard OpenID Connect offering](/verify/getting-started/oidc-intro/)
-with the follow specifics:
+Age verification is triggered via a [standard OpenID Connect integration](/verify/getting-started/oidc-intro/) using the following settings:
 
 - `acr_values=urn:age-verification`
-- `login_hint=country:{country}`, `{country}` can be one of DK|SE|NO|FI
-- `scope=openid is_over_18`, values such as `is_over_16` and `is_over_21` are also supported, see extension documentation for full list.
+- `login_hint=country:{country}`, `{country}` can be one of `DK`|`SE`|`NO`|`FI`. _This determines the [eID provider](/verify/e-ids/) for user authentication_.
+- `scope=openid is_over_18`; Other supported values are: `is_over_15`, `is_over_16`, `is_over_21`.
 
 ### Example JWT
+
+The resulting JWT will indicate whether the user meets the age requirement. Personal data, such as the user's full name and birthdate, is not included.
 
 import JwtSnippet from '../../../snippets/jwt-payloads/age-verification';
 
 <JwtSnippet />
 
-*Be aware that the `sub` field is random for each login and cannot be used to correlate the user*
+<Highlight icon="info">
+
+The `sub` field is random for each login and cannot be used to correlate the user.
+
+</Highlight>
 
 ## Authorize URL Builder
 
