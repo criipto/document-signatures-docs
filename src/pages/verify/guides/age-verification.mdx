@@ -13,6 +13,14 @@ export default Layout;
 With the Age Verification extension, you can verify user ages without collecting personal data.
 The authentication result will simply confirm if the user meets the age requirement, without including sensitive information such as their full name or birthdate.
 
+<Highlight icon="info">
+
+Age Verification does not require you to set up your own eID provider, as it defaults to using shared Criipto-provided eID providers. This batteries included approach comes with certain limitations, such as the absence of many tenant-specific features.
+
+For instance, the [Custom styling feature](https://docs.criipto.com/verify/guides/custom-styling/) is not available out of the box for Age Verification applications. To enable it, you can switch to using [your own MitID provider](https://docs.criipto.com/verify/guides/age-verification/#optional-use-your-own-mitid-service-provider).
+
+</Highlight>
+
 ## Prerequisites
 
 You'll need a [Criipto tenant](https://docs.criipto.com/verify/getting-started/basics/#tenants) and [domain](https://dashboard.criipto.com/domains) to get started.
@@ -68,11 +76,8 @@ import AuthorizeURLBuilder from '../../../components/AuthorizeURLBuilder';
   quirks={false}
 />
 
-<Highlight icon="file-lines">
+## Optional: use your own MitID service provider
 
-**OPTIONAL: use your own MitID service provider**  
 If you prefer to use your own MitID service provider instead of the one provided by Criipto, you have the option to do so.  
 [During installation](/verify/guides/age-verification/#installation), flip the **Use own MitID** setting to enabled, and then ensure that your Criipto application has allowed `https://{YOUR_CRIIPTO_DOMAIN}/extensions/ext_ageverification/api/callback` as a callback URL.
 ![Extensions Catalogue](./images/age-verification-own-MitID.png)
-
-</Highlight>
