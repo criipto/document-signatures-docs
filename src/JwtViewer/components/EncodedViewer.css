@@ -1,0 +1,46 @@
+.criipto-jwt-viewer-encoded {
+  font-family: 'Roboto Mono', Menlo, monospace;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #d63aff;
+  word-break: break-all;
+  position: relative;
+}
+
+.criipto-jwt-viewer-encoded textarea {
+  color: transparent;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  outline: none;
+
+  font-family: 'Roboto Mono', Menlo, monospace;
+  font-size: 14px;
+  line-height: 1.5;
+  word-break: break-all;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 2;
+  background: transparent;
+  resize: none;
+
+  min-height: 250px;
+  overflow-y: hidden;
+}
+
+.criipto-jwt-viewer-encoded .dot {
+  color: #000;
+}
+
+.criipto-jwt-viewer-encoded .header {
+  color: #fb015b;
+}
+.criipto-jwt-viewer-encoded .payload {
+  color: #d63aff;
+}
+.criipto-jwt-viewer-encoded .signature {
+  color: #00b9f1;
+}

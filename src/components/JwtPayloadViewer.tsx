@@ -1,6 +1,5 @@
 import React from 'react';
-import {PayloadViewer, JwtPayload} from '@criipto/jwt-viewer';
-import '@criipto/jwt-viewer/dist/criipto-jwt-viewer.css';
+import {PayloadViewer, JwtPayload} from '../JwtViewer';
 
 interface Props {
   payload: JwtPayload

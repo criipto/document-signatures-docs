@@ -24,7 +24,6 @@
     "clean": "gatsby clean"
   },
   "dependencies": {
-    "@criipto/jwt-viewer": "^1.2.0",
     "@criipto/signatures": "^1.7.0",
     "@criipto/ui-operations-status": "^1.1.1",
     "@fontsource/roboto-mono": "^4.5.8",

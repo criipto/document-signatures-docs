@@ -1,0 +1,20 @@
+.criipto-jwt-viewer-header {
+  font-family: 'Roboto Mono', Menlo, monospace;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #fb015b;
+}
+.criipto-jwt-viewer-header pre {
+  margin: 0;
+  padding: 0;
+}
+
+.criipto-jwt-viewer-header-item {
+  position: relative;
+  overflow-wrap: anywhere;
+}
+
+.criipto-jwt-viewer-header-item:hover .criipto-jwt-viewer-tooltip {
+  opacity: 1;
+}
+
