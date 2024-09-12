@@ -1,0 +1,93 @@
+---
+product: verify
+category: Getting Started
+sort: 3
+title: OpenID Connect best security practices
+subtitle: Learn about key security guidelines for implementing basic OpenID Connect authentication in client applications.
+---
+
+import Layout from '../../../layouts/mdx';
+
+export default Layout;
+
+In OpenID Connect(OIDC) authentication flows, there are two main roles:
+
+1. **Authorization Server (OpenID Provider)**: the server that authenticates the user and issues ID tokens and access tokens. It handles user authentication and returns the user’s identity information to the client application.
+2. **Client Application**: the application requesting authentication on behalf of the end user.
+
+Criipto Verify is an OpenID Provider, handling most of the process. However, it's important for developers of client applications to also follow security best practices.
+
+## Authorization Code Flow
+
+The most secure method of performing OIDC authentication is the [Authorization Code Flow](/verify/getting-started/oidc-intro/#authenticate-with-back-channel-authorization-code-flow), or its extended version — [Authorization Code Flow with PKCE](http://localhost:8000/verify/getting-started/oidc-intro/#authenticate-with-pkce). 
+
+In the Authorization Code Flow, the client application exchanges an authorization code for tokens at the token endpoint. When using Criipto Verify for eID authentication: After the end user successfully logs in with their [eID](/verify/e-ids) and is redirected back to the client application through the redirect URL, the client application retrieves the authorization code from the URL. The client application then uses this code to request an ID token from Criipto Verify (see [code for token exchange](/verify/getting-started/oidc-intro/#exchange-the-code-for-a-token)).
+
+The Authorization Code Flow enhances security by mitigating replay attempts by attackers (when an attacker tries to reuse a valid intercepted token) and generally reduces the attack surface since ID tokens are not exposed in URLs.
+
+**Best practice:**
+
+- Public clients — such as single-page applications and native applications — must use the **PKCE flow** to prevent misuse of authorization codes.
+- Confidential clients — such as traditional server-based web applications — must use the **Authorization Code Flow**.
+- Confidential clients implementing the Authorization Code Flow should take additional precautions, such as using the `nonce` parameter and the respective claim in the `id_token`, or one-time tokens carried in the `state` parameter.
+- For use cases where authentication is initiated on one device but completed on another (e.g., a call center agent starts the authentication process for the end user), the back-channel [CIBA flow](/verify/getting-started/oidc-intro/#authenticate-with-ciba) is the right choice.
+- The Implicit Flow is obsolete and [should never be used](/verify/getting-started/best-security-practices/#avoid-implicit-flow).
+
+## The nonce parameter
+
+`nonce` is used to associate an ID token to the specific authentication request and user session.
+
+The client application should bind `nonce` to the user agent session and send it with the initial request to the OpenID Provider. The binding is done using HTTPOnly, Secure cookies, and preferably with a server-side encrypted value for the `nonce` (using authenticated encryption). The OpenID Provider puts the received `nonce` value into the `id_token` that is issued as part of the [code exchange](/verify/getting-started/oidc-intro/#exchange-the-code-for-a-token) at the token endpoint.
+
+- `nonce` serves as a [token validation](/verify/getting-started/best-security-practices/#always-validating-jwts) parameter. If an attacker injects an authorization code in the authorization response, the `nonce` value in the client session and the `nonce` value in the `id_token` received from the token endpoint will not match, and the attack will be detected. 
+- `nonce` also helps protect against an attacker potentially intercepting a valid [`state` parameter](/verify/getting-started/best-security-practices/#the-state-parameter), but then providing a `code` value tied to a different session. This could be a concern for public clients, and, in theory, in some confidential client scenarios.
+
+**Best practice:** It is recommended to always include a `nonce` in your [authorize URLs](/verify/guides/authorize-url-builder/). Your application should then validate the `nonce` in the received `id_token`, and not use any issued tokens until this check has succeeded.
+
+## The state parameter
+
+The `state` parameter helps prevent Cross-Site Request Forgery (CSRF) attacks by maintaining state between the client application and the authorization server. The client application passes a random value, also known as a CSRF Token, in the `state` parameter, that links the request to the redirect URL to the client session.
+
+When the user has been authenticated, the authorization server redirects the user back to the client application’s redirect URL, including the `state` parameter in the URL. For example:
+
+`https://your-app.com/callback?code=authorization-code&state=unique-state-value`
+
+The `state` parameter allows the client application to verify that the authorization response is genuine and was sent by the authorization server in response to the original authentication request.
+
+**Best practice:** Always generate a unique, random `state` value for each authorization request and validate it when the response is received.
+
+## Always validating JWTs
+
+Upon successful user authentication, Criipto Verify will issue an **[ID token](/verify/getting-started/token-contents/)** to the client application. `id_token` contains user authentication information in the form of a JSON Web Token (JWT). 
+However, receiving a JWT is not enough - your application must also [validate it](/verify/getting-started/oidc-intro/#validate-the-jwt). Without validation, there’s no guarantee that the token hasn’t been tampered with or forged.
+
+*Note: `id_token` must be validated, even if using the `/userInfo` endpoint for personal data.*
+
+**Best practice:** Always delegate token validation to trusted libraries like <a href='https://github.com/panva/jose' target="_blank">jose</a> or choose one of [Criipto's integrations](/verify/integrations). Libraries like these handle all the complexities involved in checking JWT signatures, token expiration, etc. Manual validation should be avoided. 
+More information on how JWT validation works is available in our <a href='https://www.criipto.com/blog/jwt-validation-guide' target="_blank">JWT validation guide</a>.
+
+## Client authentication
+
+For client authentication, it is recommended to use asymmetric cryptography, such as [Private Key JWTs](/verify/guides/privatekey-jwt/). This provides stronger security compared to symmetric key methods.
+
+When using asymmetric cryptography, authorization servers do not need to store sensitive symmetric keys, reducing the risk of key leakage. Additionally, key rotation is simplified because you can provide a JWT keys set in a URL, allowing Criipto Verify to dynamically fetch the updated keys.
+
+**Best practice:** Use Private Key JWTs for client authentication to enhance security and simplify key management.
+
+## Avoid Implicit Flow
+
+The Implicit Flow has been deprecated and is considered insecure due to its vulnerability to token leakage and token replay attacks. Client applications should not use the Implicit Flow or any other method that causes the authorization server to issue tokens directly in the authorization response (such as `response_type=id_token`).
+
+Tokens in the Implicit Flow are exposed in the URL fragment (`response_mode=fragment`), making them vulnerable to interception and mishandling. While `response_mode=fragment` is convenient and easy to use during development and testing, it is insecure for production applications for several reasons:
+
+- Tokens in a URL fragment can be exposed to browser history, referral headers, and intermediaries.
+- Browser components or extensions may access the fragment, increasing the risk of interception or token leakage.
+- Some modern browsers restrict or block the use of URL fragments in certain scenarios, which 70causes compatibility issues. 
+
+### Use response_mode=query
+
+For improved security, use `response_mode=query`, which returns authorization parameters in the query string of the redirect URL. This approach is more secure and is the default `response_mode` for the Authorization Code Flow and PKCE.
+
+## More information
+
+For detailed information on security requirements and other recommendations for clients and servers implementing OAuth 2.0 and OpenID Connect, check <a href='https://datatracker.ietf.org/doc/html/draft-ietf-oauth-security-topics' target="_blank">OAuth 2.0 Security Best Current Practice</a>.

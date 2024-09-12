@@ -46,7 +46,7 @@ _The full content of `evidence` and `ocspResponse` is omitted for brevity._
 
 When included in the payload, `evidence` and `ocspResponse` claims will significantly increase the size of the JWT token, potentially causing it to exceed the size limitations of an HTTP header. The bloated JWTs would thus become unusable as Bearer tokens for accessing APIs.
 
-To address this concern, consider changing the <a href="https://openid.net/specs/oauth-v2-multiple-response-types-1_0.html" target="_blank">response type</a> in your [authorization request](/verify/getting-started/oidc-intro/#example-authentication-url) to `response_type=code id_token`.
+To address this concern, consider changing the <a href="https://openid.net/specs/oauth-v2-multiple-response-types-1_0.html" target="_blank">response type</a> in your [authorization request](/verify/getting-started/oidc-intro/#example-authorization-url) to `response_type=code id_token`.
 
 In this case, a more compact ID Token with only essential claims will be issued from the Token endpoint. The client can subsequently fetch all data about the user from the Userinfo endpoint.
 

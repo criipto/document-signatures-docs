@@ -11,7 +11,7 @@ export default Layout;
 
 This document explains some of the basic terminology we use at Criipto, and we try to relate these terms to concepts you are already familiar with. 
 
-This article introduces the following   core concepts of Criipto: **Tenants**, **Domains**, **Applications**, and **Identity Sources**. Each is explained in the following.
+This article introduces the following core concepts of Criipto: **[Tenants](/verify/getting-started/basics/#tenants)**, **[Domains](/verify/getting-started/basics/#domains)**, **[Applications](/verify/getting-started/basics/#applications)**, and **[Identity Sources](/verify/getting-started/basics/#identity-sources)**.
 
 <Highlight icon="file-lines">
 
@@ -27,7 +27,7 @@ For illustration purposes, we will use a fictitious company named `Secure Insura
 
 If you haven't already [signed up](https://criipto.com/signup) for a Criipto account, feel free - it's free. 
 
-When you signup for the first time you will be asked to create your first tenant and your first _domain_ along with it. In Criipto, a tenant is the **logical isolation unit** that isolates you and your data from other Criipto tenants. The term describes a software architecture where a single instance of the software serves multiple tenants. No tenant can access the instance of another tenant, even though the software may be running on the same machine.
+When you sign up for the first time, you will be asked to create your first tenant and your first _domain_ along with it. In Criipto, a tenant is the **logical isolation unit** that isolates you and your data from other Criipto tenants. The term describes a software architecture where a single instance of the software serves multiple tenants. No tenant can access the instance of another tenant, even though the software may be running on the same machine.
 
 Tenant characteristics:
 
@@ -45,7 +45,7 @@ A domain in Criipto Verify is the DNS domain on which you call our service to pe
 
 <Highlight icon="info">
 
-  Domains are registered for either test or production and as such determines whether you can use test eID accounts or real, live eID accounts. 
+  Domains are registered for either test or production and as such determine whether you can use test eID accounts or real, live eID accounts. 
 
   As such, **the domain is the key distinction between test and production.**
 
@@ -53,7 +53,7 @@ A domain in Criipto Verify is the DNS domain on which you call our service to pe
 
 ### Bring your own domain
 
-For development and testing it is usually sufficient to just use the preconfigured `criipto.id` top-level domain, but for production you may wish to map a domain of your own, such as `login.secure-insurance.com`, to point to Criipto Verify. In some scenarios this is required for technical reasons, but you should also keep in mind the perception of your users. They may feel uncomfortable being taken to a third party domain to login. If instead you have mapped your own domain, your users may feel safer as they are being kept in the realm of your company and application.
+For development and testing it is usually sufficient to just use the preconfigured `criipto.id` top-level domain, but for production you may wish to map a domain of your own, such as `login.secure-insurance.com`, to point to Criipto Verify. In some scenarios this is required for technical reasons, but you should also keep in mind the perception of your users. They may feel uncomfortable being taken to a third-party domain to log in. If instead you have mapped your own domain, your users may feel safer as they are being kept in the realm of your company and application.
 
 If you choose to set up your own domain for production you must have access to your company's _DNS setup_ and be able to acquire a so-called _SSL certificate_ which must be uploaded to the Criipto Verify service (after setting up your DNS record).
 
@@ -77,9 +77,9 @@ In our example, `Secure Insurance` has two apps: a web app (running on a server)
 
 ## Identity Sources
 
-Now that you have set up your **Applications**, you are ready to configure how your users will login. 
+Now that you have set up your **Applications**, you are ready to configure how your users will log in. 
 
-Criipto sits between your app and the Identity Sources that authenticate your users (such as Swedish BankID and Danish MitID). Through this abstraction, Criipto keeps your app isolated from any changes of the provider's implementation.
+Criipto sits between your app and the Identity Sources that authenticate your users (such as Swedish BankID and Danish MitID). Through this abstraction, Criipto keeps your app isolated from any changes in the provider's implementation.
 
 Each Identity Source can be shared among multiple applications. You may use all the available Identity Sources for all your applications.
 
@@ -87,7 +87,7 @@ Each Identity Source can be shared among multiple applications. You may use all 
 
   Identity sources are already configured for test when you create a tenant. To be able to use an Identity Source in production you will - in most cases - have to enter into some sort of formal agreement with the provider of the particular type of eID.
 
-  In most cases this is handled through the intermediary of Criipto, although in some cases you will also have to set up direct agreements (in countries such as Denmark and the Netherlands).
+  In most cases, this is handled through the intermediary of Criipto, although in some cases you will also have to set up direct agreements (in countries such as Denmark and the Netherlands).
 
   More detail on the formalities and process can be found in the section about [eIDs](/verify/e-ids/).
 
@@ -95,4 +95,4 @@ Each Identity Source can be shared among multiple applications. You may use all 
 
 ## Where to go from here
 
-In this article you have familiarized yourself with several core concepts of Criipto. If you wish to learn more about the next steps in setting up Criipto, you can read more in the rest of the documentation.
+This section introduced several core concepts of Criipto. Next, we recommend learning [how Criipto supports the OpenID Connect protocol](/verify/getting-started/oidc-intro/) and reviewing [best security practices for implementing OpenID Connect authentication](/verify/getting-started/best-security-practices/) in client applications.

@@ -3,7 +3,7 @@ product: verify
 category: Getting Started
 sort: 2
 title: Using OpenID Connect
-subtitle: Learn how Criipto supports the OpenID Connect protocol
+subtitle: Learn how Criipto supports the OpenID Connect protocol.
 ---
 import Layout from '../../../layouts/mdx';
 
@@ -11,40 +11,41 @@ export default Layout;
 
 ## Using OpenID Connect to integrate with Criipto Verify
 
-Criipto Verify is integrated through the authentication API which follows the OpenID Connect and OAuth2 specifications. 
+Criipto Verify is an OpenID Provider. It is integrated through the authentication API which follows the <a href='https://openid.net/specs/openid-connect-core-1_0.html' target="_blank">OpenID Connect</a> and <a href='https://datatracker.ietf.org/doc/html/rfc6749' target="_blank">OAuth 2.0</a> specifications.
 
-<Highlight icon="file-lines">
+### Supported OpenID Connect Flows
 
-Criipto Verify is an OpenID Provider. It supports four different OpenID Connect flows: the OAuth2 **authorization code flow**, the **PKCE flow**, the (now deprecated) **implicit flow**, and the **CIBA flow**. 
+The OpenID Connect(OIDC) protocol defines different strategies (flows) to authenticate users. Criipto Verify supports four different OpenID Connect flows:  
 
-**The authorization code flow** is used for traditional server-based web applications, also referred to as _confidential clients_. These applications can securely store a client secret and establish back-channel communication with the Criipto Verify service. This facilitates a secure [code-for-token exchange](#exchange-the-code-for-a-token) during authentication.
+#### [1. The Authorization Code Flow](/verify/getting-started/oidc-intro/#authenticate-with-back-channel-authorization-code-flow)
 
-**The PKCE flow** (pronounced _pixy_) can be used by _public clients_ such as single page applications(SPAs) and native applications that cannot keep a secret. With PKCE flow, a one-time secret is generated and used for the code exchange.
+The Authorization Code Flow is used for traditional server-based web applications, also referred to as _confidential clients_. These applications can securely store a client secret and establish back-channel communication with the Criipto Verify service. This facilitates a secure [code-for-token exchange](#exchange-the-code-for-a-token) during authentication.
 
-The traditional **implicit flow** returns a token directly in the browser. Support for this flow is being discontinued, although it will continue to function on test domains for the foreseeable future for simpler debugging during development.
+#### [2. The PKCE Flow](/verify/getting-started/oidc-intro/#authenticate-with-pkce)
+The PKCE Flow (pronounced _pixy_) can be used by _public clients_ such as single-page applications (SPAs) and native applications that cannot keep a secret. With PKCE, a one-time secret is generated and used for the code exchange.
 
-**The CIBA flow** is designed for use cases where the client application isn't directly operated by the end-user but can trigger the authentication process on their behalf. A canonical example is a call center agent verifying a caller's identity.
+#### [3. The Implicit Flow](/verify/getting-started/oidc-intro/#authenticate-with-implicit-flow)
+The Implicit Flow (now deprecated) returns a token directly in the browser. Support for this flow is being discontinued, although it will continue to function on test domains for the foreseeable future for simpler debugging during development.
 
-*When implementing Criipto Verify, consider your application's architecture and requirements in order to select and implement the appropriate OpenID Connect flow.*
+#### [4. The CIBA flow](/verify/getting-started/oidc-intro/#authenticate-with-ciba)
+The CIBA flow is designed for use cases where the client application isn't directly operated by the end-user but can trigger the authentication process on their behalf. A canonical example is a call center agent verifying a caller's identity.
 
-</Highlight>
-
-The following sections describe the four flows and introduce the parameters to configure the authentication and subsequent user information retrieval.  
+**The choice of the OpenID Connect flow depends on the requirements and architecture of the client application implementing the OIDC authentication.**
 
 <Highlight icon="info">
+The following sections describe the four flows and introduce the parameters to configure the authentication and subsequent user information retrieval.
 
 Please beware that you don't have to go through the below motions manually. Most often it will be handled by configuring an OpenID Connect package on your platform of choice.
 
 </Highlight>
 
-
 ## Authenticate the User
 
-To begin the login flow, you will need to authenticate the user at the identity source indicated in your request.
+To begin the login flow, you will need to authenticate the user at the [identity source](/verify/e-ids) indicated in your request.
 
-To authenticate the user, your app must send the user to the *OAuth2 authorization endpoint* with the appropriate set of parameters.
+To authenticate the user, your app must send the user to the *OAuth2 authorization endpoint (`/oauth2/authorize`)* with the appropriate set of parameters.
 
-You can find the URL for the *OAuth2 authorization endpoint* in the OpenID Connect Discovery Document exposed on your Criipto Verify Domain:
+You can find the URL for the *OAuth2 authorization endpoint* in the OpenID Connect Discovery Document exposed on your [Criipto Verify Domain](/verify/getting-started/basics/#domains):
 
 ```
 GET https://YOUR_SUBDOMAIN.criipto.id/.well-known/openid-configuration
@@ -52,7 +53,7 @@ GET https://YOUR_SUBDOMAIN.criipto.id/.well-known/openid-configuration
 
 The response from this endpoint is a JSON document, with an `authorization_endpoint` property. The corresponding property value is the URL of the *OAuth2 authorization endpoint*.
 
-### Example authentication URL
+### Example authorization URL
 
 The following initiates the authentication through an OAuth2 authorization request:
 
@@ -66,7 +67,7 @@ GET https://YOUR_SUBDOMAIN.criipto.id/oauth2/authorize?
     state=YOUR_STATE
 ```
 
-Note that providing `response_type=code` specifies that you want either the traditional back-channel *authorization code* flow or the *PKCE* flow. If you specify `response_type=id_token` you indicate that you want the *implicit flow*. In the implicit flow you receive the issued token in a query parameter on the return URL.
+Note that providing `response_type=code` specifies that you want either the traditional back-channel *Authorization Code Flow* or the *PKCE Flow*. If you specify `response_type=id_token` you indicate that you want the *Implicit Flow*. In the Implicit Flow, you receive the issued token in a URL fragment on the return URL.
 
 If you want to receive the response in another way you must specify the `response_mode` parameter, see below.
 
@@ -81,12 +82,12 @@ If you want to receive the response in another way you must specify the `respons
 | `redirect_uri`  | The URL to which Criipto will redirect the browser after authentication has been completed. The authorization code and the `id_token` will be available in the `code` and `id_token` URL parameter for the back-channel flow and on a URL query parameter for the front-channel flow. This URL must be pre-registered as a valid callback URL in your application settings.<br /> <br /> **Warning:** Per the [OAuth 2.0 Specification](https://tools.ietf.org/html/rfc6749#section-3.1.2), Criipto removes everything after the hash and does *not* honor any fragments. |
 | `scope`         | For applications configured with a `static` scope strategy, specify `openid`. This gets you the information configured in the management dashboard for each kind of eID (where applicable).  <br />  <br />  For applications configured with a `dynamic` scope strategy, you must specify scope tokens for the types of data you want, in addition to the `openid` scope token. Possible values are described in the individual eID articles.<br /> <br />You can read more about this parameter [here](#the-scope-parameter) |
 | `acr_values`    | Identifies which eID identity service you want to use. You can only specify one value, and it must identify the exact type of identity service, as some countries have, for example, both a mobile and web based service. Possible values can be found in the [authorize request builder](/verify/guides/authorize-url-builder/#auth-methods--acr-values). |
-| `response_mode` | (optional) Specifies how you want your result delivered via the `redirect_uri`: Use `query` to return the `code`/`id_token` as a query parameter, `fragment` to have it delivered on a URL fragment, and finally `form_post` to have it posted back to your `redirect_uri`.  <br />  <br /> Default values are `query` for `response_type=code` and `query` for `response_type=id_token`. |
+| `response_mode` | (optional) Specifies how you want your result delivered via the `redirect_uri`: Use `query` to return the `code`/`id_token` as a query parameter, `fragment` to have it delivered on a URL fragment, and finally `form_post` to have it posted back to your `redirect_uri`.  <br />  <br /> Default values are `query` for `response_type=code` and `fragment` for `response_type=id_token`. |
 | `state`         | (optional but recommended) An opaque arbitrary alphanumeric string your app adds to the initial request that Criipto includes when redirecting back to your application. |
 | `login_hint`    | (optional) Various use cases leverage this parameter. You can read more about them [here](#the-loginhint-parameter).|
 | `prompt`        | (optional) Specifies whether the user will be forced to re-authenticate. Possible values are `none`, `login`, `consent`, and `consent_revoke`. More information is available in our [SSO guide](/verify/guides/sso/#per-request-options) and in our [authorize URL builder](/verify/guides/authorize-url-builder/). |
 
-As an example, your HTML snippet for your authorization URL when adding login to your app might look like:
+When adding login to your application, you will build the authorization URL (also called the [_authorize URL_](/verify/guides/authorize-url-builder/)) and redirect the user to it. An HTML snippet for your authorize URL might look like this:
 
 ```html
 <a href="https://acme-corp.criipto.id/oauth2/authorize?
@@ -102,9 +103,16 @@ As an example, your HTML snippet for your authorization URL when adding login to
 
 You can <a href="https://acme-corp.criipto.id/oauth2/authorize?response_type=id_token&client_id=urn:debug:jwt.io&acr_values=urn:grn:authn:no:bankid&redirect_uri=https://jwt.io&scope=openid&state=etats" target="_blank">try the above URL</a> right now if you have a [test user for Norwegian BankID](/verify/e-ids/norwegian-bankid/#test-users).
 
-For more about how to handle the implicit flow, see below. 
+Your next steps will depend on the [OpenID Connect flow type](/verify/getting-started/oidc-intro/#supported-openid-connect-flows) you're implementing. See the relevant section below for a description of how each flow unfolds:
 
-## Authenticate with back-channel code flow
+- [Authorization Code Flow](/verify/getting-started/oidc-intro/#authenticate-with-back-channel-authorization-code-flow)
+- [PKCE Flow](/verify/getting-started/oidc-intro/#authenticate-with-pkce)
+- [Implicit Flow](/verify/getting-started/oidc-intro/#authenticate-with-implicit-flow)
+- [CIBA](/verify/getting-started/oidc-intro/#authenticate-with-ciba)
+
+After completing the steps specific to your chosen flow, you can proceed to [validating the JWT](/verify/getting-started/oidc-intro/#validate-the-jwt) received from successful authentication.
+
+## Authenticate with back-channel Authorization Code Flow
 
 ### Example request
 
@@ -121,7 +129,7 @@ GET https://YOUR_SUBDOMAIN.criipto.id/oauth2/authorize?
 
 ### Example response
 
-For the code flow, when you used `response_type=code`, you will receive an `HTTP 302` response which redirects your browser to your specified `redirect_uri` with the authorization code included at the end of the URL:
+For the Authorization Code Flow, when you used `response_type=code`, you will receive an `HTTP 302` response which redirects your browser to your specified `redirect_uri` with the authorization code included at the end of the URL:
 
 ```text
 HTTP/1.1 302 Found
@@ -139,7 +147,7 @@ Location: YOUR_RETURN_URL?error=ERROR_CODE&error_description=...&state=YOUR_STAT
 
 ### Exchange the code for a token
 
-For the code flow you will need to exchange the returned code for an actual token. This is done by posting the authorization code received from the previous step to the token endpoint.
+For the Authorization Code Flow, you will need to exchange the returned code for an actual token. This is done by posting the authorization code received from the previous step to the token endpoint.
 
 For PKCE-enabled clients, this exchange is based on a one-time secret created by the OIDC library you use to handle the flow, and the exchange will also be handled by the same library.
 
@@ -192,7 +200,7 @@ GET https://YOUR_SUBDOMAIN.criipto.id/oauth2/authorize?
 
 ### Example response #example-response-pkce
 
-For authentication using code flow, you will receive an `HTTP 302` response which redirects your browser to your specified `redirect_uri` with the authorization code included at the end of the URL:
+You will receive an `HTTP 302` response which redirects your browser to your specified `redirect_uri` with the authorization code included at the end of the URL:
 
 ```text
 HTTP/1.1 302 Found
@@ -208,11 +216,11 @@ Content-Type: application/x-www-form-urlencoded
 grant_type=authorization_code&code=AUTHORIZATION_CODE&client_id=CLIENT_ID&redirect_uri=YOUR_RETURN_URL&code_verifier=YOUR_CODE_VERIFIER
 ```
 
-## Authenticate with implicit flow
+## Authenticate with Implicit Flow
 
-Implicit flow, which returns an `id_token` directly in the browser via the `#` fragment, is supported, but not recommended.
+Implicit Flow, which returns an `id_token` directly in the browser via the `#` fragment, is supported, but not recommended.
 
-[@criipto/auth-js](https://github.com/criipto/criipto-auth.js) supports implicit flow.
+[@criipto/auth-js](https://github.com/criipto/criipto-auth.js) supports Implicit Flow.
 
 ### Example request #example-request-implicit
 
@@ -306,14 +314,15 @@ The token will be issued upon successful user identification:
 }
 ```
 
-## Validate the response
+## Validate the JWT
 
-You can now proceed with validating the returned `JWT` and access the contained end-user information.
-The validation step is required - if you do not validate the signature, you cannot trust the contained end-user information.
-We strongly recommend that you find a battle-hardened library for you specific platfrom to do this heavy lifting.
-Criipto has a list of [integrations](/verify/integrations) and you can find an extensive list of libraries on [jwt.io](https://jwt.io) (scroll down to the `Libraries for Token Signing/Verification` section).
+You can now proceed with validating the `JWT` returned in response and access the [end-user information it contains](/verify/getting-started/token-contents/). 
+The validation step is required; without it, you cannot trust the contained end-user information. 
 
-You can find more informaiton about JWT validation (including a few code samples) <a href="https://www.criipto.com/blog/jwt-validation-guide" target="_blank">in our blogpost</a>. 
+We strongly recommend that you find a battle-hardened library for your specific platform to do this heavy lifting. 
+You can find an extensive list of libraries on <a href='https://jwt.io/libraries' target="_blank">jwt.io</a>. Alternatively, Criipto provides a list of [integrations](/verify/integrations) that handle most of the authentication process, including JWT validation.
+
+For more informaiton, see [OpenID Connect security best practices](/verify/getting-started/best-security-practices/#always-validating-id-tokens) and <a href='https://www.criipto.com/blog/jwt-validation-guide' target="_blank">JWT validation guide</a>.
 
 ## The 'scope' parameter
 
