@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.002.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{7B27613D-63CA-48A5-B69D-0B90A7281369}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "examples", "src\examples\examples.csproj", "{57B9CE70-AAAA-4394-B910-07C9F4A81EFA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dist", "dist", "{B26108C9-4EFA-4459-AEAF-3D955AA98915}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "examples", "dist\signatures-csharp\examples.csproj", "{53E4CBFD-06DF-4396-A9EF-E464C3FFC376}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{57B9CE70-AAAA-4394-B910-07C9F4A81EFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57B9CE70-AAAA-4394-B910-07C9F4A81EFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57B9CE70-AAAA-4394-B910-07C9F4A81EFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57B9CE70-AAAA-4394-B910-07C9F4A81EFA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53E4CBFD-06DF-4396-A9EF-E464C3FFC376}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53E4CBFD-06DF-4396-A9EF-E464C3FFC376}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53E4CBFD-06DF-4396-A9EF-E464C3FFC376}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53E4CBFD-06DF-4396-A9EF-E464C3FFC376}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{57B9CE70-AAAA-4394-B910-07C9F4A81EFA} = {7B27613D-63CA-48A5-B69D-0B90A7281369}
+		{53E4CBFD-06DF-4396-A9EF-E464C3FFC376} = {B26108C9-4EFA-4459-AEAF-3D955AA98915}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {069FE033-300F-47C4-8D60-A2D1382C092F}
+	EndGlobalSection
+EndGlobal

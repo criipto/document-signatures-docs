@@ -1,4 +1,4 @@
-import {base64url} from 'jose';
+import * as base64url from '../utils/base64url';
 
 export interface JwtHeader {
   type: string
