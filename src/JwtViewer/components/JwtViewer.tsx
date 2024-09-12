@@ -16,8 +16,7 @@ export default function JwtViewer(props: Props) {
     if (!jwt) return null;
     return {
       jwt,
-      header: tryJwtDecode<JwtHeader>(jwt, {header: true}),
-      payload: tryJwtDecode<JwtPayload>(jwt, {header: false})
+      ...tryJwtDecode<JwtHeader, JwtPayload>(jwt),
     };
   }, [jwt]);
 
