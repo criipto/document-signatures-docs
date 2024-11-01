@@ -44,7 +44,12 @@ const config : GatsbyConfig = {
     {
       resolve: "gatsby-plugin-netlify",
       options: {
-        mergeSecurityHeaders: false
+        mergeSecurityHeaders: false,
+        headers: {
+          '/changelog.json': [
+            'Access-Control-Allow-Origin: *'
+          ]
+        }
       }
     },
     {
