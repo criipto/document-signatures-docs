@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "develop": "gatsby develop",
-    "start": "gatsby clean && gatsby develop && mv public/changelog-1.json public/static/changelog.json",
+    "start": "gatsby clean && gatsby develop",
     "codegen": "npm run codegen:gatsby && npm run codegen:signatures",
     "codegen:gatsby": "graphql-codegen -c graphql-gatsby-codegen.yml",
     "codegen:signatures": "npm run codegen:signatures:graphql && npm run codegen:signatures:csharp",
@@ -19,7 +19,7 @@
     "check:signatures:csharp": "./check-signatures-csharp.sh",
     "schema": "npm run schema:signatures",
     "schema:signatures": "curl https://signatures-api.criipto.com/v1/graphql > graphql-signatures-schema.json",
-    "build": "rm -rf .cache/ && gatsby build",
+    "build": "rm -rf .cache/ && gatsby build && mv public/changelog-1.json public/changelog.json",
     "serve": "gatsby serve",
     "clean": "gatsby clean"
   },
