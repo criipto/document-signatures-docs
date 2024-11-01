@@ -24,7 +24,7 @@
     "clean": "gatsby clean"
   },
   "dependencies": {
-    "@criipto/signatures": "^1.7.0",
+    "@criipto/signatures": "^1.8.0",
     "@criipto/ui-operations-status": "^1.1.1",
     "@fontsource/roboto-mono": "^4.5.8",
     "@fortawesome/fontawesome-svg-core": "^1.3.0",
