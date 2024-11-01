@@ -148,6 +148,26 @@ import createSignatureAppearanceExample from '../../../examples/createSignatureO
 
 <GraphQLExample example={createSignatureAppearanceExample} />
 
+### Variable Templating
+
+Templating in signature seals can happen in either the left side of the header or the footer.
+
+Variable templating works by enclosing the referenced variable curly brackets, e.g. `{{my-identifier}}`
+
+In addition to templating values from claims (see [Seal display name](#seal-display-name)), we enable use of some additional variables, such as:
+
+* Timestamp (see [Seal timestamp](#seal-timestamp)):
+  * Year: `$timestamp.YYYY`
+  * Month: `$timestamp.MM`
+  * Day: `$timestamp.DD`
+  * Hour: `$timestamp.hh`
+  * Minutes: `$timestamp.mm`
+  * Seconds: `$timestamp.ss`
+  * Milliseconds (1 digit): `$timestamp.z`
+  * Milliseconds (2 digit): `$timestamp.zz`
+  * Milliseconds (3 digit): `$timestamp.zzz`
+* Document ID (see [Seal document ID](#seal-document-id)): `$document.id`
+
 ### Seal timestamp
 
 By default the seal renders a timestamp in the left side of the seal header.
@@ -173,6 +193,16 @@ This feature currently ONLY works with CriiptoVerify/OIDC based signatures.
 import addSignatoryDisplayNameExample from '../../../examples/addSignatory/displayName';
 
 <GraphQLExample example={addSignatoryDisplayNameExample} />
+
+### Seal document ID
+
+By default the seal does not render the document ID.
+
+The document ID can be added to the seal by templating as shown in the following example:
+
+import addSignatoryFooterExample from '../../../examples/addSignatory/footer';
+
+<GraphQLExample example={addSignatoryFooterExample} />
 
 ## Closing a signature order
 
