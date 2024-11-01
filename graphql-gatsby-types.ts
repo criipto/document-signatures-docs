@@ -3,158 +3,158 @@ export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
+export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: string;
-  String: string;
-  Boolean: boolean;
-  Int: number;
-  Float: number;
-  /** A date string, such as 2007-12-03, compliant with the ISO 8601 standard for representation of dates and times using the Gregorian calendar. */
-  Date: any;
-  /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
-  JSON: any;
+  ID: { input: string; output: string; }
+  String: { input: string; output: string; }
+  Boolean: { input: boolean; output: boolean; }
+  Int: { input: number; output: number; }
+  Float: { input: number; output: number; }
+  Date: { input: any; output: any; }
+  JSON: { input: any; output: any; }
 };
 
 export type AvifOptions = {
-  lossless?: InputMaybe<Scalars['Boolean']>;
-  quality?: InputMaybe<Scalars['Int']>;
-  speed?: InputMaybe<Scalars['Int']>;
+  lossless?: InputMaybe<Scalars['Boolean']['input']>;
+  quality?: InputMaybe<Scalars['Int']['input']>;
+  speed?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type BlurredOptions = {
   /** Force the output format for the low-res preview. Default is to use the same format as the input. You should rarely need to change this */
   toFormat?: InputMaybe<ImageFormat>;
   /** Width of the generated low-res preview. Default is 20px */
-  width?: InputMaybe<Scalars['Int']>;
+  width?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type BooleanQueryOperatorInput = {
-  eq?: InputMaybe<Scalars['Boolean']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['Boolean']>>>;
-  ne?: InputMaybe<Scalars['Boolean']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['Boolean']>>>;
+  eq?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['Boolean']['input']>>>;
+  ne?: InputMaybe<Scalars['Boolean']['input']>;
+  nin?: InputMaybe<Array<InputMaybe<Scalars['Boolean']['input']>>>;
 };
 
 export type DateQueryOperatorInput = {
-  eq?: InputMaybe<Scalars['Date']>;
-  gt?: InputMaybe<Scalars['Date']>;
-  gte?: InputMaybe<Scalars['Date']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['Date']>>>;
-  lt?: InputMaybe<Scalars['Date']>;
-  lte?: InputMaybe<Scalars['Date']>;
-  ne?: InputMaybe<Scalars['Date']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['Date']>>>;
+  eq?: InputMaybe<Scalars['Date']['input']>;
+  gt?: InputMaybe<Scalars['Date']['input']>;
+  gte?: InputMaybe<Scalars['Date']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['Date']['input']>>>;
+  lt?: InputMaybe<Scalars['Date']['input']>;
+  lte?: InputMaybe<Scalars['Date']['input']>;
+  ne?: InputMaybe<Scalars['Date']['input']>;
+  nin?: InputMaybe<Array<InputMaybe<Scalars['Date']['input']>>>;
 };
 
 export type Directory = Node & {
   __typename?: 'Directory';
-  absolutePath: Scalars['String'];
-  accessTime: Scalars['Date'];
-  atime: Scalars['Date'];
-  atimeMs: Scalars['Float'];
-  base: Scalars['String'];
-  birthTime: Scalars['Date'];
+  absolutePath: Scalars['String']['output'];
+  accessTime: Scalars['Date']['output'];
+  atime: Scalars['Date']['output'];
+  atimeMs: Scalars['Float']['output'];
+  base: Scalars['String']['output'];
+  birthTime: Scalars['Date']['output'];
   /** @deprecated Use `birthTime` instead */
-  birthtime?: Maybe<Scalars['Date']>;
+  birthtime?: Maybe<Scalars['Date']['output']>;
   /** @deprecated Use `birthTime` instead */
-  birthtimeMs?: Maybe<Scalars['Float']>;
-  changeTime: Scalars['Date'];
+  birthtimeMs?: Maybe<Scalars['Float']['output']>;
+  changeTime: Scalars['Date']['output'];
   children: Array<Node>;
-  ctime: Scalars['Date'];
-  ctimeMs: Scalars['Float'];
-  dev: Scalars['Int'];
-  dir: Scalars['String'];
-  ext: Scalars['String'];
-  extension: Scalars['String'];
-  gid: Scalars['Int'];
-  id: Scalars['ID'];
-  ino: Scalars['Float'];
+  ctime: Scalars['Date']['output'];
+  ctimeMs: Scalars['Float']['output'];
+  dev: Scalars['Int']['output'];
+  dir: Scalars['String']['output'];
+  ext: Scalars['String']['output'];
+  extension: Scalars['String']['output'];
+  gid: Scalars['Int']['output'];
+  id: Scalars['ID']['output'];
+  ino: Scalars['Float']['output'];
   internal: Internal;
-  mode: Scalars['Int'];
-  modifiedTime: Scalars['Date'];
-  mtime: Scalars['Date'];
-  mtimeMs: Scalars['Float'];
-  name: Scalars['String'];
-  nlink: Scalars['Int'];
+  mode: Scalars['Int']['output'];
+  modifiedTime: Scalars['Date']['output'];
+  mtime: Scalars['Date']['output'];
+  mtimeMs: Scalars['Float']['output'];
+  name: Scalars['String']['output'];
+  nlink: Scalars['Int']['output'];
   parent?: Maybe<Node>;
-  prettySize: Scalars['String'];
-  rdev: Scalars['Int'];
-  relativeDirectory: Scalars['String'];
-  relativePath: Scalars['String'];
-  root: Scalars['String'];
-  size: Scalars['Int'];
-  sourceInstanceName: Scalars['String'];
-  uid: Scalars['Int'];
+  prettySize: Scalars['String']['output'];
+  rdev: Scalars['Int']['output'];
+  relativeDirectory: Scalars['String']['output'];
+  relativePath: Scalars['String']['output'];
+  root: Scalars['String']['output'];
+  size: Scalars['Int']['output'];
+  sourceInstanceName: Scalars['String']['output'];
+  uid: Scalars['Int']['output'];
 };
 
 
 export type DirectoryAccessTimeArgs = {
-  difference?: InputMaybe<Scalars['String']>;
-  formatString?: InputMaybe<Scalars['String']>;
-  fromNow?: InputMaybe<Scalars['Boolean']>;
-  locale?: InputMaybe<Scalars['String']>;
+  difference?: InputMaybe<Scalars['String']['input']>;
+  formatString?: InputMaybe<Scalars['String']['input']>;
+  fromNow?: InputMaybe<Scalars['Boolean']['input']>;
+  locale?: InputMaybe<Scalars['String']['input']>;
 };
 
 
 export type DirectoryAtimeArgs = {
-  difference?: InputMaybe<Scalars['String']>;
-  formatString?: InputMaybe<Scalars['String']>;
-  fromNow?: InputMaybe<Scalars['Boolean']>;
-  locale?: InputMaybe<Scalars['String']>;
+  difference?: InputMaybe<Scalars['String']['input']>;
+  formatString?: InputMaybe<Scalars['String']['input']>;
+  fromNow?: InputMaybe<Scalars['Boolean']['input']>;
+  locale?: InputMaybe<Scalars['String']['input']>;
 };
 
 
 export type DirectoryBirthTimeArgs = {
-  difference?: InputMaybe<Scalars['String']>;
-  formatString?: InputMaybe<Scalars['String']>;
-  fromNow?: InputMaybe<Scalars['Boolean']>;
-  locale?: InputMaybe<Scalars['String']>;
+  difference?: InputMaybe<Scalars['String']['input']>;
+  formatString?: InputMaybe<Scalars['String']['input']>;
+  fromNow?: InputMaybe<Scalars['Boolean']['input']>;
+  locale?: InputMaybe<Scalars['String']['input']>;
 };
 
 
 export type DirectoryChangeTimeArgs = {
-  difference?: InputMaybe<Scalars['String']>;
-  formatString?: InputMaybe<Scalars['String']>;
-  fromNow?: InputMaybe<Scalars['Boolean']>;
-  locale?: InputMaybe<Scalars['String']>;
+  difference?: InputMaybe<Scalars['String']['input']>;
+  formatString?: InputMaybe<Scalars['String']['input']>;
+  fromNow?: InputMaybe<Scalars['Boolean']['input']>;
+  locale?: InputMaybe<Scalars['String']['input']>;
 };
 
 
 export type DirectoryCtimeArgs = {
-  difference?: InputMaybe<Scalars['String']>;
-  formatString?: InputMaybe<Scalars['String']>;
-  fromNow?: InputMaybe<Scalars['Boolean']>;
-  locale?: InputMaybe<Scalars['String']>;
+  difference?: InputMaybe<Scalars['String']['input']>;
+  formatString?: InputMaybe<Scalars['String']['input']>;
+  fromNow?: InputMaybe<Scalars['Boolean']['input']>;
+  locale?: InputMaybe<Scalars['String']['input']>;
 };
 
 
 export type DirectoryModifiedTimeArgs = {
-  difference?: InputMaybe<Scalars['String']>;
-  formatString?: InputMaybe<Scalars['String']>;
-  fromNow?: InputMaybe<Scalars['Boolean']>;
-  locale?: InputMaybe<Scalars['String']>;
+  difference?: InputMaybe<Scalars['String']['input']>;
+  formatString?: InputMaybe<Scalars['String']['input']>;
+  fromNow?: InputMaybe<Scalars['Boolean']['input']>;
+  locale?: InputMaybe<Scalars['String']['input']>;
 };
 
 
 export type DirectoryMtimeArgs = {
-  difference?: InputMaybe<Scalars['String']>;
-  formatString?: InputMaybe<Scalars['String']>;
-  fromNow?: InputMaybe<Scalars['Boolean']>;
-  locale?: InputMaybe<Scalars['String']>;
+  difference?: InputMaybe<Scalars['String']['input']>;
+  formatString?: InputMaybe<Scalars['String']['input']>;
+  fromNow?: InputMaybe<Scalars['Boolean']['input']>;
+  locale?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type DirectoryConnection = {
   __typename?: 'DirectoryConnection';
-  distinct: Array<Scalars['String']>;
+  distinct: Array<Scalars['String']['output']>;
   edges: Array<DirectoryEdge>;
   group: Array<DirectoryGroupConnection>;
-  max?: Maybe<Scalars['Float']>;
-  min?: Maybe<Scalars['Float']>;
+  max?: Maybe<Scalars['Float']['output']>;
+  min?: Maybe<Scalars['Float']['output']>;
   nodes: Array<Directory>;
   pageInfo: PageInfo;
-  sum?: Maybe<Scalars['Float']>;
-  totalCount: Scalars['Int'];
+  sum?: Maybe<Scalars['Float']['output']>;
+  totalCount: Scalars['Int']['output'];
 };
 
 
@@ -165,8 +165,8 @@ export type DirectoryConnectionDistinctArgs = {
 
 export type DirectoryConnectionGroupArgs = {
   field: DirectoryFieldsEnum;
-  limit?: InputMaybe<Scalars['Int']>;
-  skip?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
@@ -351,17 +351,17 @@ export type DirectoryFilterInput = {
 
 export type DirectoryGroupConnection = {
   __typename?: 'DirectoryGroupConnection';
-  distinct: Array<Scalars['String']>;
+  distinct: Array<Scalars['String']['output']>;
   edges: Array<DirectoryEdge>;
-  field: Scalars['String'];
-  fieldValue?: Maybe<Scalars['String']>;
+  field: Scalars['String']['output'];
+  fieldValue?: Maybe<Scalars['String']['output']>;
   group: Array<DirectoryGroupConnection>;
-  max?: Maybe<Scalars['Float']>;
-  min?: Maybe<Scalars['Float']>;
+  max?: Maybe<Scalars['Float']['output']>;
+  min?: Maybe<Scalars['Float']['output']>;
   nodes: Array<Directory>;
   pageInfo: PageInfo;
-  sum?: Maybe<Scalars['Float']>;
-  totalCount: Scalars['Int'];
+  sum?: Maybe<Scalars['Float']['output']>;
+  totalCount: Scalars['Int']['output'];
 };
 
 
@@ -372,8 +372,8 @@ export type DirectoryGroupConnectionDistinctArgs = {
 
 export type DirectoryGroupConnectionGroupArgs = {
   field: DirectoryFieldsEnum;
-  limit?: InputMaybe<Scalars['Int']>;
-  skip?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
@@ -397,26 +397,26 @@ export type DirectorySortInput = {
 };
 
 export type DuotoneGradient = {
-  highlight: Scalars['String'];
-  opacity?: InputMaybe<Scalars['Int']>;
-  shadow: Scalars['String'];
+  highlight: Scalars['String']['input'];
+  opacity?: InputMaybe<Scalars['Int']['input']>;
+  shadow: Scalars['String']['input'];
 };
 
 export type File = Node & {
   __typename?: 'File';
-  absolutePath: Scalars['String'];
-  accessTime: Scalars['Date'];
-  atime: Scalars['Date'];
-  atimeMs: Scalars['Float'];
-  base: Scalars['String'];
-  birthTime: Scalars['Date'];
+  absolutePath: Scalars['String']['output'];
+  accessTime: Scalars['Date']['output'];
+  atime: Scalars['Date']['output'];
+  atimeMs: Scalars['Float']['output'];
+  base: Scalars['String']['output'];
+  birthTime: Scalars['Date']['output'];
   /** @deprecated Use `birthTime` instead */
-  birthtime?: Maybe<Scalars['Date']>;
+  birthtime?: Maybe<Scalars['Date']['output']>;
   /** @deprecated Use `birthTime` instead */
-  birthtimeMs?: Maybe<Scalars['Float']>;
-  blksize?: Maybe<Scalars['Int']>;
-  blocks?: Maybe<Scalars['Int']>;
-  changeTime: Scalars['Date'];
+  birthtimeMs?: Maybe<Scalars['Float']['output']>;
+  blksize?: Maybe<Scalars['Int']['output']>;
+  blocks?: Maybe<Scalars['Int']['output']>;
+  changeTime: Scalars['Date']['output'];
   /** Returns the first child node of type ImageSharp or null if there are no children of given type on this node */
   childImageSharp?: Maybe<ImageSharp>;
   /** Returns the first child node of type Mdx or null if there are no children of given type on this node */
@@ -426,102 +426,102 @@ export type File = Node & {
   childrenImageSharp?: Maybe<Array<Maybe<ImageSharp>>>;
   /** Returns all children nodes filtered by type Mdx */
   childrenMdx?: Maybe<Array<Maybe<Mdx>>>;
-  ctime: Scalars['Date'];
-  ctimeMs: Scalars['Float'];
-  dev: Scalars['Int'];
-  dir: Scalars['String'];
-  ext: Scalars['String'];
-  extension: Scalars['String'];
-  gid: Scalars['Int'];
-  id: Scalars['ID'];
-  ino: Scalars['Float'];
+  ctime: Scalars['Date']['output'];
+  ctimeMs: Scalars['Float']['output'];
+  dev: Scalars['Int']['output'];
+  dir: Scalars['String']['output'];
+  ext: Scalars['String']['output'];
+  extension: Scalars['String']['output'];
+  gid: Scalars['Int']['output'];
+  id: Scalars['ID']['output'];
+  ino: Scalars['Float']['output'];
   internal: Internal;
-  mode: Scalars['Int'];
-  modifiedTime: Scalars['Date'];
-  mtime: Scalars['Date'];
-  mtimeMs: Scalars['Float'];
-  name: Scalars['String'];
-  nlink: Scalars['Int'];
+  mode: Scalars['Int']['output'];
+  modifiedTime: Scalars['Date']['output'];
+  mtime: Scalars['Date']['output'];
+  mtimeMs: Scalars['Float']['output'];
+  name: Scalars['String']['output'];
+  nlink: Scalars['Int']['output'];
   parent?: Maybe<Node>;
-  prettySize: Scalars['String'];
+  prettySize: Scalars['String']['output'];
   /** Copy file to static directory and return public url to it */
-  publicURL?: Maybe<Scalars['String']>;
-  rdev: Scalars['Int'];
-  relativeDirectory: Scalars['String'];
-  relativePath: Scalars['String'];
-  root: Scalars['String'];
-  size: Scalars['Int'];
-  sourceInstanceName: Scalars['String'];
-  uid: Scalars['Int'];
+  publicURL?: Maybe<Scalars['String']['output']>;
+  rdev: Scalars['Int']['output'];
+  relativeDirectory: Scalars['String']['output'];
+  relativePath: Scalars['String']['output'];
+  root: Scalars['String']['output'];
+  size: Scalars['Int']['output'];
+  sourceInstanceName: Scalars['String']['output'];
+  uid: Scalars['Int']['output'];
 };
 
 
 export type FileAccessTimeArgs = {
-  difference?: InputMaybe<Scalars['String']>;
-  formatString?: InputMaybe<Scalars['String']>;
-  fromNow?: InputMaybe<Scalars['Boolean']>;
-  locale?: InputMaybe<Scalars['String']>;
+  difference?: InputMaybe<Scalars['String']['input']>;
+  formatString?: InputMaybe<Scalars['String']['input']>;
+  fromNow?: InputMaybe<Scalars['Boolean']['input']>;
+  locale?: InputMaybe<Scalars['String']['input']>;
 };
 
 
 export type FileAtimeArgs = {
-  difference?: InputMaybe<Scalars['String']>;
-  formatString?: InputMaybe<Scalars['String']>;
-  fromNow?: InputMaybe<Scalars['Boolean']>;
-  locale?: InputMaybe<Scalars['String']>;
+  difference?: InputMaybe<Scalars['String']['input']>;
+  formatString?: InputMaybe<Scalars['String']['input']>;
+  fromNow?: InputMaybe<Scalars['Boolean']['input']>;
+  locale?: InputMaybe<Scalars['String']['input']>;
 };
 
 
 export type FileBirthTimeArgs = {
-  difference?: InputMaybe<Scalars['String']>;
-  formatString?: InputMaybe<Scalars['String']>;
-  fromNow?: InputMaybe<Scalars['Boolean']>;
-  locale?: InputMaybe<Scalars['String']>;
+  difference?: InputMaybe<Scalars['String']['input']>;
+  formatString?: InputMaybe<Scalars['String']['input']>;
+  fromNow?: InputMaybe<Scalars['Boolean']['input']>;
+  locale?: InputMaybe<Scalars['String']['input']>;
 };
 
 
 export type FileChangeTimeArgs = {
-  difference?: InputMaybe<Scalars['String']>;
-  formatString?: InputMaybe<Scalars['String']>;
-  fromNow?: InputMaybe<Scalars['Boolean']>;
-  locale?: InputMaybe<Scalars['String']>;
+  difference?: InputMaybe<Scalars['String']['input']>;
+  formatString?: InputMaybe<Scalars['String']['input']>;
+  fromNow?: InputMaybe<Scalars['Boolean']['input']>;
+  locale?: InputMaybe<Scalars['String']['input']>;
 };
 
 
 export type FileCtimeArgs = {
-  difference?: InputMaybe<Scalars['String']>;
-  formatString?: InputMaybe<Scalars['String']>;
-  fromNow?: InputMaybe<Scalars['Boolean']>;
-  locale?: InputMaybe<Scalars['String']>;
+  difference?: InputMaybe<Scalars['String']['input']>;
+  formatString?: InputMaybe<Scalars['String']['input']>;
+  fromNow?: InputMaybe<Scalars['Boolean']['input']>;
+  locale?: InputMaybe<Scalars['String']['input']>;
 };
 
 
 export type FileModifiedTimeArgs = {
-  difference?: InputMaybe<Scalars['String']>;
-  formatString?: InputMaybe<Scalars['String']>;
-  fromNow?: InputMaybe<Scalars['Boolean']>;
-  locale?: InputMaybe<Scalars['String']>;
+  difference?: InputMaybe<Scalars['String']['input']>;
+  formatString?: InputMaybe<Scalars['String']['input']>;
+  fromNow?: InputMaybe<Scalars['Boolean']['input']>;
+  locale?: InputMaybe<Scalars['String']['input']>;
 };
 
 
 export type FileMtimeArgs = {
-  difference?: InputMaybe<Scalars['String']>;
-  formatString?: InputMaybe<Scalars['String']>;
-  fromNow?: InputMaybe<Scalars['Boolean']>;
-  locale?: InputMaybe<Scalars['String']>;
+  difference?: InputMaybe<Scalars['String']['input']>;
+  formatString?: InputMaybe<Scalars['String']['input']>;
+  fromNow?: InputMaybe<Scalars['Boolean']['input']>;
+  locale?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type FileConnection = {
   __typename?: 'FileConnection';
-  distinct: Array<Scalars['String']>;
+  distinct: Array<Scalars['String']['output']>;
   edges: Array<FileEdge>;
   group: Array<FileGroupConnection>;
-  max?: Maybe<Scalars['Float']>;
-  min?: Maybe<Scalars['Float']>;
+  max?: Maybe<Scalars['Float']['output']>;
+  min?: Maybe<Scalars['Float']['output']>;
   nodes: Array<File>;
   pageInfo: PageInfo;
-  sum?: Maybe<Scalars['Float']>;
-  totalCount: Scalars['Int'];
+  sum?: Maybe<Scalars['Float']['output']>;
+  totalCount: Scalars['Int']['output'];
 };
 
 
@@ -532,8 +532,8 @@ export type FileConnectionDistinctArgs = {
 
 export type FileConnectionGroupArgs = {
   field: FileFieldsEnum;
-  limit?: InputMaybe<Scalars['Int']>;
-  skip?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
@@ -585,28 +585,51 @@ export enum FileFieldsEnum {
   ChildImageSharpChildrenInternalType = 'childImageSharp___children___internal___type',
   ChildImageSharpChildrenParentChildren = 'childImageSharp___children___parent___children',
   ChildImageSharpChildrenParentId = 'childImageSharp___children___parent___id',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildImageSharpFixedAspectRatio = 'childImageSharp___fixed___aspectRatio',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildImageSharpFixedBase64 = 'childImageSharp___fixed___base64',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildImageSharpFixedHeight = 'childImageSharp___fixed___height',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildImageSharpFixedOriginalName = 'childImageSharp___fixed___originalName',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildImageSharpFixedSrc = 'childImageSharp___fixed___src',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildImageSharpFixedSrcSet = 'childImageSharp___fixed___srcSet',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildImageSharpFixedSrcSetWebp = 'childImageSharp___fixed___srcSetWebp',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildImageSharpFixedSrcWebp = 'childImageSharp___fixed___srcWebp',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildImageSharpFixedTracedSvg = 'childImageSharp___fixed___tracedSVG',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildImageSharpFixedWidth = 'childImageSharp___fixed___width',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildImageSharpFluidAspectRatio = 'childImageSharp___fluid___aspectRatio',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildImageSharpFluidBase64 = 'childImageSharp___fluid___base64',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildImageSharpFluidOriginalImg = 'childImageSharp___fluid___originalImg',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildImageSharpFluidOriginalName = 'childImageSharp___fluid___originalName',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildImageSharpFluidPresentationHeight = 'childImageSharp___fluid___presentationHeight',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildImageSharpFluidPresentationWidth = 'childImageSharp___fluid___presentationWidth',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildImageSharpFluidSizes = 'childImageSharp___fluid___sizes',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildImageSharpFluidSrc = 'childImageSharp___fluid___src',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildImageSharpFluidSrcSet = 'childImageSharp___fluid___srcSet',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildImageSharpFluidSrcSetWebp = 'childImageSharp___fluid___srcSetWebp',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildImageSharpFluidSrcWebp = 'childImageSharp___fluid___srcWebp',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildImageSharpFluidTracedSvg = 'childImageSharp___fluid___tracedSVG',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildImageSharpGatsbyImageData = 'childImageSharp___gatsbyImageData',
   ChildImageSharpId = 'childImageSharp___id',
   ChildImageSharpInternalContent = 'childImageSharp___internal___content',
@@ -634,11 +657,17 @@ export enum FileFieldsEnum {
   ChildImageSharpParentInternalType = 'childImageSharp___parent___internal___type',
   ChildImageSharpParentParentChildren = 'childImageSharp___parent___parent___children',
   ChildImageSharpParentParentId = 'childImageSharp___parent___parent___id',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildImageSharpResizeAspectRatio = 'childImageSharp___resize___aspectRatio',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildImageSharpResizeHeight = 'childImageSharp___resize___height',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildImageSharpResizeOriginalName = 'childImageSharp___resize___originalName',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildImageSharpResizeSrc = 'childImageSharp___resize___src',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildImageSharpResizeTracedSvg = 'childImageSharp___resize___tracedSVG',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildImageSharpResizeWidth = 'childImageSharp___resize___width',
   ChildMdxBody = 'childMdx___body',
   ChildMdxChildren = 'childMdx___children',
@@ -656,6 +685,7 @@ export enum FileFieldsEnum {
   ChildMdxChildrenInternalType = 'childMdx___children___internal___type',
   ChildMdxChildrenParentChildren = 'childMdx___children___parent___children',
   ChildMdxChildrenParentId = 'childMdx___children___parent___id',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildMdxExcerpt = 'childMdx___excerpt',
   ChildMdxFileAbsolutePath = 'childMdx___fileAbsolutePath',
   ChildMdxFrontmatterArticles = 'childMdx___frontmatter___articles',
@@ -664,8 +694,11 @@ export enum FileFieldsEnum {
   ChildMdxFrontmatterSort = 'childMdx___frontmatter___sort',
   ChildMdxFrontmatterSubtitle = 'childMdx___frontmatter___subtitle',
   ChildMdxFrontmatterTitle = 'childMdx___frontmatter___title',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildMdxHeadings = 'childMdx___headings',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildMdxHeadingsDepth = 'childMdx___headings___depth',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildMdxHeadingsValue = 'childMdx___headings___value',
   ChildMdxHtml = 'childMdx___html',
   ChildMdxId = 'childMdx___id',
@@ -694,6 +727,7 @@ export enum FileFieldsEnum {
   ChildMdxParentParentId = 'childMdx___parent___parent___id',
   ChildMdxRawBody = 'childMdx___rawBody',
   ChildMdxSlug = 'childMdx___slug',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildMdxTableOfContents = 'childMdx___tableOfContents',
   ChildMdxTimeToRead = 'childMdx___timeToRead',
   ChildMdxWordCountParagraphs = 'childMdx___wordCount___paragraphs',
@@ -716,28 +750,51 @@ export enum FileFieldsEnum {
   ChildrenImageSharpChildrenInternalType = 'childrenImageSharp___children___internal___type',
   ChildrenImageSharpChildrenParentChildren = 'childrenImageSharp___children___parent___children',
   ChildrenImageSharpChildrenParentId = 'childrenImageSharp___children___parent___id',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildrenImageSharpFixedAspectRatio = 'childrenImageSharp___fixed___aspectRatio',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildrenImageSharpFixedBase64 = 'childrenImageSharp___fixed___base64',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildrenImageSharpFixedHeight = 'childrenImageSharp___fixed___height',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildrenImageSharpFixedOriginalName = 'childrenImageSharp___fixed___originalName',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildrenImageSharpFixedSrc = 'childrenImageSharp___fixed___src',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildrenImageSharpFixedSrcSet = 'childrenImageSharp___fixed___srcSet',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildrenImageSharpFixedSrcSetWebp = 'childrenImageSharp___fixed___srcSetWebp',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildrenImageSharpFixedSrcWebp = 'childrenImageSharp___fixed___srcWebp',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildrenImageSharpFixedTracedSvg = 'childrenImageSharp___fixed___tracedSVG',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildrenImageSharpFixedWidth = 'childrenImageSharp___fixed___width',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildrenImageSharpFluidAspectRatio = 'childrenImageSharp___fluid___aspectRatio',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildrenImageSharpFluidBase64 = 'childrenImageSharp___fluid___base64',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildrenImageSharpFluidOriginalImg = 'childrenImageSharp___fluid___originalImg',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildrenImageSharpFluidOriginalName = 'childrenImageSharp___fluid___originalName',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildrenImageSharpFluidPresentationHeight = 'childrenImageSharp___fluid___presentationHeight',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildrenImageSharpFluidPresentationWidth = 'childrenImageSharp___fluid___presentationWidth',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildrenImageSharpFluidSizes = 'childrenImageSharp___fluid___sizes',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildrenImageSharpFluidSrc = 'childrenImageSharp___fluid___src',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildrenImageSharpFluidSrcSet = 'childrenImageSharp___fluid___srcSet',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildrenImageSharpFluidSrcSetWebp = 'childrenImageSharp___fluid___srcSetWebp',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildrenImageSharpFluidSrcWebp = 'childrenImageSharp___fluid___srcWebp',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildrenImageSharpFluidTracedSvg = 'childrenImageSharp___fluid___tracedSVG',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildrenImageSharpGatsbyImageData = 'childrenImageSharp___gatsbyImageData',
   ChildrenImageSharpId = 'childrenImageSharp___id',
   ChildrenImageSharpInternalContent = 'childrenImageSharp___internal___content',
@@ -765,11 +822,17 @@ export enum FileFieldsEnum {
   ChildrenImageSharpParentInternalType = 'childrenImageSharp___parent___internal___type',
   ChildrenImageSharpParentParentChildren = 'childrenImageSharp___parent___parent___children',
   ChildrenImageSharpParentParentId = 'childrenImageSharp___parent___parent___id',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildrenImageSharpResizeAspectRatio = 'childrenImageSharp___resize___aspectRatio',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildrenImageSharpResizeHeight = 'childrenImageSharp___resize___height',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildrenImageSharpResizeOriginalName = 'childrenImageSharp___resize___originalName',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildrenImageSharpResizeSrc = 'childrenImageSharp___resize___src',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildrenImageSharpResizeTracedSvg = 'childrenImageSharp___resize___tracedSVG',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildrenImageSharpResizeWidth = 'childrenImageSharp___resize___width',
   ChildrenMdx = 'childrenMdx',
   ChildrenMdxBody = 'childrenMdx___body',
@@ -788,6 +851,7 @@ export enum FileFieldsEnum {
   ChildrenMdxChildrenInternalType = 'childrenMdx___children___internal___type',
   ChildrenMdxChildrenParentChildren = 'childrenMdx___children___parent___children',
   ChildrenMdxChildrenParentId = 'childrenMdx___children___parent___id',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildrenMdxExcerpt = 'childrenMdx___excerpt',
   ChildrenMdxFileAbsolutePath = 'childrenMdx___fileAbsolutePath',
   ChildrenMdxFrontmatterArticles = 'childrenMdx___frontmatter___articles',
@@ -796,8 +860,11 @@ export enum FileFieldsEnum {
   ChildrenMdxFrontmatterSort = 'childrenMdx___frontmatter___sort',
   ChildrenMdxFrontmatterSubtitle = 'childrenMdx___frontmatter___subtitle',
   ChildrenMdxFrontmatterTitle = 'childrenMdx___frontmatter___title',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildrenMdxHeadings = 'childrenMdx___headings',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildrenMdxHeadingsDepth = 'childrenMdx___headings___depth',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildrenMdxHeadingsValue = 'childrenMdx___headings___value',
   ChildrenMdxHtml = 'childrenMdx___html',
   ChildrenMdxId = 'childrenMdx___id',
@@ -826,6 +893,7 @@ export enum FileFieldsEnum {
   ChildrenMdxParentParentId = 'childrenMdx___parent___parent___id',
   ChildrenMdxRawBody = 'childrenMdx___rawBody',
   ChildrenMdxSlug = 'childrenMdx___slug',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ChildrenMdxTableOfContents = 'childrenMdx___tableOfContents',
   ChildrenMdxTimeToRead = 'childrenMdx___timeToRead',
   ChildrenMdxWordCountParagraphs = 'childrenMdx___wordCount___paragraphs',
@@ -988,17 +1056,17 @@ export type FileFilterInput = {
 
 export type FileGroupConnection = {
   __typename?: 'FileGroupConnection';
-  distinct: Array<Scalars['String']>;
+  distinct: Array<Scalars['String']['output']>;
   edges: Array<FileEdge>;
-  field: Scalars['String'];
-  fieldValue?: Maybe<Scalars['String']>;
+  field: Scalars['String']['output'];
+  fieldValue?: Maybe<Scalars['String']['output']>;
   group: Array<FileGroupConnection>;
-  max?: Maybe<Scalars['Float']>;
-  min?: Maybe<Scalars['Float']>;
+  max?: Maybe<Scalars['Float']['output']>;
+  min?: Maybe<Scalars['Float']['output']>;
   nodes: Array<File>;
   pageInfo: PageInfo;
-  sum?: Maybe<Scalars['Float']>;
-  totalCount: Scalars['Int'];
+  sum?: Maybe<Scalars['Float']['output']>;
+  totalCount: Scalars['Int']['output'];
 };
 
 
@@ -1009,8 +1077,8 @@ export type FileGroupConnectionDistinctArgs = {
 
 export type FileGroupConnectionGroupArgs = {
   field: FileFieldsEnum;
-  limit?: InputMaybe<Scalars['Int']>;
-  skip?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
@@ -1034,14 +1102,14 @@ export type FileSortInput = {
 };
 
 export type FloatQueryOperatorInput = {
-  eq?: InputMaybe<Scalars['Float']>;
-  gt?: InputMaybe<Scalars['Float']>;
-  gte?: InputMaybe<Scalars['Float']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
-  lt?: InputMaybe<Scalars['Float']>;
-  lte?: InputMaybe<Scalars['Float']>;
-  ne?: InputMaybe<Scalars['Float']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
+  eq?: InputMaybe<Scalars['Float']['input']>;
+  gt?: InputMaybe<Scalars['Float']['input']>;
+  gte?: InputMaybe<Scalars['Float']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['Float']['input']>>>;
+  lt?: InputMaybe<Scalars['Float']['input']>;
+  lte?: InputMaybe<Scalars['Float']['input']>;
+  ne?: InputMaybe<Scalars['Float']['input']>;
+  nin?: InputMaybe<Array<InputMaybe<Scalars['Float']['input']>>>;
 };
 
 export enum GatsbyImageFormat {
@@ -1124,8 +1192,8 @@ export type ImageSharp = Node & {
   children: Array<Node>;
   fixed?: Maybe<ImageSharpFixed>;
   fluid?: Maybe<ImageSharpFluid>;
-  gatsbyImageData: Scalars['JSON'];
-  id: Scalars['ID'];
+  gatsbyImageData: Scalars['JSON']['output'];
+  id: Scalars['ID']['output'];
   internal: Internal;
   original?: Maybe<ImageSharpOriginal>;
   parent?: Maybe<Node>;
@@ -1134,108 +1202,108 @@ export type ImageSharp = Node & {
 
 
 export type ImageSharpFixedArgs = {
-  background?: InputMaybe<Scalars['String']>;
-  base64Width?: InputMaybe<Scalars['Int']>;
+  background?: InputMaybe<Scalars['String']['input']>;
+  base64Width?: InputMaybe<Scalars['Int']['input']>;
   cropFocus?: InputMaybe<ImageCropFocus>;
   duotone?: InputMaybe<DuotoneGradient>;
   fit?: InputMaybe<ImageFit>;
-  grayscale?: InputMaybe<Scalars['Boolean']>;
-  height?: InputMaybe<Scalars['Int']>;
-  jpegProgressive?: InputMaybe<Scalars['Boolean']>;
-  jpegQuality?: InputMaybe<Scalars['Int']>;
-  pngCompressionSpeed?: InputMaybe<Scalars['Int']>;
-  pngQuality?: InputMaybe<Scalars['Int']>;
-  quality?: InputMaybe<Scalars['Int']>;
-  rotate?: InputMaybe<Scalars['Int']>;
+  grayscale?: InputMaybe<Scalars['Boolean']['input']>;
+  height?: InputMaybe<Scalars['Int']['input']>;
+  jpegProgressive?: InputMaybe<Scalars['Boolean']['input']>;
+  jpegQuality?: InputMaybe<Scalars['Int']['input']>;
+  pngCompressionSpeed?: InputMaybe<Scalars['Int']['input']>;
+  pngQuality?: InputMaybe<Scalars['Int']['input']>;
+  quality?: InputMaybe<Scalars['Int']['input']>;
+  rotate?: InputMaybe<Scalars['Int']['input']>;
   toFormat?: InputMaybe<ImageFormat>;
   toFormatBase64?: InputMaybe<ImageFormat>;
   traceSVG?: InputMaybe<Potrace>;
-  trim?: InputMaybe<Scalars['Float']>;
-  webpQuality?: InputMaybe<Scalars['Int']>;
-  width?: InputMaybe<Scalars['Int']>;
+  trim?: InputMaybe<Scalars['Float']['input']>;
+  webpQuality?: InputMaybe<Scalars['Int']['input']>;
+  width?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
 export type ImageSharpFluidArgs = {
-  background?: InputMaybe<Scalars['String']>;
-  base64Width?: InputMaybe<Scalars['Int']>;
+  background?: InputMaybe<Scalars['String']['input']>;
+  base64Width?: InputMaybe<Scalars['Int']['input']>;
   cropFocus?: InputMaybe<ImageCropFocus>;
   duotone?: InputMaybe<DuotoneGradient>;
   fit?: InputMaybe<ImageFit>;
-  grayscale?: InputMaybe<Scalars['Boolean']>;
-  jpegProgressive?: InputMaybe<Scalars['Boolean']>;
-  jpegQuality?: InputMaybe<Scalars['Int']>;
-  maxHeight?: InputMaybe<Scalars['Int']>;
-  maxWidth?: InputMaybe<Scalars['Int']>;
-  pngCompressionSpeed?: InputMaybe<Scalars['Int']>;
-  pngQuality?: InputMaybe<Scalars['Int']>;
-  quality?: InputMaybe<Scalars['Int']>;
-  rotate?: InputMaybe<Scalars['Int']>;
-  sizes?: InputMaybe<Scalars['String']>;
-  srcSetBreakpoints?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  grayscale?: InputMaybe<Scalars['Boolean']['input']>;
+  jpegProgressive?: InputMaybe<Scalars['Boolean']['input']>;
+  jpegQuality?: InputMaybe<Scalars['Int']['input']>;
+  maxHeight?: InputMaybe<Scalars['Int']['input']>;
+  maxWidth?: InputMaybe<Scalars['Int']['input']>;
+  pngCompressionSpeed?: InputMaybe<Scalars['Int']['input']>;
+  pngQuality?: InputMaybe<Scalars['Int']['input']>;
+  quality?: InputMaybe<Scalars['Int']['input']>;
+  rotate?: InputMaybe<Scalars['Int']['input']>;
+  sizes?: InputMaybe<Scalars['String']['input']>;
+  srcSetBreakpoints?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
   toFormat?: InputMaybe<ImageFormat>;
   toFormatBase64?: InputMaybe<ImageFormat>;
   traceSVG?: InputMaybe<Potrace>;
-  trim?: InputMaybe<Scalars['Float']>;
-  webpQuality?: InputMaybe<Scalars['Int']>;
+  trim?: InputMaybe<Scalars['Float']['input']>;
+  webpQuality?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
 export type ImageSharpGatsbyImageDataArgs = {
-  aspectRatio?: InputMaybe<Scalars['Float']>;
+  aspectRatio?: InputMaybe<Scalars['Float']['input']>;
   avifOptions?: InputMaybe<AvifOptions>;
-  backgroundColor?: InputMaybe<Scalars['String']>;
+  backgroundColor?: InputMaybe<Scalars['String']['input']>;
   blurredOptions?: InputMaybe<BlurredOptions>;
-  breakpoints?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  breakpoints?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
   formats?: InputMaybe<Array<InputMaybe<ImageFormat>>>;
-  height?: InputMaybe<Scalars['Int']>;
+  height?: InputMaybe<Scalars['Int']['input']>;
   jpgOptions?: InputMaybe<JpgOptions>;
   layout?: InputMaybe<ImageLayout>;
-  outputPixelDensities?: InputMaybe<Array<InputMaybe<Scalars['Float']>>>;
+  outputPixelDensities?: InputMaybe<Array<InputMaybe<Scalars['Float']['input']>>>;
   placeholder?: InputMaybe<ImagePlaceholder>;
   pngOptions?: InputMaybe<PngOptions>;
-  quality?: InputMaybe<Scalars['Int']>;
-  sizes?: InputMaybe<Scalars['String']>;
+  quality?: InputMaybe<Scalars['Int']['input']>;
+  sizes?: InputMaybe<Scalars['String']['input']>;
   tracedSVGOptions?: InputMaybe<Potrace>;
   transformOptions?: InputMaybe<TransformOptions>;
   webpOptions?: InputMaybe<WebPOptions>;
-  width?: InputMaybe<Scalars['Int']>;
+  width?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
 export type ImageSharpResizeArgs = {
-  background?: InputMaybe<Scalars['String']>;
-  base64?: InputMaybe<Scalars['Boolean']>;
+  background?: InputMaybe<Scalars['String']['input']>;
+  base64?: InputMaybe<Scalars['Boolean']['input']>;
   cropFocus?: InputMaybe<ImageCropFocus>;
   duotone?: InputMaybe<DuotoneGradient>;
   fit?: InputMaybe<ImageFit>;
-  grayscale?: InputMaybe<Scalars['Boolean']>;
-  height?: InputMaybe<Scalars['Int']>;
-  jpegProgressive?: InputMaybe<Scalars['Boolean']>;
-  jpegQuality?: InputMaybe<Scalars['Int']>;
-  pngCompressionLevel?: InputMaybe<Scalars['Int']>;
-  pngCompressionSpeed?: InputMaybe<Scalars['Int']>;
-  pngQuality?: InputMaybe<Scalars['Int']>;
-  quality?: InputMaybe<Scalars['Int']>;
-  rotate?: InputMaybe<Scalars['Int']>;
+  grayscale?: InputMaybe<Scalars['Boolean']['input']>;
+  height?: InputMaybe<Scalars['Int']['input']>;
+  jpegProgressive?: InputMaybe<Scalars['Boolean']['input']>;
+  jpegQuality?: InputMaybe<Scalars['Int']['input']>;
+  pngCompressionLevel?: InputMaybe<Scalars['Int']['input']>;
+  pngCompressionSpeed?: InputMaybe<Scalars['Int']['input']>;
+  pngQuality?: InputMaybe<Scalars['Int']['input']>;
+  quality?: InputMaybe<Scalars['Int']['input']>;
+  rotate?: InputMaybe<Scalars['Int']['input']>;
   toFormat?: InputMaybe<ImageFormat>;
   traceSVG?: InputMaybe<Potrace>;
-  trim?: InputMaybe<Scalars['Float']>;
-  webpQuality?: InputMaybe<Scalars['Int']>;
-  width?: InputMaybe<Scalars['Int']>;
+  trim?: InputMaybe<Scalars['Float']['input']>;
+  webpQuality?: InputMaybe<Scalars['Int']['input']>;
+  width?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type ImageSharpConnection = {
   __typename?: 'ImageSharpConnection';
-  distinct: Array<Scalars['String']>;
+  distinct: Array<Scalars['String']['output']>;
   edges: Array<ImageSharpEdge>;
   group: Array<ImageSharpGroupConnection>;
-  max?: Maybe<Scalars['Float']>;
-  min?: Maybe<Scalars['Float']>;
+  max?: Maybe<Scalars['Float']['output']>;
+  min?: Maybe<Scalars['Float']['output']>;
   nodes: Array<ImageSharp>;
   pageInfo: PageInfo;
-  sum?: Maybe<Scalars['Float']>;
-  totalCount: Scalars['Int'];
+  sum?: Maybe<Scalars['Float']['output']>;
+  totalCount: Scalars['Int']['output'];
 };
 
 
@@ -1246,8 +1314,8 @@ export type ImageSharpConnectionDistinctArgs = {
 
 export type ImageSharpConnectionGroupArgs = {
   field: ImageSharpFieldsEnum;
-  limit?: InputMaybe<Scalars['Int']>;
-  skip?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
@@ -1312,28 +1380,51 @@ export enum ImageSharpFieldsEnum {
   ChildrenParentInternalType = 'children___parent___internal___type',
   ChildrenParentParentChildren = 'children___parent___parent___children',
   ChildrenParentParentId = 'children___parent___parent___id',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   FixedAspectRatio = 'fixed___aspectRatio',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   FixedBase64 = 'fixed___base64',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   FixedHeight = 'fixed___height',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   FixedOriginalName = 'fixed___originalName',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   FixedSrc = 'fixed___src',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   FixedSrcSet = 'fixed___srcSet',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   FixedSrcSetWebp = 'fixed___srcSetWebp',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   FixedSrcWebp = 'fixed___srcWebp',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   FixedTracedSvg = 'fixed___tracedSVG',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   FixedWidth = 'fixed___width',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   FluidAspectRatio = 'fluid___aspectRatio',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   FluidBase64 = 'fluid___base64',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   FluidOriginalImg = 'fluid___originalImg',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   FluidOriginalName = 'fluid___originalName',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   FluidPresentationHeight = 'fluid___presentationHeight',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   FluidPresentationWidth = 'fluid___presentationWidth',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   FluidSizes = 'fluid___sizes',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   FluidSrc = 'fluid___src',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   FluidSrcSet = 'fluid___srcSet',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   FluidSrcSetWebp = 'fluid___srcSetWebp',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   FluidSrcWebp = 'fluid___srcWebp',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   FluidTracedSvg = 'fluid___tracedSVG',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   GatsbyImageData = 'gatsbyImageData',
   Id = 'id',
   InternalContent = 'internal___content',
@@ -1385,11 +1476,17 @@ export enum ImageSharpFieldsEnum {
   ParentParentInternalType = 'parent___parent___internal___type',
   ParentParentParentChildren = 'parent___parent___parent___children',
   ParentParentParentId = 'parent___parent___parent___id',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ResizeAspectRatio = 'resize___aspectRatio',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ResizeHeight = 'resize___height',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ResizeOriginalName = 'resize___originalName',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ResizeSrc = 'resize___src',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ResizeTracedSvg = 'resize___tracedSVG',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   ResizeWidth = 'resize___width'
 }
 
@@ -1411,16 +1508,16 @@ export type ImageSharpFilterListInput = {
 
 export type ImageSharpFixed = {
   __typename?: 'ImageSharpFixed';
-  aspectRatio?: Maybe<Scalars['Float']>;
-  base64?: Maybe<Scalars['String']>;
-  height: Scalars['Float'];
-  originalName?: Maybe<Scalars['String']>;
-  src: Scalars['String'];
-  srcSet: Scalars['String'];
-  srcSetWebp?: Maybe<Scalars['String']>;
-  srcWebp?: Maybe<Scalars['String']>;
-  tracedSVG?: Maybe<Scalars['String']>;
-  width: Scalars['Float'];
+  aspectRatio?: Maybe<Scalars['Float']['output']>;
+  base64?: Maybe<Scalars['String']['output']>;
+  height: Scalars['Float']['output'];
+  originalName?: Maybe<Scalars['String']['output']>;
+  src: Scalars['String']['output'];
+  srcSet: Scalars['String']['output'];
+  srcSetWebp?: Maybe<Scalars['String']['output']>;
+  srcWebp?: Maybe<Scalars['String']['output']>;
+  tracedSVG?: Maybe<Scalars['String']['output']>;
+  width: Scalars['Float']['output'];
 };
 
 export type ImageSharpFixedFilterInput = {
@@ -1438,18 +1535,18 @@ export type ImageSharpFixedFilterInput = {
 
 export type ImageSharpFluid = {
   __typename?: 'ImageSharpFluid';
-  aspectRatio: Scalars['Float'];
-  base64?: Maybe<Scalars['String']>;
-  originalImg?: Maybe<Scalars['String']>;
-  originalName?: Maybe<Scalars['String']>;
-  presentationHeight: Scalars['Int'];
-  presentationWidth: Scalars['Int'];
-  sizes: Scalars['String'];
-  src: Scalars['String'];
-  srcSet: Scalars['String'];
-  srcSetWebp?: Maybe<Scalars['String']>;
-  srcWebp?: Maybe<Scalars['String']>;
-  tracedSVG?: Maybe<Scalars['String']>;
+  aspectRatio: Scalars['Float']['output'];
+  base64?: Maybe<Scalars['String']['output']>;
+  originalImg?: Maybe<Scalars['String']['output']>;
+  originalName?: Maybe<Scalars['String']['output']>;
+  presentationHeight: Scalars['Int']['output'];
+  presentationWidth: Scalars['Int']['output'];
+  sizes: Scalars['String']['output'];
+  src: Scalars['String']['output'];
+  srcSet: Scalars['String']['output'];
+  srcSetWebp?: Maybe<Scalars['String']['output']>;
+  srcWebp?: Maybe<Scalars['String']['output']>;
+  tracedSVG?: Maybe<Scalars['String']['output']>;
 };
 
 export type ImageSharpFluidFilterInput = {
@@ -1469,17 +1566,17 @@ export type ImageSharpFluidFilterInput = {
 
 export type ImageSharpGroupConnection = {
   __typename?: 'ImageSharpGroupConnection';
-  distinct: Array<Scalars['String']>;
+  distinct: Array<Scalars['String']['output']>;
   edges: Array<ImageSharpEdge>;
-  field: Scalars['String'];
-  fieldValue?: Maybe<Scalars['String']>;
+  field: Scalars['String']['output'];
+  fieldValue?: Maybe<Scalars['String']['output']>;
   group: Array<ImageSharpGroupConnection>;
-  max?: Maybe<Scalars['Float']>;
-  min?: Maybe<Scalars['Float']>;
+  max?: Maybe<Scalars['Float']['output']>;
+  min?: Maybe<Scalars['Float']['output']>;
   nodes: Array<ImageSharp>;
   pageInfo: PageInfo;
-  sum?: Maybe<Scalars['Float']>;
-  totalCount: Scalars['Int'];
+  sum?: Maybe<Scalars['Float']['output']>;
+  totalCount: Scalars['Int']['output'];
 };
 
 
@@ -1490,8 +1587,8 @@ export type ImageSharpGroupConnectionDistinctArgs = {
 
 export type ImageSharpGroupConnectionGroupArgs = {
   field: ImageSharpFieldsEnum;
-  limit?: InputMaybe<Scalars['Int']>;
-  skip?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
@@ -1511,9 +1608,9 @@ export type ImageSharpGroupConnectionSumArgs = {
 
 export type ImageSharpOriginal = {
   __typename?: 'ImageSharpOriginal';
-  height?: Maybe<Scalars['Float']>;
-  src?: Maybe<Scalars['String']>;
-  width?: Maybe<Scalars['Float']>;
+  height?: Maybe<Scalars['Float']['output']>;
+  src?: Maybe<Scalars['String']['output']>;
+  width?: Maybe<Scalars['Float']['output']>;
 };
 
 export type ImageSharpOriginalFilterInput = {
@@ -1524,12 +1621,12 @@ export type ImageSharpOriginalFilterInput = {
 
 export type ImageSharpResize = {
   __typename?: 'ImageSharpResize';
-  aspectRatio?: Maybe<Scalars['Float']>;
-  height?: Maybe<Scalars['Int']>;
-  originalName?: Maybe<Scalars['String']>;
-  src?: Maybe<Scalars['String']>;
-  tracedSVG?: Maybe<Scalars['String']>;
-  width?: Maybe<Scalars['Int']>;
+  aspectRatio?: Maybe<Scalars['Float']['output']>;
+  height?: Maybe<Scalars['Int']['output']>;
+  originalName?: Maybe<Scalars['String']['output']>;
+  src?: Maybe<Scalars['String']['output']>;
+  tracedSVG?: Maybe<Scalars['String']['output']>;
+  width?: Maybe<Scalars['Int']['output']>;
 };
 
 export type ImageSharpResizeFilterInput = {
@@ -1547,26 +1644,26 @@ export type ImageSharpSortInput = {
 };
 
 export type IntQueryOperatorInput = {
-  eq?: InputMaybe<Scalars['Int']>;
-  gt?: InputMaybe<Scalars['Int']>;
-  gte?: InputMaybe<Scalars['Int']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
-  lt?: InputMaybe<Scalars['Int']>;
-  lte?: InputMaybe<Scalars['Int']>;
-  ne?: InputMaybe<Scalars['Int']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  eq?: InputMaybe<Scalars['Int']['input']>;
+  gt?: InputMaybe<Scalars['Int']['input']>;
+  gte?: InputMaybe<Scalars['Int']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
+  lt?: InputMaybe<Scalars['Int']['input']>;
+  lte?: InputMaybe<Scalars['Int']['input']>;
+  ne?: InputMaybe<Scalars['Int']['input']>;
+  nin?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
 };
 
 export type Internal = {
   __typename?: 'Internal';
-  content?: Maybe<Scalars['String']>;
-  contentDigest: Scalars['String'];
-  description?: Maybe<Scalars['String']>;
-  fieldOwners?: Maybe<Array<Maybe<Scalars['String']>>>;
-  ignoreType?: Maybe<Scalars['Boolean']>;
-  mediaType?: Maybe<Scalars['String']>;
-  owner: Scalars['String'];
-  type: Scalars['String'];
+  content?: Maybe<Scalars['String']['output']>;
+  contentDigest: Scalars['String']['output'];
+  description?: Maybe<Scalars['String']['output']>;
+  fieldOwners?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  ignoreType?: Maybe<Scalars['Boolean']['output']>;
+  mediaType?: Maybe<Scalars['String']['output']>;
+  owner: Scalars['String']['output'];
+  type: Scalars['String']['output'];
 };
 
 export type InternalFilterInput = {
@@ -1581,43 +1678,43 @@ export type InternalFilterInput = {
 };
 
 export type JpgOptions = {
-  progressive?: InputMaybe<Scalars['Boolean']>;
-  quality?: InputMaybe<Scalars['Int']>;
+  progressive?: InputMaybe<Scalars['Boolean']['input']>;
+  quality?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type JsonQueryOperatorInput = {
-  eq?: InputMaybe<Scalars['JSON']>;
-  glob?: InputMaybe<Scalars['JSON']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']>>>;
-  ne?: InputMaybe<Scalars['JSON']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['JSON']>>>;
-  regex?: InputMaybe<Scalars['JSON']>;
+  eq?: InputMaybe<Scalars['JSON']['input']>;
+  glob?: InputMaybe<Scalars['JSON']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  ne?: InputMaybe<Scalars['JSON']['input']>;
+  nin?: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  regex?: InputMaybe<Scalars['JSON']['input']>;
 };
 
 export type Mdx = Node & {
   __typename?: 'Mdx';
-  body: Scalars['String'];
+  body: Scalars['String']['output'];
   children: Array<Node>;
-  excerpt: Scalars['String'];
-  fileAbsolutePath: Scalars['String'];
+  excerpt: Scalars['String']['output'];
+  fileAbsolutePath: Scalars['String']['output'];
   frontmatter?: Maybe<MdxFrontmatter>;
   headings?: Maybe<Array<Maybe<MdxHeadingMdx>>>;
-  html?: Maybe<Scalars['String']>;
-  id: Scalars['ID'];
+  html?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
   internal: Internal;
-  mdxAST?: Maybe<Scalars['JSON']>;
+  mdxAST?: Maybe<Scalars['JSON']['output']>;
   parent?: Maybe<Node>;
-  rawBody: Scalars['String'];
-  slug?: Maybe<Scalars['String']>;
-  tableOfContents?: Maybe<Scalars['JSON']>;
-  timeToRead?: Maybe<Scalars['Int']>;
+  rawBody: Scalars['String']['output'];
+  slug?: Maybe<Scalars['String']['output']>;
+  tableOfContents?: Maybe<Scalars['JSON']['output']>;
+  timeToRead?: Maybe<Scalars['Int']['output']>;
   wordCount?: Maybe<MdxWordCount>;
 };
 
 
 export type MdxExcerptArgs = {
-  pruneLength?: InputMaybe<Scalars['Int']>;
-  truncate?: InputMaybe<Scalars['Boolean']>;
+  pruneLength?: InputMaybe<Scalars['Int']['input']>;
+  truncate?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 
@@ -1627,20 +1724,20 @@ export type MdxHeadingsArgs = {
 
 
 export type MdxTableOfContentsArgs = {
-  maxDepth?: InputMaybe<Scalars['Int']>;
+  maxDepth?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type MdxConnection = {
   __typename?: 'MdxConnection';
-  distinct: Array<Scalars['String']>;
+  distinct: Array<Scalars['String']['output']>;
   edges: Array<MdxEdge>;
   group: Array<MdxGroupConnection>;
-  max?: Maybe<Scalars['Float']>;
-  min?: Maybe<Scalars['Float']>;
+  max?: Maybe<Scalars['Float']['output']>;
+  min?: Maybe<Scalars['Float']['output']>;
   nodes: Array<Mdx>;
   pageInfo: PageInfo;
-  sum?: Maybe<Scalars['Float']>;
-  totalCount: Scalars['Int'];
+  sum?: Maybe<Scalars['Float']['output']>;
+  totalCount: Scalars['Int']['output'];
 };
 
 
@@ -1651,8 +1748,8 @@ export type MdxConnectionDistinctArgs = {
 
 export type MdxConnectionGroupArgs = {
   field: MdxFieldsEnum;
-  limit?: InputMaybe<Scalars['Int']>;
-  skip?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
@@ -1718,6 +1815,7 @@ export enum MdxFieldsEnum {
   ChildrenParentInternalType = 'children___parent___internal___type',
   ChildrenParentParentChildren = 'children___parent___parent___children',
   ChildrenParentParentId = 'children___parent___parent___id',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   Excerpt = 'excerpt',
   FileAbsolutePath = 'fileAbsolutePath',
   FrontmatterArticles = 'frontmatter___articles',
@@ -1726,8 +1824,11 @@ export enum MdxFieldsEnum {
   FrontmatterSort = 'frontmatter___sort',
   FrontmatterSubtitle = 'frontmatter___subtitle',
   FrontmatterTitle = 'frontmatter___title',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   Headings = 'headings',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   HeadingsDepth = 'headings___depth',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   HeadingsValue = 'headings___value',
   Html = 'html',
   Id = 'id',
@@ -1780,6 +1881,7 @@ export enum MdxFieldsEnum {
   ParentParentParentId = 'parent___parent___parent___id',
   RawBody = 'rawBody',
   Slug = 'slug',
+  /** @deprecated Sorting on fields that need arguments to resolve is deprecated. */
   TableOfContents = 'tableOfContents',
   TimeToRead = 'timeToRead',
   WordCountParagraphs = 'wordCount___paragraphs',
@@ -1812,12 +1914,12 @@ export type MdxFilterListInput = {
 
 export type MdxFrontmatter = {
   __typename?: 'MdxFrontmatter';
-  articles?: Maybe<Scalars['String']>;
-  category?: Maybe<Scalars['String']>;
-  product?: Maybe<Scalars['String']>;
-  sort?: Maybe<Scalars['Int']>;
-  subtitle?: Maybe<Scalars['String']>;
-  title: Scalars['String'];
+  articles?: Maybe<Scalars['String']['output']>;
+  category?: Maybe<Scalars['String']['output']>;
+  product?: Maybe<Scalars['String']['output']>;
+  sort?: Maybe<Scalars['Int']['output']>;
+  subtitle?: Maybe<Scalars['String']['output']>;
+  title: Scalars['String']['output'];
 };
 
 export type MdxFrontmatterFilterInput = {
@@ -1831,17 +1933,17 @@ export type MdxFrontmatterFilterInput = {
 
 export type MdxGroupConnection = {
   __typename?: 'MdxGroupConnection';
-  distinct: Array<Scalars['String']>;
+  distinct: Array<Scalars['String']['output']>;
   edges: Array<MdxEdge>;
-  field: Scalars['String'];
-  fieldValue?: Maybe<Scalars['String']>;
+  field: Scalars['String']['output'];
+  fieldValue?: Maybe<Scalars['String']['output']>;
   group: Array<MdxGroupConnection>;
-  max?: Maybe<Scalars['Float']>;
-  min?: Maybe<Scalars['Float']>;
+  max?: Maybe<Scalars['Float']['output']>;
+  min?: Maybe<Scalars['Float']['output']>;
   nodes: Array<Mdx>;
   pageInfo: PageInfo;
-  sum?: Maybe<Scalars['Float']>;
-  totalCount: Scalars['Int'];
+  sum?: Maybe<Scalars['Float']['output']>;
+  totalCount: Scalars['Int']['output'];
 };
 
 
@@ -1852,8 +1954,8 @@ export type MdxGroupConnectionDistinctArgs = {
 
 export type MdxGroupConnectionGroupArgs = {
   field: MdxFieldsEnum;
-  limit?: InputMaybe<Scalars['Int']>;
-  skip?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
@@ -1873,8 +1975,8 @@ export type MdxGroupConnectionSumArgs = {
 
 export type MdxHeadingMdx = {
   __typename?: 'MdxHeadingMdx';
-  depth?: Maybe<Scalars['Int']>;
-  value?: Maybe<Scalars['String']>;
+  depth?: Maybe<Scalars['Int']['output']>;
+  value?: Maybe<Scalars['String']['output']>;
 };
 
 export type MdxHeadingMdxFilterInput = {
@@ -1893,9 +1995,9 @@ export type MdxSortInput = {
 
 export type MdxWordCount = {
   __typename?: 'MdxWordCount';
-  paragraphs?: Maybe<Scalars['Int']>;
-  sentences?: Maybe<Scalars['Int']>;
-  words?: Maybe<Scalars['Int']>;
+  paragraphs?: Maybe<Scalars['Int']['output']>;
+  sentences?: Maybe<Scalars['Int']['output']>;
+  words?: Maybe<Scalars['Int']['output']>;
 };
 
 export type MdxWordCountFilterInput = {
@@ -1907,7 +2009,7 @@ export type MdxWordCountFilterInput = {
 /** Node Interface */
 export type Node = {
   children: Array<Node>;
-  id: Scalars['ID'];
+  id: Scalars['ID']['output'];
   internal: Internal;
   parent?: Maybe<Node>;
 };
@@ -1924,30 +2026,30 @@ export type NodeFilterListInput = {
 };
 
 export type PngOptions = {
-  compressionSpeed?: InputMaybe<Scalars['Int']>;
-  quality?: InputMaybe<Scalars['Int']>;
+  compressionSpeed?: InputMaybe<Scalars['Int']['input']>;
+  quality?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type PageInfo = {
   __typename?: 'PageInfo';
-  currentPage: Scalars['Int'];
-  hasNextPage: Scalars['Boolean'];
-  hasPreviousPage: Scalars['Boolean'];
-  itemCount: Scalars['Int'];
-  pageCount: Scalars['Int'];
-  perPage?: Maybe<Scalars['Int']>;
-  totalCount: Scalars['Int'];
+  currentPage: Scalars['Int']['output'];
+  hasNextPage: Scalars['Boolean']['output'];
+  hasPreviousPage: Scalars['Boolean']['output'];
+  itemCount: Scalars['Int']['output'];
+  pageCount: Scalars['Int']['output'];
+  perPage?: Maybe<Scalars['Int']['output']>;
+  totalCount: Scalars['Int']['output'];
 };
 
 export type Potrace = {
-  alphaMax?: InputMaybe<Scalars['Float']>;
-  background?: InputMaybe<Scalars['String']>;
-  blackOnWhite?: InputMaybe<Scalars['Boolean']>;
-  color?: InputMaybe<Scalars['String']>;
-  optCurve?: InputMaybe<Scalars['Boolean']>;
-  optTolerance?: InputMaybe<Scalars['Float']>;
-  threshold?: InputMaybe<Scalars['Int']>;
-  turdSize?: InputMaybe<Scalars['Float']>;
+  alphaMax?: InputMaybe<Scalars['Float']['input']>;
+  background?: InputMaybe<Scalars['String']['input']>;
+  blackOnWhite?: InputMaybe<Scalars['Boolean']['input']>;
+  color?: InputMaybe<Scalars['String']['input']>;
+  optCurve?: InputMaybe<Scalars['Boolean']['input']>;
+  optTolerance?: InputMaybe<Scalars['Float']['input']>;
+  threshold?: InputMaybe<Scalars['Int']['input']>;
+  turdSize?: InputMaybe<Scalars['Float']['input']>;
   turnPolicy?: InputMaybe<PotraceTurnPolicy>;
 };
 
@@ -1985,72 +2087,72 @@ export type Query = {
 
 export type QueryAllDirectoryArgs = {
   filter?: InputMaybe<DirectoryFilterInput>;
-  limit?: InputMaybe<Scalars['Int']>;
-  skip?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
   sort?: InputMaybe<DirectorySortInput>;
 };
 
 
 export type QueryAllFileArgs = {
   filter?: InputMaybe<FileFilterInput>;
-  limit?: InputMaybe<Scalars['Int']>;
-  skip?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
   sort?: InputMaybe<FileSortInput>;
 };
 
 
 export type QueryAllImageSharpArgs = {
   filter?: InputMaybe<ImageSharpFilterInput>;
-  limit?: InputMaybe<Scalars['Int']>;
-  skip?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
   sort?: InputMaybe<ImageSharpSortInput>;
 };
 
 
 export type QueryAllMdxArgs = {
   filter?: InputMaybe<MdxFilterInput>;
-  limit?: InputMaybe<Scalars['Int']>;
-  skip?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
   sort?: InputMaybe<MdxSortInput>;
 };
 
 
 export type QueryAllSiteArgs = {
   filter?: InputMaybe<SiteFilterInput>;
-  limit?: InputMaybe<Scalars['Int']>;
-  skip?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
   sort?: InputMaybe<SiteSortInput>;
 };
 
 
 export type QueryAllSiteBuildMetadataArgs = {
   filter?: InputMaybe<SiteBuildMetadataFilterInput>;
-  limit?: InputMaybe<Scalars['Int']>;
-  skip?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
   sort?: InputMaybe<SiteBuildMetadataSortInput>;
 };
 
 
 export type QueryAllSiteFunctionArgs = {
   filter?: InputMaybe<SiteFunctionFilterInput>;
-  limit?: InputMaybe<Scalars['Int']>;
-  skip?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
   sort?: InputMaybe<SiteFunctionSortInput>;
 };
 
 
 export type QueryAllSitePageArgs = {
   filter?: InputMaybe<SitePageFilterInput>;
-  limit?: InputMaybe<Scalars['Int']>;
-  skip?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
   sort?: InputMaybe<SitePageSortInput>;
 };
 
 
 export type QueryAllSitePluginArgs = {
   filter?: InputMaybe<SitePluginFilterInput>;
-  limit?: InputMaybe<Scalars['Int']>;
-  skip?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
   sort?: InputMaybe<SitePluginSortInput>;
 };
 
@@ -2246,56 +2348,56 @@ export type QuerySitePluginArgs = {
 
 export type Site = Node & {
   __typename?: 'Site';
-  buildTime?: Maybe<Scalars['Date']>;
+  buildTime?: Maybe<Scalars['Date']['output']>;
   children: Array<Node>;
-  host?: Maybe<Scalars['String']>;
-  id: Scalars['ID'];
+  host?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
   internal: Internal;
-  jsxRuntime?: Maybe<Scalars['String']>;
+  jsxRuntime?: Maybe<Scalars['String']['output']>;
   parent?: Maybe<Node>;
-  pathPrefix?: Maybe<Scalars['String']>;
-  polyfill?: Maybe<Scalars['Boolean']>;
-  port?: Maybe<Scalars['Int']>;
+  pathPrefix?: Maybe<Scalars['String']['output']>;
+  polyfill?: Maybe<Scalars['Boolean']['output']>;
+  port?: Maybe<Scalars['Int']['output']>;
   siteMetadata?: Maybe<SiteSiteMetadata>;
-  trailingSlash?: Maybe<Scalars['String']>;
+  trailingSlash?: Maybe<Scalars['String']['output']>;
 };
 
 
 export type SiteBuildTimeArgs = {
-  difference?: InputMaybe<Scalars['String']>;
-  formatString?: InputMaybe<Scalars['String']>;
-  fromNow?: InputMaybe<Scalars['Boolean']>;
-  locale?: InputMaybe<Scalars['String']>;
+  difference?: InputMaybe<Scalars['String']['input']>;
+  formatString?: InputMaybe<Scalars['String']['input']>;
+  fromNow?: InputMaybe<Scalars['Boolean']['input']>;
+  locale?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type SiteBuildMetadata = Node & {
   __typename?: 'SiteBuildMetadata';
-  buildTime?: Maybe<Scalars['Date']>;
+  buildTime?: Maybe<Scalars['Date']['output']>;
   children: Array<Node>;
-  id: Scalars['ID'];
+  id: Scalars['ID']['output'];
   internal: Internal;
   parent?: Maybe<Node>;
 };
 
 
 export type SiteBuildMetadataBuildTimeArgs = {
-  difference?: InputMaybe<Scalars['String']>;
-  formatString?: InputMaybe<Scalars['String']>;
-  fromNow?: InputMaybe<Scalars['Boolean']>;
-  locale?: InputMaybe<Scalars['String']>;
+  difference?: InputMaybe<Scalars['String']['input']>;
+  formatString?: InputMaybe<Scalars['String']['input']>;
+  fromNow?: InputMaybe<Scalars['Boolean']['input']>;
+  locale?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type SiteBuildMetadataConnection = {
   __typename?: 'SiteBuildMetadataConnection';
-  distinct: Array<Scalars['String']>;
+  distinct: Array<Scalars['String']['output']>;
   edges: Array<SiteBuildMetadataEdge>;
   group: Array<SiteBuildMetadataGroupConnection>;
-  max?: Maybe<Scalars['Float']>;
-  min?: Maybe<Scalars['Float']>;
+  max?: Maybe<Scalars['Float']['output']>;
+  min?: Maybe<Scalars['Float']['output']>;
   nodes: Array<SiteBuildMetadata>;
   pageInfo: PageInfo;
-  sum?: Maybe<Scalars['Float']>;
-  totalCount: Scalars['Int'];
+  sum?: Maybe<Scalars['Float']['output']>;
+  totalCount: Scalars['Int']['output'];
 };
 
 
@@ -2306,8 +2408,8 @@ export type SiteBuildMetadataConnectionDistinctArgs = {
 
 export type SiteBuildMetadataConnectionGroupArgs = {
   field: SiteBuildMetadataFieldsEnum;
-  limit?: InputMaybe<Scalars['Int']>;
-  skip?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
@@ -2432,17 +2534,17 @@ export type SiteBuildMetadataFilterInput = {
 
 export type SiteBuildMetadataGroupConnection = {
   __typename?: 'SiteBuildMetadataGroupConnection';
-  distinct: Array<Scalars['String']>;
+  distinct: Array<Scalars['String']['output']>;
   edges: Array<SiteBuildMetadataEdge>;
-  field: Scalars['String'];
-  fieldValue?: Maybe<Scalars['String']>;
+  field: Scalars['String']['output'];
+  fieldValue?: Maybe<Scalars['String']['output']>;
   group: Array<SiteBuildMetadataGroupConnection>;
-  max?: Maybe<Scalars['Float']>;
-  min?: Maybe<Scalars['Float']>;
+  max?: Maybe<Scalars['Float']['output']>;
+  min?: Maybe<Scalars['Float']['output']>;
   nodes: Array<SiteBuildMetadata>;
   pageInfo: PageInfo;
-  sum?: Maybe<Scalars['Float']>;
-  totalCount: Scalars['Int'];
+  sum?: Maybe<Scalars['Float']['output']>;
+  totalCount: Scalars['Int']['output'];
 };
 
 
@@ -2453,8 +2555,8 @@ export type SiteBuildMetadataGroupConnectionDistinctArgs = {
 
 export type SiteBuildMetadataGroupConnectionGroupArgs = {
   field: SiteBuildMetadataFieldsEnum;
-  limit?: InputMaybe<Scalars['Int']>;
-  skip?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
@@ -2479,15 +2581,15 @@ export type SiteBuildMetadataSortInput = {
 
 export type SiteConnection = {
   __typename?: 'SiteConnection';
-  distinct: Array<Scalars['String']>;
+  distinct: Array<Scalars['String']['output']>;
   edges: Array<SiteEdge>;
   group: Array<SiteGroupConnection>;
-  max?: Maybe<Scalars['Float']>;
-  min?: Maybe<Scalars['Float']>;
+  max?: Maybe<Scalars['Float']['output']>;
+  min?: Maybe<Scalars['Float']['output']>;
   nodes: Array<Site>;
   pageInfo: PageInfo;
-  sum?: Maybe<Scalars['Float']>;
-  totalCount: Scalars['Int'];
+  sum?: Maybe<Scalars['Float']['output']>;
+  totalCount: Scalars['Int']['output'];
 };
 
 
@@ -2498,8 +2600,8 @@ export type SiteConnectionDistinctArgs = {
 
 export type SiteConnectionGroupArgs = {
   field: SiteFieldsEnum;
-  limit?: InputMaybe<Scalars['Int']>;
-  skip?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
@@ -2640,30 +2742,30 @@ export type SiteFilterInput = {
 
 export type SiteFunction = Node & {
   __typename?: 'SiteFunction';
-  absoluteCompiledFilePath: Scalars['String'];
+  absoluteCompiledFilePath: Scalars['String']['output'];
   children: Array<Node>;
-  functionRoute: Scalars['String'];
-  id: Scalars['ID'];
+  functionRoute: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
   internal: Internal;
-  matchPath?: Maybe<Scalars['String']>;
-  originalAbsoluteFilePath: Scalars['String'];
-  originalRelativeFilePath: Scalars['String'];
+  matchPath?: Maybe<Scalars['String']['output']>;
+  originalAbsoluteFilePath: Scalars['String']['output'];
+  originalRelativeFilePath: Scalars['String']['output'];
   parent?: Maybe<Node>;
-  pluginName: Scalars['String'];
-  relativeCompiledFilePath: Scalars['String'];
+  pluginName: Scalars['String']['output'];
+  relativeCompiledFilePath: Scalars['String']['output'];
 };
 
 export type SiteFunctionConnection = {
   __typename?: 'SiteFunctionConnection';
-  distinct: Array<Scalars['String']>;
+  distinct: Array<Scalars['String']['output']>;
   edges: Array<SiteFunctionEdge>;
   group: Array<SiteFunctionGroupConnection>;
-  max?: Maybe<Scalars['Float']>;
-  min?: Maybe<Scalars['Float']>;
+  max?: Maybe<Scalars['Float']['output']>;
+  min?: Maybe<Scalars['Float']['output']>;
   nodes: Array<SiteFunction>;
   pageInfo: PageInfo;
-  sum?: Maybe<Scalars['Float']>;
-  totalCount: Scalars['Int'];
+  sum?: Maybe<Scalars['Float']['output']>;
+  totalCount: Scalars['Int']['output'];
 };
 
 
@@ -2674,8 +2776,8 @@ export type SiteFunctionConnectionDistinctArgs = {
 
 export type SiteFunctionConnectionGroupArgs = {
   field: SiteFunctionFieldsEnum;
-  limit?: InputMaybe<Scalars['Int']>;
-  skip?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
@@ -2812,17 +2914,17 @@ export type SiteFunctionFilterInput = {
 
 export type SiteFunctionGroupConnection = {
   __typename?: 'SiteFunctionGroupConnection';
-  distinct: Array<Scalars['String']>;
+  distinct: Array<Scalars['String']['output']>;
   edges: Array<SiteFunctionEdge>;
-  field: Scalars['String'];
-  fieldValue?: Maybe<Scalars['String']>;
+  field: Scalars['String']['output'];
+  fieldValue?: Maybe<Scalars['String']['output']>;
   group: Array<SiteFunctionGroupConnection>;
-  max?: Maybe<Scalars['Float']>;
-  min?: Maybe<Scalars['Float']>;
+  max?: Maybe<Scalars['Float']['output']>;
+  min?: Maybe<Scalars['Float']['output']>;
   nodes: Array<SiteFunction>;
   pageInfo: PageInfo;
-  sum?: Maybe<Scalars['Float']>;
-  totalCount: Scalars['Int'];
+  sum?: Maybe<Scalars['Float']['output']>;
+  totalCount: Scalars['Int']['output'];
 };
 
 
@@ -2833,8 +2935,8 @@ export type SiteFunctionGroupConnectionDistinctArgs = {
 
 export type SiteFunctionGroupConnectionGroupArgs = {
   field: SiteFunctionFieldsEnum;
-  limit?: InputMaybe<Scalars['Int']>;
-  skip?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
@@ -2859,17 +2961,17 @@ export type SiteFunctionSortInput = {
 
 export type SiteGroupConnection = {
   __typename?: 'SiteGroupConnection';
-  distinct: Array<Scalars['String']>;
+  distinct: Array<Scalars['String']['output']>;
   edges: Array<SiteEdge>;
-  field: Scalars['String'];
-  fieldValue?: Maybe<Scalars['String']>;
+  field: Scalars['String']['output'];
+  fieldValue?: Maybe<Scalars['String']['output']>;
   group: Array<SiteGroupConnection>;
-  max?: Maybe<Scalars['Float']>;
-  min?: Maybe<Scalars['Float']>;
+  max?: Maybe<Scalars['Float']['output']>;
+  min?: Maybe<Scalars['Float']['output']>;
   nodes: Array<Site>;
   pageInfo: PageInfo;
-  sum?: Maybe<Scalars['Float']>;
-  totalCount: Scalars['Int'];
+  sum?: Maybe<Scalars['Float']['output']>;
+  totalCount: Scalars['Int']['output'];
 };
 
 
@@ -2880,8 +2982,8 @@ export type SiteGroupConnectionDistinctArgs = {
 
 export type SiteGroupConnectionGroupArgs = {
   field: SiteFieldsEnum;
-  limit?: InputMaybe<Scalars['Int']>;
-  skip?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
@@ -2902,29 +3004,29 @@ export type SiteGroupConnectionSumArgs = {
 export type SitePage = Node & {
   __typename?: 'SitePage';
   children: Array<Node>;
-  component: Scalars['String'];
-  componentChunkName: Scalars['String'];
-  id: Scalars['ID'];
+  component: Scalars['String']['output'];
+  componentChunkName: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
   internal: Internal;
-  internalComponentName: Scalars['String'];
-  matchPath?: Maybe<Scalars['String']>;
-  pageContext?: Maybe<Scalars['JSON']>;
+  internalComponentName: Scalars['String']['output'];
+  matchPath?: Maybe<Scalars['String']['output']>;
+  pageContext?: Maybe<Scalars['JSON']['output']>;
   parent?: Maybe<Node>;
-  path: Scalars['String'];
+  path: Scalars['String']['output'];
   pluginCreator?: Maybe<SitePlugin>;
 };
 
 export type SitePageConnection = {
   __typename?: 'SitePageConnection';
-  distinct: Array<Scalars['String']>;
+  distinct: Array<Scalars['String']['output']>;
   edges: Array<SitePageEdge>;
   group: Array<SitePageGroupConnection>;
-  max?: Maybe<Scalars['Float']>;
-  min?: Maybe<Scalars['Float']>;
+  max?: Maybe<Scalars['Float']['output']>;
+  min?: Maybe<Scalars['Float']['output']>;
   nodes: Array<SitePage>;
   pageInfo: PageInfo;
-  sum?: Maybe<Scalars['Float']>;
-  totalCount: Scalars['Int'];
+  sum?: Maybe<Scalars['Float']['output']>;
+  totalCount: Scalars['Int']['output'];
 };
 
 
@@ -2935,8 +3037,8 @@ export type SitePageConnectionDistinctArgs = {
 
 export type SitePageConnectionGroupArgs = {
   field: SitePageFieldsEnum;
-  limit?: InputMaybe<Scalars['Int']>;
-  skip?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
@@ -3119,17 +3221,17 @@ export type SitePageFilterInput = {
 
 export type SitePageGroupConnection = {
   __typename?: 'SitePageGroupConnection';
-  distinct: Array<Scalars['String']>;
+  distinct: Array<Scalars['String']['output']>;
   edges: Array<SitePageEdge>;
-  field: Scalars['String'];
-  fieldValue?: Maybe<Scalars['String']>;
+  field: Scalars['String']['output'];
+  fieldValue?: Maybe<Scalars['String']['output']>;
   group: Array<SitePageGroupConnection>;
-  max?: Maybe<Scalars['Float']>;
-  min?: Maybe<Scalars['Float']>;
+  max?: Maybe<Scalars['Float']['output']>;
+  min?: Maybe<Scalars['Float']['output']>;
   nodes: Array<SitePage>;
   pageInfo: PageInfo;
-  sum?: Maybe<Scalars['Float']>;
-  totalCount: Scalars['Int'];
+  sum?: Maybe<Scalars['Float']['output']>;
+  totalCount: Scalars['Int']['output'];
 };
 
 
@@ -3140,8 +3242,8 @@ export type SitePageGroupConnectionDistinctArgs = {
 
 export type SitePageGroupConnectionGroupArgs = {
   field: SitePageFieldsEnum;
-  limit?: InputMaybe<Scalars['Int']>;
-  skip?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
@@ -3166,32 +3268,32 @@ export type SitePageSortInput = {
 
 export type SitePlugin = Node & {
   __typename?: 'SitePlugin';
-  browserAPIs?: Maybe<Array<Maybe<Scalars['String']>>>;
+  browserAPIs?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
   children: Array<Node>;
-  id: Scalars['ID'];
+  id: Scalars['ID']['output'];
   internal: Internal;
-  name?: Maybe<Scalars['String']>;
-  nodeAPIs?: Maybe<Array<Maybe<Scalars['String']>>>;
-  packageJson?: Maybe<Scalars['JSON']>;
+  name?: Maybe<Scalars['String']['output']>;
+  nodeAPIs?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  packageJson?: Maybe<Scalars['JSON']['output']>;
   parent?: Maybe<Node>;
-  pluginFilepath?: Maybe<Scalars['String']>;
-  pluginOptions?: Maybe<Scalars['JSON']>;
-  resolve?: Maybe<Scalars['String']>;
-  ssrAPIs?: Maybe<Array<Maybe<Scalars['String']>>>;
-  version?: Maybe<Scalars['String']>;
+  pluginFilepath?: Maybe<Scalars['String']['output']>;
+  pluginOptions?: Maybe<Scalars['JSON']['output']>;
+  resolve?: Maybe<Scalars['String']['output']>;
+  ssrAPIs?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  version?: Maybe<Scalars['String']['output']>;
 };
 
 export type SitePluginConnection = {
   __typename?: 'SitePluginConnection';
-  distinct: Array<Scalars['String']>;
+  distinct: Array<Scalars['String']['output']>;
   edges: Array<SitePluginEdge>;
   group: Array<SitePluginGroupConnection>;
-  max?: Maybe<Scalars['Float']>;
-  min?: Maybe<Scalars['Float']>;
+  max?: Maybe<Scalars['Float']['output']>;
+  min?: Maybe<Scalars['Float']['output']>;
   nodes: Array<SitePlugin>;
   pageInfo: PageInfo;
-  sum?: Maybe<Scalars['Float']>;
-  totalCount: Scalars['Int'];
+  sum?: Maybe<Scalars['Float']['output']>;
+  totalCount: Scalars['Int']['output'];
 };
 
 
@@ -3202,8 +3304,8 @@ export type SitePluginConnectionDistinctArgs = {
 
 export type SitePluginConnectionGroupArgs = {
   field: SitePluginFieldsEnum;
-  limit?: InputMaybe<Scalars['Int']>;
-  skip?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
@@ -3344,17 +3446,17 @@ export type SitePluginFilterInput = {
 
 export type SitePluginGroupConnection = {
   __typename?: 'SitePluginGroupConnection';
-  distinct: Array<Scalars['String']>;
+  distinct: Array<Scalars['String']['output']>;
   edges: Array<SitePluginEdge>;
-  field: Scalars['String'];
-  fieldValue?: Maybe<Scalars['String']>;
+  field: Scalars['String']['output'];
+  fieldValue?: Maybe<Scalars['String']['output']>;
   group: Array<SitePluginGroupConnection>;
-  max?: Maybe<Scalars['Float']>;
-  min?: Maybe<Scalars['Float']>;
+  max?: Maybe<Scalars['Float']['output']>;
+  min?: Maybe<Scalars['Float']['output']>;
   nodes: Array<SitePlugin>;
   pageInfo: PageInfo;
-  sum?: Maybe<Scalars['Float']>;
-  totalCount: Scalars['Int'];
+  sum?: Maybe<Scalars['Float']['output']>;
+  totalCount: Scalars['Int']['output'];
 };
 
 
@@ -3365,8 +3467,8 @@ export type SitePluginGroupConnectionDistinctArgs = {
 
 export type SitePluginGroupConnectionGroupArgs = {
   field: SitePluginFieldsEnum;
-  limit?: InputMaybe<Scalars['Int']>;
-  skip?: InputMaybe<Scalars['Int']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
@@ -3391,9 +3493,9 @@ export type SitePluginSortInput = {
 
 export type SiteSiteMetadata = {
   __typename?: 'SiteSiteMetadata';
-  description?: Maybe<Scalars['String']>;
-  siteUrl?: Maybe<Scalars['String']>;
-  title?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']['output']>;
+  siteUrl?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
 };
 
 export type SiteSiteMetadataFilterInput = {
@@ -3413,28 +3515,28 @@ export enum SortOrderEnum {
 }
 
 export type StringQueryOperatorInput = {
-  eq?: InputMaybe<Scalars['String']>;
-  glob?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['String']>;
+  eq?: InputMaybe<Scalars['String']['input']>;
+  glob?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  ne?: InputMaybe<Scalars['String']['input']>;
+  nin?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  regex?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type TransformOptions = {
   cropFocus?: InputMaybe<ImageCropFocus>;
   duotone?: InputMaybe<DuotoneGradient>;
   fit?: InputMaybe<ImageFit>;
-  grayscale?: InputMaybe<Scalars['Boolean']>;
-  rotate?: InputMaybe<Scalars['Int']>;
-  trim?: InputMaybe<Scalars['Float']>;
+  grayscale?: InputMaybe<Scalars['Boolean']['input']>;
+  rotate?: InputMaybe<Scalars['Int']['input']>;
+  trim?: InputMaybe<Scalars['Float']['input']>;
 };
 
 export type WebPOptions = {
-  quality?: InputMaybe<Scalars['Int']>;
+  quality?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type NavigationQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type NavigationQuery = { __typename?: 'Query', signaturesPages: { __typename?: 'MdxConnection', edges: Array<{ __typename?: 'MdxEdge', node: { __typename: 'Mdx', id: string, slug?: string | null | undefined, fileAbsolutePath: string, frontmatter?: { __typename?: 'MdxFrontmatter', title: string, category?: string | null | undefined } | null | undefined } }> }, verifyPages: { __typename?: 'MdxConnection', edges: Array<{ __typename?: 'MdxEdge', node: { __typename: 'Mdx', id: string, slug?: string | null | undefined, fileAbsolutePath: string, frontmatter?: { __typename?: 'MdxFrontmatter', title: string, category?: string | null | undefined } | null | undefined } }> } };
+export type NavigationQuery = { __typename?: 'Query', signaturesPages: { __typename?: 'MdxConnection', edges: Array<{ __typename?: 'MdxEdge', node: { __typename: 'Mdx', id: string, slug?: string | null, fileAbsolutePath: string, frontmatter?: { __typename?: 'MdxFrontmatter', title: string, category?: string | null } | null } }> }, verifyPages: { __typename?: 'MdxConnection', edges: Array<{ __typename?: 'MdxEdge', node: { __typename: 'Mdx', id: string, slug?: string | null, fileAbsolutePath: string, frontmatter?: { __typename?: 'MdxFrontmatter', title: string, category?: string | null } | null } }> } };
