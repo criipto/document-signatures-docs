@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { MDXProvider } from "@mdx-js/react";
+import cx from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {default as SyntaxHighlighter, Prism} from 'react-syntax-highlighter';
 import { useLocation } from '@reach/router';
@@ -23,7 +24,6 @@ function replaceParams(input: string, params: URLSearchParams) {
       return params.get('verify_acr_values')!;
     }
     if (value.includes('||')) {
-      console.log(value);
       const candidate = value.split('||')[1];
       return candidate.substring(0, candidate.length - 2).trim();
     }
@@ -43,8 +43,8 @@ export function parseHeader(input: string) {
   const id = textToId(input);
   return input.replace(`#${id}`, '').trim();
 }
-export const H2 = (props: {children: string}) => (
-  <h2 {...props} className="group flex whitespace-pre-wrap -ml-4 pl-4 text-gray-ash-900 text-medium text-display-md">
+export const H2 = (props: {className?: string, children: string}) => (
+  <h2 {...props} className={cx("group flex whitespace-pre-wrap -ml-4 pl-4 text-gray-ash-900 text-medium text-display-md", props.className)}>
     <a id={textToId(props.children)} className="relative top-[-150px] lg:top-[-90px]"/>
     <a
       href={`#${textToId(props.children)}`}
@@ -162,7 +162,9 @@ export const Highlight = (props: {children: React.ReactNode, icon?: string, warn
   );
 }
 
-export const Paragraph = (props: any) => (<p {...props} className="max-w-screen-md">{props.children}</p>)
+export const Paragraph = (props: any) => {
+  return (<p {...props} className="max-w-screen-md">{props.children}</p>);
+}
 
 export const ImageContainer = (props: {children: React.ReactNode, maxWidth?: number}) => {
   return (<div style={{maxWidth: props.maxWidth ? `${props.maxWidth}px` : undefined}}>{props.children}</div>);
@@ -178,7 +180,7 @@ export const Anchor = (props: {children: React.ReactNode, href: string}) => {
   return <a target={props.href?.startsWith('http') ? '_top' : undefined} {...props} />;
 }
 
-const components = {
+export const MdxComponents = {
   h2: H2,
   h3: H3,
   Text,
@@ -189,14 +191,16 @@ const components = {
   Highlight,
   ImageContainer,
   p: Paragraph,
+  Paragraph,
   ol: (props: any) => (<ol {...props} className="max-w-screen-md">{props.children}</ol>),
   ul: (props: any) => (<ul {...props} className="max-w-screen-md">{props.children}</ul>),
-  a: Anchor
+  a: Anchor,
+  Link: Anchor
 }
 
 export default function CustomMDXProvider(props: {children: any}) {
   return (
-    <MDXProvider components={components}>
+    <MDXProvider components={MdxComponents}>
       {props.children}
     </MDXProvider>
   );

@@ -108,6 +108,9 @@ export default function Header(props: {path: string | undefined, className?: str
             </div>
             <div className="hidden lg:flex items-center">
               <div>
+                <Link to="/changelog" target="_blank" className="text-white font-medium mr-2 py-2 px-4 rounded uppercase text-deep-purple-900 hover:text-primary-600 focus:outline-none focus:shadow-outline">
+                  Changelog
+                </Link>
                 <a href="https://dashboard.criipto.com" target="_blank" className="text-white font-medium mr-2 py-2 px-4 rounded uppercase text-deep-purple-900 hover:text-primary-600 focus:outline-none focus:shadow-outline">
                   Dashboard
                 </a>

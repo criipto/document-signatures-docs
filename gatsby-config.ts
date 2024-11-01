@@ -63,6 +63,51 @@ const config : GatsbyConfig = {
         path: "./src/snippets/"
       },
       __key: "snippets",
+    },
+    {
+      resolve: `gatsby-plugin-json-output`,
+      options: {
+        siteUrl: 'https://docs.criipto.com/changelog/',
+        graphQLQuery: `
+          {
+            allMdx(
+              filter: {
+                fileAbsolutePath: {regex: "/(changelog)/"}
+              }
+              sort: {
+                fields: [frontmatter___date],
+                order: DESC
+              }
+            ) {
+              edges {
+                node {
+                  excerpt(pruneLength: 5000)
+                  slug
+                  frontmatter {
+                    title
+                    date
+                  }
+                }
+              }
+            }
+          }
+        `,
+        serialize: results => results.data.allMdx.edges.map(({ node }) => ({
+          path: node.slug, // MUST contain a path
+          title: node.frontmatter.title,
+          date: node.frontmatter.date,
+          excerpt: node.excerpt,
+        })),
+        serializeFeed: results => results.data.allMdx.edges.map(({ node }) => ({
+          id: node.slug,
+          url: 'https://docs.criipto.com/' + node.slug,
+          title: node.frontmatter.title,
+          date: node.frontmatter.date,
+          excerpt: node.excerpt,
+        })),
+        feedFilename: "changelog",
+        nodesPerFeedFile: 1000,
+      }
     }
   ].concat(process.env.GATSBY_ALGOLIA_APP_ID ? [
     {
