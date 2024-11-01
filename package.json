@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "develop": "gatsby develop",
-    "start": "gatsby clean && gatsby develop && mv public/changelog-1.json public/changelog.json",
+    "start": "gatsby clean && gatsby develop && mv public/changelog-1.json public/static/changelog.json",
     "codegen": "npm run codegen:gatsby && npm run codegen:signatures",
     "codegen:gatsby": "graphql-codegen -c graphql-gatsby-codegen.yml",
     "codegen:signatures": "npm run codegen:signatures:graphql && npm run codegen:signatures:csharp",
