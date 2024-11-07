@@ -24,5 +24,9 @@ You can use the copy application feature from test to production to ensure the s
 ## MitID Core Client error
 
 If you encounter the `mitid_core_client_error` while running test logins, it indicates issues with the MitID PP environment. 
-Please note that the MitID PP environment can occasionally experience instability, and MitID does not provide SLAs or status updates for this environment.
-Criipto does not have control over the MitID Test Tools.
+
+Please note that the MitID PP environment may occasionally experience instability, and MitID does not provide SLAs or status updates for this environment. Criipto does not have control over the MitID Test Tools.
+
+### Using TOTP test user as a workaround
+
+In some cases, only App Simulator test users may be affected. If you are experiencing issues with the App Simulator (e.g. the *Scan QR and Confirm* action is not available), you can try [creating a test user](/verify/e-ids/danish-mitid/#test-users) with a TOTP authenticator instead. You can do this by checking both the *Password* and the *TOTP simulator* checkboxes at user creation time. 
