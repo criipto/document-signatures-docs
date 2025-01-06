@@ -28,7 +28,14 @@ It is currently not possible to sign documents that have previously been signed,
 
 ### Changing authentication options
 
-You can change authentication methods displayed or disable popups by modifying the Criipto Verify evidence provider settings as such:
+You can modify Criipto Verify evidence provider settings to change the runtime behavior: 
+
+- To change authentication methods displayed, add [`acrValues`](/verify/getting-started/oidc-intro#authorize-request-parameters). 
+- To disable popups, set `"alwaysRedirect": true`. 
+- To specify the user data you need, add the [OpenID Connect `scope`](/verify/getting-started/oidc-intro/#the-scope-parameter). 
+- To add a message, use [`loginHint`](/verify/getting-started/oidc-intro/#the-loginhint-parameter). 
+
+To experiment with different query parameters, see [Authorize URL builder](/verify/guides/authorize-url-builder/). 
 
 import criiptoVerifyOptionsExample from '../../../examples/createSignatureOrder/criiptoVerifyOptions';
 
@@ -77,9 +84,9 @@ import addSignatoryBasicExample from '../../../examples/addSignatory/basic';
 
 ### Evidence validation
 
-If you wish to validate the user signing you should use the `evidenceValidation` input for `addSignatory`.
+If you wish to validate the user signing, you should use the `evidenceValidation` input for `addSignatory`.
 
-Evidence validation keys must match what will be found in the claims token when signing. You can inspect JWT Tokens issued by Criipto Verify to see the necessary keys.
+Evidence validation keys must match what will be found in the token claims when signing. You can inspect the [JWTs issued by Criipto Verify](https://docs.criipto.com/verify/getting-started/token-contents/) to see the keys that can be used for evidence validation. _Tip: Hover over a claim in the JWT payload to view its description._
 
 Evidence will be hashed before storage and compared when a user tries to sign. If the evidence does not match an error will be displayed to the user and they will be prompted to try again.
 
